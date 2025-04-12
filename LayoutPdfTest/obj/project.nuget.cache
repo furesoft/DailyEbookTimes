@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "MMEvRpp/+f8=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\chris\\OneDrive\\Desktop\\Neuer Ordner\\LayoutPdfTest\\LayoutPdfTest\\LayoutPdfTest.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\chris\\.nuget\\packages\\pdfpig\\0.1.11-alpha-20250407-24902\\pdfpig.0.1.11-alpha-20250407-24902.nupkg.sha512"
+  ],
+  "logs": []
+}
