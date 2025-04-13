@@ -28,14 +28,13 @@ class Program
 
         var header = new YogaNode(config)
         {
-            Height = 100,
+            Height = 120,
             MarginTop = 15,
             MarginLeft = 10,
             MarginRight = 10,
             FlexGrow = 0,
             AlignItems = YogaAlign.Center,
-            Data = "header",
-            BorderColor = new Color(0, 255, 0)
+            Name = "header",
         };
 
         var headerText = new TextNode(config)
@@ -46,23 +45,51 @@ class Program
             AlignSelf = YogaAlign.Center,
             Width = 300,
             Height = 55,
-            PositionType = YogaPositionType.Relative,
-            BorderColor = new Color(255, 0, 0)
+            PositionType = YogaPositionType.Relative
+        };
+        var topLine = new HorizontalLineNode(config)
+        {
+            LineThickness = 2,
+            Margin = 10
+        };
+        var bottomLine = new HorizontalLineNode(config)
+        {
+            LineThickness = 2,
+            Margin = 10
+        };
+
+        var issueText = new TextNode(config)
+        {
+            Text = "Issue #1",
+            Font = textFont,
+            FontSize = 15,
+            MarginLeft = 10,
+            MarginBottom = 10,
+            AlignSelf = YogaAlign.FlexStart,
         };
 
         header.Add(headerText);
+        header.Add(topLine);
+        header.Add(issueText);
+        header.Add(bottomLine);
 
         var footer = new YogaNode(config)
         {
-            Height = 35,
+            Height = 10,
             MarginBottom = 5,
             MarginLeft = 10,
             MarginRight = 10,
             FlexDirection = YogaFlexDirection.Row,
             FlexGrow = 0,
             Name = "footer",
-            BorderColor = new Color(0, 255, 0)
         };
+        var footerLine = new HorizontalLineNode(config)
+        {
+            LineThickness = 1,
+            Margin = 10
+        };
+
+        footer.Add(footerLine);
 
         var contentArea = new YogaNode(config)
         {
