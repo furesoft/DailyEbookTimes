@@ -94,4 +94,27 @@ public class Layout
             Name = name
         };
     }
+
+    /// <summary>
+    /// Finds a node in the layout tree by a query.
+    /// </summary>
+    /// <param name="query"></param>
+    /// <returns></returns>
+    /// <example>content.left.article</example>
+    public YogaNode? FindNode(string query)
+    {
+        var parts = query.Split('.');
+        var currentNode = root;
+
+        foreach (var part in parts)
+        {
+            currentNode = currentNode.Children.FirstOrDefault(child => child.Name == part);
+            if (currentNode == null)
+            {
+                return null; // Node nicht gefunden
+            }
+        }
+
+        return currentNode;
+    }
 }
