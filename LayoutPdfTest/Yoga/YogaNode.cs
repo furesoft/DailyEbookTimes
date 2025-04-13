@@ -145,7 +145,8 @@ namespace Marius.Yoga
         }
 
         public Color? BorderColor { get; set; }
-        public string Name { get; set; }
+        public string? Name { get; set; }
+
         public YogaPrint PrintFunction
         {
             get { return _print; }

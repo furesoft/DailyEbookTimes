@@ -14,159 +14,95 @@ class Program
         var textFont = builder.AddTrueTypeFont(File.ReadAllBytes("fonts/NoticiaText-Regular.ttf"));
 
         var page = builder.AddPage(PageSize.A4, false);
-        var config = new YogaConfig();
+        var layout = Layout.Create(page);
 
-        var root = new YogaNode(config)
-        {
-            Width = page.PageSize.Width,
-            Height = page.PageSize.Height,
-            Margin = 10,
-            Padding = 10,
-            Name = "root",
-            BorderColor = new Color(0, 255, 0)
-        };
+        var header = layout.CreateNode("header");
 
-        var header = new YogaNode(config)
-        {
-            Height = 120,
-            MarginTop = 15,
-            MarginLeft = 10,
-            MarginRight = 10,
-            FlexGrow = 0,
-            AlignItems = YogaAlign.Center,
-            Name = "header",
-        };
+        header.Height = 120;
+        header.MarginTop = 15;
+        header.MarginLeft = 10;
+        header.MarginRight = 10;
+        header.FlexGrow = 0;
+        header.AlignItems = YogaAlign.Center;
 
-        var headerText = new TextNode(config)
-        {
-            Text = "Daily E-Book Times",
-            FontSize = 75,
-            Font = headlineFont,
-            AlignSelf = YogaAlign.Center,
-            Width = 300,
-            Height = 55,
-            PositionType = YogaPositionType.Relative
-        };
-        var topLine = new HorizontalLineNode(config)
-        {
-            LineThickness = 2,
-            Margin = 10
-        };
-        var bottomLine = new HorizontalLineNode(config)
-        {
-            LineThickness = 2,
-            Margin = 10
-        };
+        var headerText = layout.CreateTextNode("Daily E-Book Times");
+        headerText.FontSize = 75;
+        headerText.Font = headlineFont;
+        headerText.AlignSelf = YogaAlign.Center;
+        headerText.Width = 300;
+        headerText.Height = 55;
+        headerText.PositionType = YogaPositionType.Relative;
 
-        var issueText = new TextNode(config)
-        {
-            Text = "Issue #1",
-            Font = textFont,
-            FontSize = 15,
-            MarginLeft = 10,
-            MarginBottom = 10,
-            AlignSelf = YogaAlign.FlexStart,
-        };
+        var topLine = layout.CreateHorizontalLine();
+        topLine.LineThickness = 2;
+        topLine.Margin = 10;
+
+        var bottomLine = layout.CreateHorizontalLine();
+        bottomLine.LineThickness = 2;
+        bottomLine.Margin = 10;
+
+        var issueText = layout.CreateTextNode("Issue #1");
+        issueText.Font = textFont;
+        issueText.FontSize = 15;
+        issueText.MarginLeft = 10;
+        issueText.MarginBottom = 10;
+        issueText.AlignSelf = YogaAlign.FlexStart;
 
         header.Add(headerText);
         header.Add(topLine);
         header.Add(issueText);
         header.Add(bottomLine);
 
-        var footer = new YogaNode(config)
-        {
-            Height = 10,
-            MarginBottom = 5,
-            MarginLeft = 10,
-            MarginRight = 10,
-            FlexDirection = YogaFlexDirection.Row,
-            FlexGrow = 0,
-            Name = "footer",
-        };
-        var footerLine = new HorizontalLineNode(config)
-        {
-            LineThickness = 1,
-            Margin = 10
-        };
+        var footer = layout.CreateNode("footer");
+        footer.Height = 10;
+        footer.MarginBottom = 5;
+        footer.MarginLeft = 10;
+        footer.MarginRight = 10;
+        footer.FlexDirection = YogaFlexDirection.Row;
+        footer.FlexGrow = 0;
+
+        var footerLine = layout.CreateHorizontalLine();
+        footerLine.LineThickness = 1;
+        footerLine.Margin = 10;
 
         footer.Add(footerLine);
 
-        var contentArea = new YogaNode(config)
-        {
-            FlexDirection = YogaFlexDirection.Row,
-            FlexGrow = 1,
-            Margin = 10,
-            Name = "content"
-        };
+        var contentArea = layout.CreateNode("content");
+        contentArea.FlexDirection = YogaFlexDirection.Row;
+        contentArea.FlexGrow = 1;
+        contentArea.Margin = 10;
 
-        var leftColumn = new YogaNode(config)
-        {
-            FlexGrow = 1,
-            MarginLeft = 10,
-            MarginRight = 10,
-            Name = "left",
-            BorderColor = new Color(0, 0, 255)
-        };
+        var leftColumn = layout.CreateNode("left");
+        leftColumn.FlexGrow = 1;
+        leftColumn.MarginLeft = 10;
+        leftColumn.MarginRight = 10;
+        leftColumn.BorderColor = new Color(0, 0, 255);
 
-        var middleColumn = new YogaNode(config)
-        {
-            FlexGrow = 2,
-            MarginLeft = 10,
-            MarginRight = 10,
-            Name = "middle",
-            BorderColor = new Color(0, 0, 255)
-        };
+        var middleColumn = layout.CreateNode("middle");
+        middleColumn.FlexGrow = 2;
+        middleColumn.MarginLeft = 10;
+        middleColumn.MarginRight = 10;
+        middleColumn.BorderColor = new Color(0, 0, 255);
 
-        var rightColumn = new YogaNode(config)
-        {
-            FlexGrow = 1,
-            MarginLeft = 10,
-            MarginRight = 10,
-            Name = "right",
-            BorderColor = new Color(0, 0, 255)
-        };
+        var rightColumn = layout.CreateNode("right");
+        rightColumn.FlexGrow = 1;
+        rightColumn.MarginLeft = 10;
+        rightColumn.MarginRight = 10;
+        rightColumn.BorderColor = new Color(0, 0, 255);
 
         contentArea.Add(leftColumn);
         contentArea.Add(middleColumn);
         contentArea.Add(rightColumn);
 
-        root.StyleDirection = YogaDirection.LeftToRight;
+        layout.Add(header);
+        layout.Add(contentArea);
+        layout.Add(footer);
 
-        root.Add(header);
-        root.Add(contentArea);
-        root.Add(footer);
-
-        ReCalculate(root, page);
-        root.CalculateLayout();
-
-        DrawNode(root, page);
+        layout.Apply(page);
 
         var documentBytes = builder.Build();
 
         File.WriteAllBytes("newPdf.pdf", documentBytes);
         Process.Start(new ProcessStartInfo("newPdf.pdf") { UseShellExecute = true });
-    }
-
-    private static void DrawNode(YogaNode root, PdfPageBuilder page, double offsetX = 0, double offsetY = 0)
-    {
-        foreach (var child in root.Children)
-        {
-            var absoluteX = offsetX + child.LayoutX;
-            var absoluteY = offsetY + child.LayoutY;
-
-            child.Draw(page, absoluteX, absoluteY);
-
-            DrawNode(child, page, absoluteX, absoluteY);
-        }
-    }
-
-    private static void ReCalculate(YogaNode root, PdfPageBuilder page)
-    {
-        foreach (var child in root.Children)
-        {
-            child.ReCalculate(page);
-
-            ReCalculate(child, page);
-        }
     }
 }
