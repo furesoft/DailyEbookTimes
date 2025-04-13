@@ -21,3 +21,4 @@ C:\Users\chris\OneDrive\Desktop\Neuer Ordner\LayoutPdfTest\LayoutPdfTest\obj\Deb
 C:\Users\chris\OneDrive\Desktop\Neuer Ordner\LayoutPdfTest\LayoutPdfTest\obj\Debug\net8.0\LayoutPdfTest.pdb
 C:\Users\chris\OneDrive\Desktop\Neuer Ordner\LayoutPdfTest\LayoutPdfTest\obj\Debug\net8.0\LayoutPdfTest.genruntimeconfig.cache
 C:\Users\chris\OneDrive\Desktop\Neuer Ordner\LayoutPdfTest\LayoutPdfTest\obj\Debug\net8.0\ref\LayoutPdfTest.dll
+C:\Users\chris\OneDrive\Desktop\Neuer Ordner\LayoutPdfTest\LayoutPdfTest\obj\Debug\net8.0\LayoutPdfTest.sourcelink.json

@@ -7,6 +7,7 @@ using UglyToad.PdfPig.Writer;
 
 namespace LayoutPdfTest;
 
+
 class Program
 {
     static void Main(string[] args)
@@ -31,10 +32,19 @@ class Program
             MarginLeft = 10,
             MarginRight = 10,
             FlexGrow = 0,
+            AlignItems = YogaAlign.FlexStart,
             Data = "header"
         };
 
-        var headerText = new YogaNode(config);
+        var headerText = new YogaNode(config)
+        {
+            Data = "headerText",
+            AlignSelf = YogaAlign.Center,
+            Width = 150,
+            Height = 35,
+            PositionType = YogaPositionType.Relative
+        };
+
         header.Add(headerText);
 
         var footer = new YogaNode(config)
@@ -87,9 +97,9 @@ class Program
 
         root.StyleDirection = YogaDirection.LeftToRight;
 
-        root.Add(footer);
-        root.Add(contentArea);
         root.Add(header);
+        root.Add(contentArea);
+        root.Add(footer);
 
         root.CalculateLayout();
 
@@ -114,26 +124,28 @@ class Program
     };
 
     private static PdfDocumentBuilder.AddedFont font;
-    private static void DrawBox(YogaNode root, PdfPageBuilder page, int colorIndex = 0)
+    private static void DrawBox(YogaNode root, PdfPageBuilder page, int colorIndex = 0, double offsetX = 0, double offsetY = 0)
     {
         foreach (var child in root.Children)
         {
             var color = Colors[colorIndex % Colors.Length];
             page.SetStrokeColor(color.r, color.g, color.b);
-            var boxPos = new PdfPoint(child.LayoutX, child.LayoutY);
+
+            // Berechne die absolute Position des Kindes
+            var absoluteX = offsetX + child.LayoutX;
+            var absoluteY = offsetY + child.LayoutY;
+
+            // Zeichne das Rechteck
+            var boxPos = new PdfPoint(absoluteX, page.PageSize.Height - absoluteY - child.LayoutHeight);
             page.DrawRectangle(boxPos, child.LayoutWidth, child.LayoutHeight, 1);
 
+            // Füge Text hinzu, falls vorhanden
             if (child.Data is string text)
             {
-                page.AddText(text, 20, new PdfPoint(child.LayoutX + 5, child.LayoutY + 5), font);
+                page.AddText(text, 20, new PdfPoint(absoluteX + 5, page.PageSize.Height - absoluteY - 25), font);
             }
 
-            DrawBox(child, page, colorIndex + 1);
-        }
-
-        PdfPoint ConvertToTopLeftOrigin(PdfPoint point)
-        {
-            return new PdfPoint(point.X, page.PageSize.Height - point.Y);
+            DrawBox(child, page, colorIndex + 1, absoluteX, absoluteY);
         }
     }
 }
