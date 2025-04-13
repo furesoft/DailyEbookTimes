@@ -8,11 +8,11 @@ public class TextNode(YogaConfig config) : YogaNode(config)
 {
     public double FontSize { get; set; }
     public string Text { get; set; }
-    public PdfDocumentBuilder.AddedFont Font { get; set; }
+    public string FontFamily { get; set; }
 
     public override void ReCalculate(PdfPageBuilder page)
     {
-        var measuredText = page.MeasureText(Text, FontSize, PdfPoint.Origin, Font);
+        var measuredText = page.MeasureText(Text, FontSize, PdfPoint.Origin, ParentLayout.GetFont(FontFamily));
         var leftMost = measuredText.Min(g => g.GlyphRectangle.Left);
         var rightMost = measuredText.Max(g => g.GlyphRectangle.Right);
         var textWidth = rightMost - leftMost;
@@ -31,10 +31,12 @@ public class TextNode(YogaConfig config) : YogaNode(config)
     {
         base.Draw(page, absoluteX, absoluteY);
 
-        var measuredText = page.MeasureText(Text, FontSize, PdfPoint.Origin, Font);
+        var font = ParentLayout.GetFont(FontFamily);
+
+        var measuredText = page.MeasureText(Text, FontSize, PdfPoint.Origin, font);
         var maxAscent = measuredText.Max(g => g.GlyphRectangle.Top);
         var yPosition = page.PageSize.Height - absoluteY - maxAscent;
 
-        page.AddText(Text, FontSize, new PdfPoint(absoluteX, yPosition), Font);
+        page.AddText(Text, FontSize, new PdfPoint(absoluteX, yPosition), font);
     }
 }

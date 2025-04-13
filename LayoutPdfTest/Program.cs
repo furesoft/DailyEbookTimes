@@ -10,11 +10,12 @@ class Program
     static void Main(string[] args)
     {
         var builder = new PdfDocumentBuilder();
-        var headlineFont = builder.AddTrueTypeFont(File.ReadAllBytes("fonts/Jaini-Regular.ttf")); //builder.AddStandard14Font(Standard14Font.Helvetica);
-        var textFont = builder.AddTrueTypeFont(File.ReadAllBytes("fonts/NoticiaText-Regular.ttf"));
 
         var page = builder.AddPage(PageSize.A4, false);
-        var layout = Layout.Create(page);
+        var layout = Layout.Create(page, builder);
+
+        layout.AddFont("Jaini", "fonts/Jaini-Regular.ttf");
+        layout.AddFont("NoticiaText", "fonts/NoticiaText-Regular.ttf");
 
         var header = layout.CreateNode("header");
 
@@ -27,7 +28,7 @@ class Program
 
         var headerText = layout.CreateTextNode("Daily E-Book Times");
         headerText.FontSize = 75;
-        headerText.Font = headlineFont;
+        headerText.FontFamily = "Jaini";
         headerText.AlignSelf = YogaAlign.Center;
         headerText.Width = 300;
         headerText.Height = 55;
@@ -42,7 +43,7 @@ class Program
         bottomLine.Margin = 10;
 
         var issueText = layout.CreateTextNode("Issue #1");
-        issueText.Font = textFont;
+        issueText.FontFamily = "NoticiaText";
         issueText.FontSize = 15;
         issueText.MarginLeft = 10;
         issueText.MarginBottom = 10;
@@ -98,7 +99,7 @@ class Program
         layout.Add(contentArea);
         layout.Add(footer);
 
-        layout.Apply(page);
+        layout.Apply();
 
         var documentBytes = builder.Build();
 

@@ -36,6 +36,7 @@ namespace Marius.Yoga
         private YogaConfig _config;
         private bool _isDirty;
         private YogaArray<YogaValue> _resolvedDimensions; // [2]
+        public Layout ParentLayout { get; set; }
 
         public YogaNode()
         {

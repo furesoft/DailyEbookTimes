@@ -1,4 +1,5 @@
 ﻿using Marius.Yoga;
+using UglyToad.PdfPig.Fonts.Standard14Fonts;
 using UglyToad.PdfPig.Writer;
 
 namespace LayoutPdfTest;
@@ -7,10 +8,15 @@ public class Layout
 {
     private YogaNode root;
     private YogaConfig config;
+    private readonly PdfPageBuilder _page;
+    private readonly PdfDocumentBuilder _builder;
+    static Dictionary<string, PdfDocumentBuilder.AddedFont> _fonts = new();
 
-    private Layout(YogaConfig config, PdfPageBuilder page)
+    private Layout(YogaConfig config, PdfPageBuilder page, PdfDocumentBuilder builder)
     {
         this.config = config;
+        _page = page;
+        _builder = builder;
 
         root = new YogaNode(config)
         {
@@ -21,25 +27,28 @@ public class Layout
             Name = "root",
             StyleDirection = YogaDirection.LeftToRight
         };
+
+        //todo: add standard font from moss
     }
 
     public YogaNode GetRoot() => root;
 
-    public static Layout Create(PdfPageBuilder page)
+    public static Layout Create(PdfPageBuilder page, PdfDocumentBuilder builder)
     {
-        return new Layout(new(), page);
+        return new Layout(new(), page, builder);
     }
 
-    public static Layout Create(PdfPageBuilder page, YogaConfig config)
+    public static Layout Create(PdfPageBuilder page, PdfDocumentBuilder builder, YogaConfig config)
     {
-        return new Layout(config, page);
+        return new Layout(config, page, builder);
     }
 
     public YogaNode CreateNode(string? name = null)
     {
         return new YogaNode(config)
         {
-            Name = name
+            Name = name,
+            ParentLayout = this
         };
     }
 
@@ -48,7 +57,8 @@ public class Layout
         return new TextNode(config)
         {
             Name = name,
-            Text = text
+            Text = text,
+            ParentLayout = this
         };
     }
 
@@ -57,12 +67,12 @@ public class Layout
         root.Add(node);
     }
 
-    public void Apply(PdfPageBuilder page)
+    public void Apply()
     {
-        ReCalculate(root, page);
+        ReCalculate(root, _page);
         root.CalculateLayout();
 
-        DrawNode(root, page);
+        DrawNode(root, _page);
     }
 
     private static void DrawNode(YogaNode root, PdfPageBuilder page, double offsetX = 0, double offsetY = 0)
@@ -116,5 +126,22 @@ public class Layout
         }
 
         return currentNode;
+    }
+
+    public void AddFont(string name, string path)
+    {
+       var font = _builder.AddTrueTypeFont(File.ReadAllBytes(path));
+       _fonts[name] = font;
+    }
+
+    public PdfDocumentBuilder.AddedFont GetFont(string fontFamily)
+    {
+        if (_fonts.TryGetValue(fontFamily, out var font))
+        {
+            return font;
+        }
+
+        //todo: use standard font instead of exception
+        throw new ArgumentException($"Font '{fontFamily}' not found.");
     }
 }
