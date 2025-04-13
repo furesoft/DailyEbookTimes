@@ -24,3 +24,4 @@ C:\Users\chris\OneDrive\Desktop\Neuer Ordner\LayoutPdfTest\LayoutPdfTest\obj\Deb
 C:\Users\chris\OneDrive\Desktop\Neuer Ordner\LayoutPdfTest\LayoutPdfTest\obj\Debug\net8.0\LayoutPdfTest.sourcelink.json
 C:\Users\chris\OneDrive\Desktop\Neuer Ordner\LayoutPdfTest\LayoutPdfTest\bin\Debug\net8.0\fonts\Jaini-Regular.ttf
 C:\Users\chris\OneDrive\Desktop\Neuer Ordner\LayoutPdfTest\LayoutPdfTest\bin\Debug\net8.0\fonts\NoticiaText-Regular.ttf
+C:\Users\chris\OneDrive\Desktop\Neuer Ordner\LayoutPdfTest\LayoutPdfTest\bin\Debug\net8.0\images\rss.png

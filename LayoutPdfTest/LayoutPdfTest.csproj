@@ -18,6 +18,9 @@
       <None Update="fonts\NoticiaText-Regular.ttf">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
+      <None Update="images\rss.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
 </Project>

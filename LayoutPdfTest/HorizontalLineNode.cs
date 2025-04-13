@@ -27,6 +27,15 @@ public class HorizontalLineNode : YogaNode
             MarginRight = Margin;
         }
 
+        if (!MarginLeft.Value.HasValue)
+        {
+            MarginLeft = 0;
+        }
+        if (!MarginRight.Value.HasValue)
+        {
+            MarginRight = 0;
+        }
+
         Height = LineThickness;
     }
 

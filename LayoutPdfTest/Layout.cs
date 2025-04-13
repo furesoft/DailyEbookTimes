@@ -144,4 +144,14 @@ public class Layout
         //todo: use standard font instead of exception
         throw new ArgumentException($"Font '{fontFamily}' not found.");
     }
+
+    public ImageNode CreateImageNode(string path, string? name = null)
+    {
+        return new ImageNode(config)
+        {
+            Name = name,
+            ParentLayout = this,
+            ImagePath = path
+        };
+    }
 }
