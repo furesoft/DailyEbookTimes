@@ -2,17 +2,31 @@
 using Marius.Yoga;
 using UglyToad.PdfPig.Content;
 using UglyToad.PdfPig.Core;
-using UglyToad.PdfPig.Fonts.Standard14Fonts;
 using UglyToad.PdfPig.Writer;
 
 namespace LayoutPdfTest;
 
+class TextNode(YogaConfig config) : YogaNode(config)
+{
+    public double FontSize { get; set; }
+    public string Text { get; set; }
+    public PdfDocumentBuilder.AddedFont Font { get; set; }
+
+    public override void Draw(PdfPageBuilder page, double absoluteX, double absoluteY)
+    {
+        base.Draw(page, absoluteX, absoluteY);
+
+        page.AddText(Text, FontSize, new PdfPoint(absoluteX, page.PageSize.Height - absoluteY), Font);
+    }
+}
 
 class Program
 {
     static void Main(string[] args)
     {
         var builder = new PdfDocumentBuilder();
+        var headlineFont = builder.AddTrueTypeFont(File.ReadAllBytes("fonts/Jaini-Regular.ttf")); //builder.AddStandard14Font(Standard14Font.Helvetica);
+        var textFont = builder.AddTrueTypeFont(File.ReadAllBytes("fonts/NoticiaText-Regular.ttf"));
 
         var page = builder.AddPage(PageSize.A4, false);
         var config = new YogaConfig();
@@ -23,6 +37,8 @@ class Program
             Height = page.PageSize.Height,
             Margin = 10,
             Padding = 10,
+            Name = "root",
+            BorderColor = new Color(0, 255, 0)
         };
 
         var header = new YogaNode(config)
@@ -32,17 +48,21 @@ class Program
             MarginLeft = 10,
             MarginRight = 10,
             FlexGrow = 0,
-            AlignItems = YogaAlign.FlexStart,
-            Data = "header"
+            AlignItems = YogaAlign.Center,
+            Data = "header",
+            BorderColor = new Color(0, 255, 0)
         };
 
-        var headerText = new YogaNode(config)
+        var headerText = new TextNode(config)
         {
-            Data = "headerText",
+            Text = "Daily E-Book Times",
+            FontSize = 75,
+            Font = headlineFont,
             AlignSelf = YogaAlign.Center,
-            Width = 150,
-            Height = 35,
-            PositionType = YogaPositionType.Relative
+            Width = 300,
+            Height = 55,
+            PositionType = YogaPositionType.Relative,
+            BorderColor = new Color(255, 0, 0)
         };
 
         header.Add(headerText);
@@ -55,16 +75,16 @@ class Program
             MarginRight = 10,
             FlexDirection = YogaFlexDirection.Row,
             FlexGrow = 0,
-            Data = "footer"
+            Name = "footer",
+            BorderColor = new Color(0, 255, 0)
         };
 
         var contentArea = new YogaNode(config)
         {
             FlexDirection = YogaFlexDirection.Row,
             FlexGrow = 1,
-            MarginLeft = 10,
-            MarginRight = 10,
-            Data = "content"
+            Margin = 10,
+            Name = "content"
         };
 
         var leftColumn = new YogaNode(config)
@@ -72,7 +92,8 @@ class Program
             FlexGrow = 1,
             MarginLeft = 10,
             MarginRight = 10,
-            Data = "left"
+            Name = "left",
+            BorderColor = new Color(0, 0, 255)
         };
 
         var middleColumn = new YogaNode(config)
@@ -80,7 +101,8 @@ class Program
             FlexGrow = 2,
             MarginLeft = 10,
             MarginRight = 10,
-            Data = "middle"
+            Name = "middle",
+            BorderColor = new Color(0, 0, 255)
         };
 
         var rightColumn = new YogaNode(config)
@@ -88,7 +110,8 @@ class Program
             FlexGrow = 1,
             MarginLeft = 10,
             MarginRight = 10,
-            Data = "right"
+            Name = "right",
+            BorderColor = new Color(0, 0, 255)
         };
 
         contentArea.Add(leftColumn);
@@ -103,9 +126,7 @@ class Program
 
         root.CalculateLayout();
 
-        font = builder.AddStandard14Font(Standard14Font.Helvetica);
-
-        DrawBox(root, page);
+        DrawNode(root, page);
 
         var documentBytes = builder.Build();
 
@@ -113,39 +134,16 @@ class Program
         Process.Start(new ProcessStartInfo("newPdf.pdf") { UseShellExecute = true });
     }
 
-    private static readonly (byte r,byte g,byte b)[] Colors =
-    {
-        (255, 0, 0),    // Rot
-        (0, 255, 0),    // Grün
-        (0, 0, 255),    // Blau
-        (255, 255, 0),  // Gelb
-        (255, 0, 255),  // Magenta
-        (0, 255, 255)   // Cyan
-    };
-
-    private static PdfDocumentBuilder.AddedFont font;
-    private static void DrawBox(YogaNode root, PdfPageBuilder page, int colorIndex = 0, double offsetX = 0, double offsetY = 0)
+    private static void DrawNode(YogaNode root, PdfPageBuilder page, double offsetX = 0, double offsetY = 0)
     {
         foreach (var child in root.Children)
         {
-            var color = Colors[colorIndex % Colors.Length];
-            page.SetStrokeColor(color.r, color.g, color.b);
-
-            // Berechne die absolute Position des Kindes
             var absoluteX = offsetX + child.LayoutX;
             var absoluteY = offsetY + child.LayoutY;
 
-            // Zeichne das Rechteck
-            var boxPos = new PdfPoint(absoluteX, page.PageSize.Height - absoluteY - child.LayoutHeight);
-            page.DrawRectangle(boxPos, child.LayoutWidth, child.LayoutHeight, 1);
+            child.Draw(page, absoluteX, absoluteY);
 
-            // Füge Text hinzu, falls vorhanden
-            if (child.Data is string text)
-            {
-                page.AddText(text, 20, new PdfPoint(absoluteX + 5, page.PageSize.Height - absoluteY - 25), font);
-            }
-
-            DrawBox(child, page, colorIndex + 1, absoluteX, absoluteY);
+            DrawNode(child, page, absoluteX, absoluteY);
         }
     }
 }

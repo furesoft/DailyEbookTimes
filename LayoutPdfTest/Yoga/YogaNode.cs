@@ -6,12 +6,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+using LayoutPdfTest;
+using UglyToad.PdfPig.Core;
+using UglyToad.PdfPig.Writer;
 
 namespace Marius.Yoga
 {
@@ -147,6 +144,8 @@ namespace Marius.Yoga
             return _instanceCount;
         }
 
+        public Color? BorderColor { get; set; }
+        public string Name { get; set; }
         public YogaPrint PrintFunction
         {
             get { return _print; }
@@ -743,6 +742,18 @@ namespace Marius.Yoga
                 return YogaValue.Undefined;
 
             return defaultValue;
+        }
+
+        public virtual void Draw(PdfPageBuilder page, double absoluteX, double absoluteY)
+        {
+            if (BorderColor != null)
+            {
+                page.SetStrokeColor(BorderColor.r, BorderColor.g, BorderColor.b);
+
+                var boxPos = new PdfPoint(absoluteX, page.PageSize.Height - absoluteY - LayoutHeight);
+                page.DrawRectangle(boxPos, LayoutWidth, LayoutHeight, 1);
+                page.ResetColor();
+            }
         }
     }
 }

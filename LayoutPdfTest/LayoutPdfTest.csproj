@@ -11,4 +11,13 @@
       <PackageReference Include="PdfPig" Version="0.1.11-alpha-20250407-24902" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Update="fonts\Jaini-Regular.ttf">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="fonts\NoticiaText-Regular.ttf">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
 </Project>
