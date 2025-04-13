@@ -13,7 +13,10 @@ public class TextNode(YogaConfig config) : YogaNode(config)
     public override void ReCalculate(PdfPageBuilder page)
     {
         var measuredText = page.MeasureText(Text, FontSize, PdfPoint.Origin, Font);
-        var textWidth = measuredText.Sum(_ => _.GlyphRectangle.Width);
+        var leftMost = measuredText.Min(g => g.GlyphRectangle.Left);
+        var rightMost = measuredText.Max(g => g.GlyphRectangle.Right);
+        var textWidth = rightMost - leftMost;
+
         var textHeight = measuredText.Max(glyph => glyph.GlyphRectangle.Top)
                          - measuredText.Min(glyph => glyph.GlyphRectangle.Bottom);
 

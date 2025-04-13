@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("LayoutPdfTest")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9f5c48717a408842d1e01d7f747cfb3f2bee65c4")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6fd51017866bacd44e755a83dbf021bb3481b2e6")]
 [assembly: System.Reflection.AssemblyProductAttribute("LayoutPdfTest")]
 [assembly: System.Reflection.AssemblyTitleAttribute("LayoutPdfTest")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
