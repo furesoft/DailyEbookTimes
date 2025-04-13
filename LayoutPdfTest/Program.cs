@@ -9,11 +9,8 @@ public enum FontSize
 {
     Headline = 75,
     HeaderInfo = 15,
-    SidebarH2 = 29,
-    MainContentH2 = 29,
-    ExtraContentH2 = 29,
-    ArticleH3 = 24,
-    ArticleP = 16,
+    ArticleHeading = 18,
+    ArticleP = 14,
     Footer = 10
 }
 
@@ -37,6 +34,7 @@ class Program
         layout.Add(contentArea);
         layout.Add(footer);
 
+       // layout.EnableDebugLines();
         layout.Apply();
 
         var documentBytes = builder.Build();
@@ -54,6 +52,7 @@ class Program
         header.MarginLeft = 10;
         header.MarginRight = 10;
         header.FlexGrow = 0;
+        header.Background = new Color(255, 255, 0);
 
         var headerInfo = layout.CreateNode();
         headerInfo.FlexDirection = YogaFlexDirection.Row;
@@ -81,16 +80,14 @@ class Program
         bottomLine.MarginLeft = 10;
         bottomLine.MarginRight = 10;
 
-        var issueText = layout.CreateTextNode("Issue #1");
+        var issueText = layout.CreateTextNode("Issue #{0}");
         issueText.FontFamily = "NoticiaText";
         issueText.FontSize = (int)FontSize.HeaderInfo;
-        issueText.MarginBottom = 10;
         issueText.AlignSelf = YogaAlign.FlexStart;
 
-        var dateText = layout.CreateTextNode("Monday, March 12, 2023");
+        var dateText = layout.CreateTextNode(DateTime.Now.ToString("dddd, MMMM dd, yyyy"));
         dateText.FontFamily = "NoticiaText";
         dateText.FontSize = (int)FontSize.HeaderInfo;
-        dateText.MarginBottom = 10;
         dateText.AlignSelf = YogaAlign.Center;
         dateText.Width = 100;
         dateText.Height = 12;
@@ -144,6 +141,9 @@ class Program
         leftColumn.MarginRight = 10;
         leftColumn.BorderColor = new Color(0, 0, 255);
 
+        var firstLeftArticle = CreateArticle(layout, "Test", "My Super duper test content. So great stuff here");
+        leftColumn.Add(firstLeftArticle);
+
         var middleColumn = layout.CreateNode("middle");
         middleColumn.FlexGrow = 2;
         middleColumn.MarginLeft = 10;
@@ -160,5 +160,34 @@ class Program
         contentArea.Add(middleColumn);
         contentArea.Add(rightColumn);
         return contentArea;
+    }
+
+    private static YogaNode CreateArticle(Layout layout, string title, string summary)
+    {
+        var article = layout.CreateNode("article");
+
+        article.FlexGrow = 1;
+        article.Margin = 10;
+        article.FlexDirection = YogaFlexDirection.Column;
+        article.Height = 50;
+        article.Margin = 10;
+        article.Padding = 10;
+
+        var articleTitle = layout.CreateTextNode(title);
+        articleTitle.FontSize = (int)FontSize.ArticleHeading;
+        articleTitle.FontFamily = "NoticiaText";
+        articleTitle.Height = 20;
+        articleTitle.AlignItems = YogaAlign.Center;
+
+        var articleSummary = layout.CreateTextNode(summary);
+        articleSummary.FontSize = (int)FontSize.ArticleP;
+        articleSummary.FontFamily = "NoticiaText";
+        articleSummary.Height = 100;
+        articleSummary.AlignItems = YogaAlign.Center;
+
+        article.Add(articleTitle);
+        article.Add(articleSummary);
+
+        return article;
     }
 }

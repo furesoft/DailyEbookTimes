@@ -134,6 +134,26 @@ public class Layout
        _fonts[name] = font;
     }
 
+    public void EnableDebugLines()
+    {
+        var random = new Random();
+        SetDebugLines(root, random);
+    }
+
+    private void SetDebugLines(YogaNode node, Random random)
+    {
+        node.BorderColor = new Color(
+            (byte)random.Next(0, 256),
+            (byte)random.Next(0, 256),
+            (byte)random.Next(0, 256)
+        );
+
+        foreach (var child in node.Children)
+        {
+            SetDebugLines(child, random);
+        }
+    }
+
     public PdfDocumentBuilder.AddedFont GetFont(string fontFamily)
     {
         if (_fonts.TryGetValue(fontFamily, out var font))

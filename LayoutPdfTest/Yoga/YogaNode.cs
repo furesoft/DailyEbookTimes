@@ -37,6 +37,7 @@ namespace Marius.Yoga
         private bool _isDirty;
         private YogaArray<YogaValue> _resolvedDimensions; // [2]
         public Layout ParentLayout { get; set; }
+        public Color? Background { get; set; }
 
         public YogaNode()
         {
@@ -748,6 +749,15 @@ namespace Marius.Yoga
 
         public virtual void Draw(PdfPageBuilder page, double absoluteX, double absoluteY)
         {
+            if (Background != null)
+            {
+                page.SetStrokeColor(Background.r, Background.g, Background.b);
+                page.SetTextAndFillColor(Background.r, Background.g, Background.b);
+                var boxPos = new PdfPoint(absoluteX, page.PageSize.Height - absoluteY - LayoutHeight);
+                page.DrawRectangle(boxPos, LayoutWidth, LayoutHeight, 0, true);
+                page.ResetColor();
+            }
+
             if (BorderColor != null)
             {
                 page.SetStrokeColor(BorderColor.r, BorderColor.g, BorderColor.b);
