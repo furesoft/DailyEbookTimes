@@ -27,4 +27,5 @@ public static class Colors
     public static readonly Color MediumSeaGreen = new(60, 179, 113);
     public static readonly Color MediumPurple = new(123, 104, 238);
     public static readonly Color SandyBrown = new(244, 164, 96);
+    public static readonly Color Creme = new Color(244, 244, 244);
 }

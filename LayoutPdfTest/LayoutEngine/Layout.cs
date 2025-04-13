@@ -71,6 +71,7 @@ public class Layout
         ReCalculate(root, _page);
         root.CalculateLayout();
 
+        root.Draw(_page, 0, 0);
         DrawNode(root, _page);
     }
 

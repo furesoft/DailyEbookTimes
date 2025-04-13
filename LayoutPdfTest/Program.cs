@@ -13,6 +13,7 @@ class Program
 
         var page = builder.AddPage(PageSize.A4, false);
         var layout = Layout.Create(page, builder);
+        layout.GetRoot().Background = Colors.Creme;
 
         layout.AddFont("Jaini", "fonts/Jaini-Regular.ttf");
         layout.AddFont("NoticiaText", "fonts/NoticiaText-Regular.ttf");
@@ -43,7 +44,6 @@ class Program
         header.MarginLeft = 10;
         header.MarginRight = 10;
         header.FlexGrow = 0;
-        header.Background = new Color(255, 255, 0);
 
         var headerInfo = layout.CreateNode();
         headerInfo.FlexDirection = YogaFlexDirection.Row;
@@ -72,12 +72,12 @@ class Program
         bottomLine.MarginRight = 10;
 
         var issueText = layout.CreateTextNode("Issue #{0}");
-        issueText.FontFamily = "NoticiaText";
+        issueText.FontFamily = "Jaini";
         issueText.FontSize = (int)FontSize.HeaderInfo;
         issueText.AlignSelf = YogaAlign.FlexStart;
 
         var dateText = layout.CreateTextNode(DateTime.Now.ToString("dddd, MMMM dd, yyyy"));
-        dateText.FontFamily = "NoticiaText";
+        dateText.FontFamily = "Jaini";
         dateText.FontSize = (int)FontSize.HeaderInfo;
         dateText.AlignSelf = YogaAlign.Center;
         dateText.Width = 100;
@@ -138,21 +138,48 @@ class Program
         leftColumn.MarginLeft = 10;
         leftColumn.MarginRight = 10;
         leftColumn.BorderColor = Colors.Gray;
+        leftColumn.Background  = Colors.White;
 
         var firstLeftArticle = CreateArticle(layout, "Test", "My Super duper test content. So great stuff here");
         leftColumn.Add(firstLeftArticle);
+
+        var secondLeftArticle = CreateArticle(layout, "Test", "My Super duper test content. So great stuff here");
+        leftColumn.Add(secondLeftArticle);
+
+        var thirdLeftArticle = CreateArticle(layout, "Test", "My Super duper test content. So great stuff here");
+        leftColumn.Add(thirdLeftArticle);
 
         var middleColumn = layout.CreateNode("middle");
         middleColumn.FlexGrow = 2;
         middleColumn.MarginLeft = 10;
         middleColumn.MarginRight = 10;
         middleColumn.BorderColor = Colors.Gray;
+        middleColumn.Background  = Colors.White;
+
+        firstLeftArticle = CreateArticle(layout, "Test", "My Super duper test content. So great stuff here");
+        middleColumn.Add(firstLeftArticle);
+
+        secondLeftArticle = CreateArticle(layout, "Test", "My Super duper test content. So great stuff here");
+        middleColumn.Add(secondLeftArticle);
+
+        thirdLeftArticle = CreateArticle(layout, "Test", "My Super duper test content. So great stuff here");
+        middleColumn.Add(thirdLeftArticle);
 
         var rightColumn = layout.CreateNode("right");
         rightColumn.FlexGrow = 1;
         rightColumn.MarginLeft = 10;
         rightColumn.MarginRight = 10;
         rightColumn.BorderColor = Colors.Gray;
+        rightColumn.Background  = Colors.White;
+
+        firstLeftArticle = CreateArticle(layout, "Test", "My Super duper test content. So great stuff here");
+        rightColumn.Add(firstLeftArticle);
+
+        secondLeftArticle = CreateArticle(layout, "Test", "My Super duper test content. So great stuff here");
+        rightColumn.Add(secondLeftArticle);
+
+        thirdLeftArticle = CreateArticle(layout, "Test", "My Super duper test content. So great stuff here");
+        rightColumn.Add(thirdLeftArticle);
 
         contentArea.Add(leftColumn);
         contentArea.Add(middleColumn);
