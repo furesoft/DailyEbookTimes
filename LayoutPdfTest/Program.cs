@@ -71,12 +71,12 @@ class Program
         headline.MarginBottom = 5;
 
         var topLine = layout.CreateHorizontalLine();
-        topLine.LineThickness = 2;
+        topLine.LineThickness = 1;
         topLine.MarginLeft = 10;
         topLine.MarginRight = 10;
 
         var bottomLine = layout.CreateHorizontalLine();
-        bottomLine.LineThickness = 2;
+        bottomLine.LineThickness = 1;
         bottomLine.MarginLeft = 10;
         bottomLine.MarginRight = 10;
 
@@ -118,13 +118,33 @@ class Program
         footer.MarginLeft = 10;
         footer.MarginRight = 10;
         footer.FlexDirection = YogaFlexDirection.Row;
-        footer.FlexGrow = 0;
 
-        var footerLine = layout.CreateHorizontalLine();
-        footerLine.LineThickness = 1;
-        footerLine.Margin = 10;
+        var footerLeftLine = layout.CreateHorizontalLine();
+        footerLeftLine.LineThickness = 1;
+        footerLeftLine.Margin = 10;
+        footerLeftLine.LineColor = Colors.Gray;
+        footerLeftLine.FlexGrow = 1;
+        footerLeftLine.AlignSelf = YogaAlign.FlexStart;
 
-        footer.Add(footerLine);
+        var footerText = layout.CreateTextNode("Generated with Totletheyn on Moss");
+        footerText.FontSize = (int)FontSize.Footer;
+        footerText.FlexGrow = 0;
+        footerText.FontFamily = "NoticiaText";
+        footerText.AlignSelf = YogaAlign.Center;
+        footerText.Width = YogaValue.Auto;
+        footerText.Height = 10;
+
+        var footerRightLine = layout.CreateHorizontalLine();
+        footerRightLine.LineThickness = 1;
+        footerRightLine.Margin = 10;
+        footerRightLine.LineColor = Colors.Gray;
+        footerRightLine.FlexGrow = 1;
+        footerRightLine.AlignSelf = YogaAlign.FlexEnd;
+
+        footer.Add(footerLeftLine);
+        footer.Add(footerText);
+        footer.Add(footerRightLine);
+
         return footer;
     }
 
@@ -139,7 +159,7 @@ class Program
         leftColumn.FlexGrow = 1;
         leftColumn.MarginLeft = 10;
         leftColumn.MarginRight = 10;
-        leftColumn.BorderColor = new Color(0, 0, 255);
+        leftColumn.BorderColor = Colors.Gray;
 
         var firstLeftArticle = CreateArticle(layout, "Test", "My Super duper test content. So great stuff here");
         leftColumn.Add(firstLeftArticle);
@@ -148,13 +168,13 @@ class Program
         middleColumn.FlexGrow = 2;
         middleColumn.MarginLeft = 10;
         middleColumn.MarginRight = 10;
-        middleColumn.BorderColor = new Color(0, 0, 255);
+        middleColumn.BorderColor = Colors.Gray;
 
         var rightColumn = layout.CreateNode("right");
         rightColumn.FlexGrow = 1;
         rightColumn.MarginLeft = 10;
         rightColumn.MarginRight = 10;
-        rightColumn.BorderColor = new Color(0, 0, 255);
+        rightColumn.BorderColor = Colors.Gray;
 
         contentArea.Add(leftColumn);
         contentArea.Add(middleColumn);
@@ -170,20 +190,19 @@ class Program
         article.Margin = 10;
         article.FlexDirection = YogaFlexDirection.Column;
         article.Height = 50;
-        article.Margin = 10;
-        article.Padding = 10;
+        article.Margin = 5;
+        article.Padding = 5;
 
         var articleTitle = layout.CreateTextNode(title);
         articleTitle.FontSize = (int)FontSize.ArticleHeading;
         articleTitle.FontFamily = "NoticiaText";
         articleTitle.Height = 20;
-        articleTitle.AlignItems = YogaAlign.Center;
+        articleTitle.Color = Colors.Red;
 
         var articleSummary = layout.CreateTextNode(summary);
         articleSummary.FontSize = (int)FontSize.ArticleP;
         articleSummary.FontFamily = "NoticiaText";
         articleSummary.Height = 100;
-        articleSummary.AlignItems = YogaAlign.Center;
 
         article.Add(articleTitle);
         article.Add(articleSummary);

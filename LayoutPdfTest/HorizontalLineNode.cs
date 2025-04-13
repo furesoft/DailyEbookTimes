@@ -14,7 +14,7 @@ public class HorizontalLineNode : YogaNode
     }
 
     public double LineThickness { get; set; } = 1.0;
-    public Color LineColor { get; set; } = new Color(0, 0, 0);
+    public Color LineColor { get; set; } = Colors.Black;
 
     public override void ReCalculate(PdfPageBuilder page)
     {
