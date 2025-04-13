@@ -1,18 +1,9 @@
 ﻿using System.Diagnostics;
-using Marius.Yoga;
+using Moss.NET.Sdk.LayoutEngine;
 using UglyToad.PdfPig.Content;
 using UglyToad.PdfPig.Writer;
 
-namespace LayoutPdfTest;
-
-public enum FontSize
-{
-    Headline = 75,
-    HeaderInfo = 15,
-    ArticleHeading = 18,
-    ArticleP = 14,
-    Footer = 10
-}
+namespace Moss.NET.Sdk;
 
 class Program
 {
@@ -34,7 +25,7 @@ class Program
         layout.Add(contentArea);
         layout.Add(footer);
 
-       // layout.EnableDebugLines();
+        //layout.EnableDebugLines();
         layout.Apply();
 
         var documentBytes = builder.Build();
@@ -118,32 +109,18 @@ class Program
         footer.MarginLeft = 10;
         footer.MarginRight = 10;
         footer.FlexDirection = YogaFlexDirection.Row;
-
-        var footerLeftLine = layout.CreateHorizontalLine();
-        footerLeftLine.LineThickness = 1;
-        footerLeftLine.Margin = 10;
-        footerLeftLine.LineColor = Colors.Gray;
-        footerLeftLine.FlexGrow = 1;
-        footerLeftLine.AlignSelf = YogaAlign.FlexStart;
+        footer.Display = YogaDisplay.Flex;
 
         var footerText = layout.CreateTextNode("Generated with Totletheyn on Moss");
         footerText.FontSize = (int)FontSize.Footer;
         footerText.FlexGrow = 0;
         footerText.FontFamily = "NoticiaText";
         footerText.AlignSelf = YogaAlign.Center;
-        footerText.Width = YogaValue.Auto;
+        footerText.Width = 10;
         footerText.Height = 10;
+        footer.JustifyContent = YogaJustify.Center;
 
-        var footerRightLine = layout.CreateHorizontalLine();
-        footerRightLine.LineThickness = 1;
-        footerRightLine.Margin = 10;
-        footerRightLine.LineColor = Colors.Gray;
-        footerRightLine.FlexGrow = 1;
-        footerRightLine.AlignSelf = YogaAlign.FlexEnd;
-
-        footer.Add(footerLeftLine);
         footer.Add(footerText);
-        footer.Add(footerRightLine);
 
         return footer;
     }
@@ -154,6 +131,7 @@ class Program
         contentArea.FlexDirection = YogaFlexDirection.Row;
         contentArea.FlexGrow = 1;
         contentArea.Margin = 10;
+        contentArea.MarginBottom = 1;
 
         var leftColumn = layout.CreateNode("left");
         leftColumn.FlexGrow = 1;

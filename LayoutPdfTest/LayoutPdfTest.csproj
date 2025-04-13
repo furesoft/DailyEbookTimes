@@ -5,6 +5,7 @@
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <RootNamespace>Moss.NET.Sdk</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
