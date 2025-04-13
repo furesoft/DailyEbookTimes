@@ -1,24 +1,9 @@
 ﻿using System.Diagnostics;
 using Marius.Yoga;
 using UglyToad.PdfPig.Content;
-using UglyToad.PdfPig.Core;
 using UglyToad.PdfPig.Writer;
 
 namespace LayoutPdfTest;
-
-class TextNode(YogaConfig config) : YogaNode(config)
-{
-    public double FontSize { get; set; }
-    public string Text { get; set; }
-    public PdfDocumentBuilder.AddedFont Font { get; set; }
-
-    public override void Draw(PdfPageBuilder page, double absoluteX, double absoluteY)
-    {
-        base.Draw(page, absoluteX, absoluteY);
-
-        page.AddText(Text, FontSize, new PdfPoint(absoluteX, page.PageSize.Height - absoluteY), Font);
-    }
-}
 
 class Program
 {
@@ -124,6 +109,7 @@ class Program
         root.Add(contentArea);
         root.Add(footer);
 
+        ReCalculate(root, page);
         root.CalculateLayout();
 
         DrawNode(root, page);
@@ -144,6 +130,16 @@ class Program
             child.Draw(page, absoluteX, absoluteY);
 
             DrawNode(child, page, absoluteX, absoluteY);
+        }
+    }
+
+    private static void ReCalculate(YogaNode root, PdfPageBuilder page)
+    {
+        foreach (var child in root.Children)
+        {
+            child.ReCalculate(page);
+
+            ReCalculate(child, page);
         }
     }
 }

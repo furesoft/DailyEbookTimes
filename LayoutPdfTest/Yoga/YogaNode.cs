@@ -755,5 +755,10 @@ namespace Marius.Yoga
                 page.ResetColor();
             }
         }
+
+        public virtual void ReCalculate(PdfPageBuilder page)
+        {
+
+        }
     }
 }
