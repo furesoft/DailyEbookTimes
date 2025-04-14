@@ -60,6 +60,7 @@ class Program
         headline.Height = 55;
         headline.PositionType = YogaPositionType.Relative;
         headline.MarginBottom = 5;
+        headline.TextDecoration = TextDecoration.Underline;
 
         var topLine = layout.CreateHorizontalLine();
         topLine.LineThickness = 1;

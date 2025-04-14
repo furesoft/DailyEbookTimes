@@ -37,7 +37,6 @@ public partial class YogaNode : IEnumerable<YogaNode>
     private YogaArray<YogaValue> _resolvedDimensions; // [2]
     public Layout ParentLayout { get; set; }
     public Color? Background { get; set; }
-
     public BoxShadow? BoxShadow { get; set; }
 
     public YogaNode()

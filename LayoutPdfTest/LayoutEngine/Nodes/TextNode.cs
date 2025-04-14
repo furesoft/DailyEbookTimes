@@ -11,6 +11,8 @@ public class TextNode(YogaConfig config) : YogaNode(config)
 
     public Color? Color { get; set; } = Colors.Black;
 
+    public TextDecoration TextDecoration { get; set; }
+
     public int TruncateSize { get; set; }
 
     public override void ReCalculate(PdfPageBuilder page)
@@ -51,14 +53,26 @@ public class TextNode(YogaConfig config) : YogaNode(config)
 
         var measuredText = page.MeasureText(text, FontSize, PdfPoint.Origin, font);
         var maxAscent = measuredText.Max(g => g.GlyphRectangle.Top);
+        var minDescent = measuredText.Min(g => g.GlyphRectangle.Bottom);
         var yPosition = page.PageSize.Height - absoluteY - maxAscent;
+        var textWidth = measuredText.Max(g => g.GlyphRectangle.Right) - measuredText.Min(g => g.GlyphRectangle.Left);
 
         if (Color != null)
         {
+            page.SetStrokeColor(Color.r, Color.g, Color.b);
             page.SetTextAndFillColor(Color.r, Color.g, Color.b);
         }
 
         page.AddText(text, FontSize, new PdfPoint(absoluteX, yPosition), font);
+
+        if (TextDecoration == TextDecoration.Underline)
+        {
+            var underlineY = yPosition + minDescent * 0.25;
+            var thickness = FontSize * 0.04;
+
+            page.DrawLine(new PdfPoint(absoluteX, underlineY), new PdfPoint(absoluteX + textWidth, underlineY), thickness);
+        }
+
         page.ResetColor();
     }
 }
