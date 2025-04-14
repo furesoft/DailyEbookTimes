@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using Moss.NET.Sdk.LayoutEngine;
+using Moss.NET.Sdk.LayoutEngine.Nodes;
 using UglyToad.PdfPig.Content;
 using UglyToad.PdfPig.Writer;
 
@@ -22,9 +23,8 @@ class Program
         var footer = AddFooter(layout);
         var contentArea = AddContentArea(layout);
 
-        layout.Add(header);
-        layout.Add(contentArea);
-        layout.Add(footer);
+        var article5 = layout.FindNode<TextNode>("content middle truncated summary");
+        article5.TruncateSize = 10;
 
         //layout.EnableDebugLines();
         layout.Apply();
@@ -98,6 +98,8 @@ class Program
         header.Add(headerInfo);
         header.Add(bottomLine);
 
+        layout.Add(header);
+
         return header;
     }
 
@@ -122,6 +124,8 @@ class Program
 
         footer.Add(footerText);
 
+        layout.Add(footer);
+
         return footer;
     }
 
@@ -140,13 +144,13 @@ class Program
         leftColumn.BorderColor = Colors.Gray;
         leftColumn.Background  = Colors.White;
 
-        var firstLeftArticle = CreateArticle(layout, "Test", "My Super duper test content. So great stuff here");
+        var firstLeftArticle = CreateArticle(layout, "Test 1", "My Super duper test content. So great stuff here. My Super duper test content. So great stuff here");
         leftColumn.Add(firstLeftArticle);
 
-        var secondLeftArticle = CreateArticle(layout, "Test", "My Super duper test content. So great stuff here");
+        var secondLeftArticle = CreateArticle(layout, "Test 2", "My Super duper test content. So great stuff here");
         leftColumn.Add(secondLeftArticle);
 
-        var thirdLeftArticle = CreateArticle(layout, "Test", "My Super duper test content. So great stuff here");
+        var thirdLeftArticle = CreateArticle(layout, "Test 3", "My Super duper test content. So great stuff here. My Super duper test content. So great stuff here");
         leftColumn.Add(thirdLeftArticle);
 
         var middleColumn = layout.CreateNode("middle");
@@ -156,13 +160,13 @@ class Program
         middleColumn.BorderColor = Colors.Gray;
         middleColumn.Background  = Colors.White;
 
-        firstLeftArticle = CreateArticle(layout, "Test", "My Super duper test content. So great stuff here");
+        firstLeftArticle = CreateArticle(layout, "Test 4", "My Super duper test content. So great stuff here.My Super duper test content. So great stuff here.");
         middleColumn.Add(firstLeftArticle);
 
-        secondLeftArticle = CreateArticle(layout, "Test", "My Super duper test content. So great stuff here");
+        secondLeftArticle = CreateArticle(layout, "Test 5", "My Super duper test content. So great stuff here. My Super duper test content. So great stuff here.", "truncated");
         middleColumn.Add(secondLeftArticle);
 
-        thirdLeftArticle = CreateArticle(layout, "Test", "My Super duper test content. So great stuff here");
+        thirdLeftArticle = CreateArticle(layout, "Test 6", "My Super duper test content. So great stuff here. My Super duper test content. So great stuff here");
         middleColumn.Add(thirdLeftArticle);
 
         var rightColumn = layout.CreateNode("right");
@@ -172,24 +176,27 @@ class Program
         rightColumn.BorderColor = Colors.Gray;
         rightColumn.Background  = Colors.White;
 
-        firstLeftArticle = CreateArticle(layout, "Test", "My Super duper test content. So great stuff here");
+        firstLeftArticle = CreateArticle(layout, "Test 7", "My Super duper test content. So great stuff here");
         rightColumn.Add(firstLeftArticle);
 
-        secondLeftArticle = CreateArticle(layout, "Test", "My Super duper test content. So great stuff here");
+        secondLeftArticle = CreateArticle(layout, "Test 8", "My Super duper test content. So great stuff here");
         rightColumn.Add(secondLeftArticle);
 
-        thirdLeftArticle = CreateArticle(layout, "Test", "My Super duper test content. So great stuff here");
+        thirdLeftArticle = CreateArticle(layout, "Test 9", "My Super duper test content. So great stuff here. My Super duper test content. So great stuff here");
         rightColumn.Add(thirdLeftArticle);
 
         contentArea.Add(leftColumn);
         contentArea.Add(middleColumn);
         contentArea.Add(rightColumn);
+
+        layout.Add(contentArea);
+
         return contentArea;
     }
 
-    private static YogaNode CreateArticle(Layout layout, string title, string summary)
+    private static YogaNode CreateArticle(Layout layout, string title, string summary, string? name = "article")
     {
-        var article = layout.CreateNode("article");
+        var article = layout.CreateNode(name);
 
         article.FlexGrow = 1;
         article.Margin = 10;
@@ -198,13 +205,13 @@ class Program
         article.Margin = 5;
         article.Padding = 5;
 
-        var articleTitle = layout.CreateTextNode(title);
+        var articleTitle = layout.CreateTextNode(title, "title");
         articleTitle.FontSize = (int)FontSize.ArticleHeading;
         articleTitle.FontFamily = "NoticiaText";
         articleTitle.Height = 20;
         articleTitle.Color = Colors.Red;
 
-        var articleSummary = layout.CreateTextNode(summary);
+        var articleSummary = layout.CreateTextNode(summary, "summary");
         articleSummary.FontSize = (int)FontSize.ArticleP;
         articleSummary.FontFamily = "NoticiaText";
         articleSummary.Height = 100;

@@ -461,6 +461,8 @@ public partial class YogaNode : IEnumerable<YogaNode>
         return YogaValue.Auto;
     }
 
+    public override string ToString() => Name;
+
     public void ResolveDimension()
     {
         for (var dim = (int)YogaDimension.Width; dim < 2; dim++)
@@ -726,6 +728,30 @@ public partial class YogaNode : IEnumerable<YogaNode>
         return value.Unit == YogaUnit.Auto ? 0F : value.Resolve(ownerSize);
     }
 
+    /// <summary>
+    /// Finds a node in the layout tree by a query.
+    /// </summary>
+    /// <param name="query"></param>
+    /// <returns></returns>
+    /// <example>content.left.article</example>
+    public T? FindNode<T>(string query)
+        where T : YogaNode
+    {
+        var parts = query.Split(' ');
+        var currentNode = this;
+
+        foreach (var part in parts)
+        {
+            currentNode = currentNode.Children.FirstOrDefault(child => child.Name == part);
+            if (currentNode == null)
+            {
+                return null;
+            }
+        }
+
+        return (T?)currentNode;
+    }
+
     private static YogaValue ComputedEdgeValue(YogaArray<YogaValue> edges, YogaEdge edge, YogaValue defaultValue)
     {
         if (edges[edge].Unit != YogaUnit.Undefined)
@@ -766,6 +792,7 @@ public partial class YogaNode : IEnumerable<YogaNode>
             page.ResetColor();
         }
     }
+
 
     public virtual void ReCalculate(PdfPageBuilder page)
     {

@@ -111,21 +111,10 @@ public class Layout
     /// <param name="query"></param>
     /// <returns></returns>
     /// <example>content.left.article</example>
-    public YogaNode? FindNode(string query)
+    public T? FindNode<T>(string query)
+        where T : YogaNode
     {
-        var parts = query.Split('.');
-        var currentNode = root;
-
-        foreach (var part in parts)
-        {
-            currentNode = currentNode.Children.FirstOrDefault(child => child.Name == part);
-            if (currentNode == null)
-            {
-                return null; // Node nicht gefunden
-            }
-        }
-
-        return currentNode;
+        return root.FindNode<T>(query);
     }
 
     public void AddFont(string name, string path)
