@@ -15,6 +15,24 @@ public class TextNode(YogaConfig config) : YogaNode(config)
 
     public int TruncateSize { get; set; }
 
+    public bool AutoSize
+    {
+        get => Width is { Value: 1 } && Height is { Value: 1 };
+        set
+        {
+            if (value)
+            {
+                Width = 1;
+                Height = 1;
+            }
+            else
+            {
+                Width = YogaValue.Undefined;
+                Height = YogaValue.Undefined;
+            }
+        }
+    }
+
     public override void ReCalculate(PdfPageBuilder page)
     {
         var text = GetActualString();

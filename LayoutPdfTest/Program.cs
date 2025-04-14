@@ -55,8 +55,7 @@ class Program
         headline.FontSize = (int)FontSize.Headline;
         headline.FontFamily = "Jaini";
         headline.AlignSelf = YogaAlign.Center;
-        headline.Width = 300;
-        headline.Height = 55;
+        headline.AutoSize = true;
         headline.PositionType = YogaPositionType.Relative;
         headline.MarginBottom = 5;
         headline.TextDecoration = TextDecoration.Underline;
@@ -78,8 +77,7 @@ class Program
         dateText.FontFamily = "Jaini";
         dateText.FontSize = (int)FontSize.HeaderInfo;
         dateText.AlignSelf = YogaAlign.Center;
-        dateText.Width = 100;
-        dateText.Height = 12;
+        dateText.AutoSize = true;
 
         var rssImg = layout.CreateImageNode("images/rss.png");
         rssImg.Width = 10;
@@ -118,8 +116,7 @@ class Program
         footerText.FlexGrow = 0;
         footerText.FontFamily = "NoticiaText";
         footerText.AlignSelf = YogaAlign.Center;
-        footerText.Width = 10;
-        footerText.Height = 10;
+        footerText.AutoSize = true;
         footerText.TextDecoration = TextDecoration.Strikethrough;
 
         footer.Add(footerText);

@@ -2479,7 +2479,10 @@ public partial class YogaNode
 
     private YogaNode DeepClone()
     {
-        var node = new YogaNode(this, null);
+        var node = new YogaNode(this, null)
+        {
+            ParentLayout = ParentLayout
+        };
         var vec = new List<YogaNode>(Children.Count);
 
         var childNode = default(YogaNode);

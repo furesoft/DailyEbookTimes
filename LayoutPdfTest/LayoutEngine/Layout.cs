@@ -24,7 +24,8 @@ public class Layout
             Margin = 10,
             Padding = 10,
             Name = "root",
-            StyleDirection = YogaDirection.LeftToRight
+            StyleDirection = YogaDirection.LeftToRight,
+            ParentLayout = this
         };
 
         //todo: add standard font from moss
@@ -101,7 +102,8 @@ public class Layout
     public HorizontalLineNode CreateHorizontalLine(string? name = null)
     {
         return new HorizontalLineNode(config){
-            Name = name
+            Name = name,
+            ParentLayout = this
         };
     }
 
