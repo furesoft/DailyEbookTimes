@@ -22,8 +22,8 @@ public class TextNode(YogaConfig config) : YogaNode(config)
         {
             if (value)
             {
-                Width = 1;
-                Height = 1;
+                Width = new YogaValue() { Unit = YogaUnit.Auto, Value = 1 };
+                Height = new YogaValue() { Unit = YogaUnit.Auto, Value = 1 };
             }
             else
             {
@@ -45,10 +45,10 @@ public class TextNode(YogaConfig config) : YogaNode(config)
         var textHeight = measuredText.Max(glyph => glyph.GlyphRectangle.Top)
                          - measuredText.Min(glyph => glyph.GlyphRectangle.Bottom);
 
-        if (Width.Value < textWidth)
+        if (Width is { Unit: YogaUnit.Auto, Value: 1 })
             Width = textWidth;
 
-        if (Height.Value < textHeight)
+        if (Height is { Unit: YogaUnit.Auto, Value: 1 })
             Height = textHeight;
     }
 
