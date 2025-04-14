@@ -19,14 +19,14 @@ class Program
         layout.AddFont("Jaini", "fonts/Jaini-Regular.ttf");
         layout.AddFont("NoticiaText", "fonts/NoticiaText-Regular.ttf");
 
-        var header = AddHeader(layout);
-        var contentArea = AddContentArea(layout);
-        var footer = AddFooter(layout);
+        AddHeader(layout);
+        AddContentArea(layout);
+        AddFooter(layout);
 
         var article5 = layout.FindNode<TextNode>("content middle truncated summary");
         article5.TruncateSize = 10;
 
-        //layout.EnableDebugLines();
+        layout.EnableDebugLines();
         layout.Apply();
 
         var documentBytes = builder.Build();
@@ -47,7 +47,6 @@ class Program
 
         var headerInfo = layout.CreateNode();
         headerInfo.FlexDirection = YogaFlexDirection.Row;
-        headerInfo.Width = YogaValue.Percent(95);
         headerInfo.AlignItems = YogaAlign.Center;
         headerInfo.JustifyContent = YogaJustify.SpaceBetween;
         headerInfo.Margin = 10;
@@ -63,12 +62,10 @@ class Program
         headline.TextDecoration = TextDecoration.Underline;
 
         var topLine = layout.CreateHorizontalLine();
-        topLine.LineThickness = 1;
         topLine.MarginLeft = 10;
         topLine.MarginRight = 10;
 
         var bottomLine = layout.CreateHorizontalLine();
-        bottomLine.LineThickness = 1;
         bottomLine.MarginLeft = 10;
         bottomLine.MarginRight = 10;
 
@@ -87,7 +84,7 @@ class Program
         var rssImg = layout.CreateImageNode("images/rss.png");
         rssImg.Width = 10;
         rssImg.Height = 10;
-        rssImg.AlignSelf = YogaAlign.FlexEnd;
+        rssImg.AlignSelf = YogaAlign.Center;
 
         header.Add(headline);
         header.Add(topLine);
