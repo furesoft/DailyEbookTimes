@@ -20,8 +20,8 @@ class Program
         layout.AddFont("NoticiaText", "fonts/NoticiaText-Regular.ttf");
 
         var header = AddHeader(layout);
-        var footer = AddFooter(layout);
         var contentArea = AddContentArea(layout);
+        var footer = AddFooter(layout);
 
         var article5 = layout.FindNode<TextNode>("content middle truncated summary");
         article5.TruncateSize = 10;
@@ -108,6 +108,7 @@ class Program
         var footer = layout.CreateNode("footer");
         footer.Height = 10;
         footer.MarginBottom = 5;
+        footer.MarginTop = 5;
         footer.MarginLeft = 10;
         footer.MarginRight = 10;
         footer.FlexDirection = YogaFlexDirection.Row;
@@ -143,6 +144,7 @@ class Program
         leftColumn.MarginRight = 10;
         leftColumn.BorderColor = Colors.Gray;
         leftColumn.Background  = Colors.White;
+        leftColumn.BoxShadow = new BoxShadow(Colors.Gray, 2);
 
         var firstLeftArticle = CreateArticle(layout, "Test 1", "My Super duper test content. So great stuff here. My Super duper test content. So great stuff here");
         leftColumn.Add(firstLeftArticle);
@@ -159,6 +161,7 @@ class Program
         middleColumn.MarginRight = 10;
         middleColumn.BorderColor = Colors.Gray;
         middleColumn.Background  = Colors.White;
+        middleColumn.BoxShadow = new BoxShadow(Colors.Gray, 2);
 
         firstLeftArticle = CreateArticle(layout, "Test 4", "My Super duper test content. So great stuff here.My Super duper test content. So great stuff here.");
         middleColumn.Add(firstLeftArticle);
@@ -175,6 +178,7 @@ class Program
         rightColumn.MarginRight = 10;
         rightColumn.BorderColor = Colors.Gray;
         rightColumn.Background  = Colors.White;
+        rightColumn.BoxShadow = new BoxShadow(Colors.Gray, 2);
 
         firstLeftArticle = CreateArticle(layout, "Test 7", "My Super duper test content. So great stuff here");
         rightColumn.Add(firstLeftArticle);

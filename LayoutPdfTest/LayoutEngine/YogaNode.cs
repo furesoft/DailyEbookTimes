@@ -38,6 +38,8 @@ public partial class YogaNode : IEnumerable<YogaNode>
     public Layout ParentLayout { get; set; }
     public Color? Background { get; set; }
 
+    public BoxShadow? BoxShadow { get; set; }
+
     public YogaNode()
     {
         _print = null;
@@ -774,6 +776,12 @@ public partial class YogaNode : IEnumerable<YogaNode>
 
     public virtual void Draw(PdfPageBuilder page, double absoluteX, double absoluteY)
     {
+        // draw box shadow
+        if (BoxShadow != null)
+        {
+            DrawBoxShadow(page, absoluteX, absoluteY);
+        }
+
         if (Background != null)
         {
             page.SetStrokeColor(Background.r, Background.g, Background.b);
@@ -793,6 +801,35 @@ public partial class YogaNode : IEnumerable<YogaNode>
         }
     }
 
+    private void DrawBoxShadow(PdfPageBuilder page, double absoluteX, double absoluteY)
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            double offset = BoxShadow.Offset * (i + 1) / 5.0;
+
+            var r = (byte)Math.Min(BoxShadow.Color.r + i * 20, 255);
+            var g = (byte)Math.Min(BoxShadow.Color.g + i * 20, 255);
+            var b = (byte)Math.Min(BoxShadow.Color.b + i * 20, 255);
+
+            page.SetStrokeColor(r, g, b);
+            page.SetTextAndFillColor(r, g, b);
+
+            var shadowPos = new PdfPoint(
+                absoluteX + offset,
+                page.PageSize.Height - absoluteY - LayoutHeight - offset
+            );
+
+            page.DrawRectangle(
+                shadowPos,
+                LayoutWidth + offset * 2,
+                LayoutHeight + offset * 2,
+                0,
+                true
+            );
+        }
+
+        page.ResetColor();
+    }
 
     public virtual void ReCalculate(PdfPageBuilder page)
     {

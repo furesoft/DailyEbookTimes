@@ -9,7 +9,7 @@ public class TextNode(YogaConfig config) : YogaNode(config)
     public string Text { get; set; }
     public string FontFamily { get; set; } = "Default";
 
-    public Color? Color { get; set; }
+    public Color? Color { get; set; } = Colors.Black;
 
     public int TruncateSize { get; set; }
 
