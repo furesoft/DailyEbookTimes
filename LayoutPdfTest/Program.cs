@@ -114,6 +114,7 @@ class Program
         footer.MarginRight = 10;
         footer.FlexDirection = YogaFlexDirection.Row;
         footer.Display = YogaDisplay.Flex;
+        footer.JustifyContent = YogaJustify.Center;
 
         var footerText = layout.CreateTextNode("Generated with Totletheyn on Moss");
         footerText.FontSize = (int)FontSize.Footer;
@@ -122,7 +123,7 @@ class Program
         footerText.AlignSelf = YogaAlign.Center;
         footerText.Width = 10;
         footerText.Height = 10;
-        footer.JustifyContent = YogaJustify.Center;
+        footerText.TextDecoration = TextDecoration.Strikethrough;
 
         footer.Add(footerText);
 

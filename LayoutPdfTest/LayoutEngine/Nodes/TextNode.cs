@@ -65,12 +65,16 @@ public class TextNode(YogaConfig config) : YogaNode(config)
 
         page.AddText(text, FontSize, new PdfPoint(absoluteX, yPosition), font);
 
+        var lineThickness = FontSize * 0.04;
         if (TextDecoration == TextDecoration.Underline)
         {
             var underlineY = yPosition + minDescent * 0.25;
-            var thickness = FontSize * 0.04;
-
-            page.DrawLine(new PdfPoint(absoluteX, underlineY), new PdfPoint(absoluteX + textWidth, underlineY), thickness);
+            page.DrawLine(new PdfPoint(absoluteX, underlineY), new PdfPoint(absoluteX + textWidth, underlineY), lineThickness);
+        }
+        else if (TextDecoration == TextDecoration.Strikethrough)
+        {
+            var strikeY = yPosition + (maxAscent * 0.4);
+            page.DrawLine(new PdfPoint(absoluteX, strikeY), new PdfPoint(absoluteX + textWidth, strikeY), lineThickness);
         }
 
         page.ResetColor();
