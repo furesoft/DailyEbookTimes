@@ -8,14 +8,13 @@ public class Layout
     private YogaNode root;
     private YogaConfig config;
     private readonly PdfPageBuilder _page;
-    private readonly PdfDocumentBuilder _builder;
+    public static PdfDocumentBuilder Builder;
     static Dictionary<string, PdfDocumentBuilder.AddedFont> _fonts = new();
 
-    private Layout(YogaConfig config, PdfPageBuilder page, PdfDocumentBuilder builder)
+    private Layout(YogaConfig config, PdfPageBuilder page)
     {
         this.config = config;
         _page = page;
-        _builder = builder;
 
         root = new YogaNode(config)
         {
@@ -33,20 +32,15 @@ public class Layout
 
     public YogaNode GetRoot() => root;
 
-    public static Layout Create(PdfPageBuilder page, PdfDocumentBuilder builder)
+    public static Layout Create(PdfPageBuilder page)
     {
-        return new Layout(new(), page, builder);
+        return new Layout(new(), page);
     }
 
-    public static Layout Create(Device device, PdfDocumentBuilder builder, bool isLandscape = true)
+    public static Layout Create(Device device, bool isLandscape = true)
     {
         var dimension = device.GetDimension(isLandscape);
-        return new Layout(new(), builder.AddPage(dimension.width, dimension.height), builder);
-    }
-
-    public static Layout Create(PdfPageBuilder page, PdfDocumentBuilder builder, YogaConfig config)
-    {
-        return new Layout(config, page, builder);
+        return new Layout(new(), Builder.AddPage(dimension.width, dimension.height));
     }
 
     public YogaNode CreateNode(string? name = null)
@@ -125,9 +119,9 @@ public class Layout
         return root.FindNode<T>(query);
     }
 
-    public void AddFont(string name, string path)
+    public static void AddFont(string name, string path)
     {
-       var font = _builder.AddTrueTypeFont(File.ReadAllBytes(path));
+       var font = Builder.AddTrueTypeFont(File.ReadAllBytes(path));
        _fonts[name] = font;
     }
 
@@ -168,7 +162,7 @@ public class Layout
         {
             Name = name,
             ParentLayout = this,
-            ImagePath = new Uri(url)
+            Src = new Uri(url)
         };
     }
 }

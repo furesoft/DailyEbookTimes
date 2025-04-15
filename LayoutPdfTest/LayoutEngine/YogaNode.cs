@@ -6,6 +6,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+using System.Globalization;
+using System.Xml.Linq;
 using UglyToad.PdfPig.Core;
 using UglyToad.PdfPig.Writer;
 
@@ -776,6 +778,11 @@ public partial class YogaNode : IEnumerable<YogaNode>
 
     public virtual void Draw(PdfPageBuilder page, double absoluteX, double absoluteY)
     {
+        if (Display == YogaDisplay.None)
+        {
+            return;
+        }
+
         // draw box shadow
         if (BoxShadow != null)
         {
@@ -832,6 +839,95 @@ public partial class YogaNode : IEnumerable<YogaNode>
     }
 
     public virtual void ReCalculate(PdfPageBuilder page)
+    {
+
+    }
+
+    public void SetAttributes(XElement element)
+    {
+        foreach (var attr in element.Attributes())
+        {
+            switch (attr.Name.LocalName.ToLower())
+            {
+                case "height":
+                    Height = double.Parse(attr.Value, CultureInfo.InvariantCulture);
+                    break;
+                case "width":
+                    Width = double.Parse(attr.Value, CultureInfo.InvariantCulture);
+                    break;
+                case "margintop":
+                    MarginTop = double.Parse(attr.Value, CultureInfo.InvariantCulture);
+                    break;
+                case "marginbottom":
+                    MarginBottom = double.Parse(attr.Value, CultureInfo.InvariantCulture);
+                    break;
+                case "margin":
+                    Margin = double.Parse(attr.Value, CultureInfo.InvariantCulture);
+                    break;
+                case "marginright":
+                    MarginRight = double.Parse(attr.Value, CultureInfo.InvariantCulture);
+                    break;
+                case "marginleft":
+                    MarginLeft = double.Parse(attr.Value, CultureInfo.InvariantCulture);
+                    break;
+
+                case "padding":
+                    Padding = double.Parse(attr.Value, CultureInfo.InvariantCulture);
+                    break;
+                case "paddingtop":
+                    PaddingTop = double.Parse(attr.Value, CultureInfo.InvariantCulture);
+                    break;
+                case "paddingbottom":
+                    PaddingBottom = double.Parse(attr.Value, CultureInfo.InvariantCulture);
+                    break;
+                case "paddingright":
+                    PaddingRight = double.Parse(attr.Value, CultureInfo.InvariantCulture);
+                    break;
+                case "paddingleft":
+                    PaddingLeft = double.Parse(attr.Value, CultureInfo.InvariantCulture);
+                    break;
+                case "flexgrow":
+                    FlexGrow = double.Parse(attr.Value, CultureInfo.InvariantCulture);
+                    break;
+                case "background":
+                    Background = Colors.FromName(attr.Value);
+                    break;
+                case "alignitems":
+                    AlignItems = Enum.Parse<YogaAlign>(attr.Value, true);
+                    break;
+                case "aligncontent":
+                    AlignContent = Enum.Parse<YogaAlign>(attr.Value, true);
+                    break;
+                case "justifycontent":
+                    JustifyContent = Enum.Parse<YogaJustify>(attr.Value, true);
+                    break;
+                case "display":
+                    Display = Enum.Parse<YogaDisplay>(attr.Value, true);
+                    break;
+                case "flexdirection":
+                    FlexDirection = Enum.Parse<YogaFlexDirection>(attr.Value, true);
+                    break;
+                case "bordercolor":
+                    BorderColor = Colors.FromName(attr.Value);
+                    break;
+                case "boxshadow":
+                    var spl = attr.Value.Split(' ');
+                    BoxShadow = new BoxShadow(Colors.FromName(spl[0]), int.Parse(spl[1]));
+                    break;
+                case "positiontype":
+                    PositionType = Enum.Parse<YogaPositionType>(attr.Value, true);
+                    break;
+                case "alignself":
+                    AlignSelf = Enum.Parse<YogaAlign>(attr.Value, true);
+                    break;
+                default:
+                    SetAttribute(attr.Name.LocalName.ToLower(), attr.Value);
+                    break;
+            }
+        }
+    }
+
+    protected virtual void SetAttribute(string name, string value)
     {
 
     }

@@ -1,4 +1,5 @@
-﻿using UglyToad.PdfPig.Writer;
+﻿using System.Globalization;
+using UglyToad.PdfPig.Writer;
 
 namespace Moss.NET.Sdk.LayoutEngine.Nodes;
 
@@ -11,5 +12,17 @@ public class HorizontalLineNode(YogaConfig config) : YogaNode(config)
     {
         Height = LineThickness;
         Background = LineColor;
+    }
+
+    protected override void SetAttribute(string name, string value)
+    {
+        if (name == "lineColor")
+        {
+            LineColor = Colors.FromName(value);
+        }
+        else if (name == "thickness")
+        {
+            LineThickness = double.Parse(value, CultureInfo.InvariantCulture);
+        }
     }
 }

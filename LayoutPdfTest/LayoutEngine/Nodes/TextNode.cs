@@ -64,6 +64,11 @@ public class TextNode(YogaConfig config) : YogaNode(config)
 
     public override void Draw(PdfPageBuilder page, double absoluteX, double absoluteY)
     {
+        if (Display == YogaDisplay.None)
+        {
+            return;
+        }
+
         base.Draw(page, absoluteX, absoluteY);
 
         var text = GetActualString();
@@ -96,5 +101,27 @@ public class TextNode(YogaConfig config) : YogaNode(config)
         }
 
         page.ResetColor();
+    }
+
+    protected override void SetAttribute(string name, string value)
+    {
+        switch (name)
+        {
+            case "fontsize":
+                FontSize = int.Parse(value);
+                break;
+            case "fontfamily":
+                FontFamily = value;
+                break;
+            case "color":
+                Color = Colors.FromName(value);
+                break;
+            case "autosize":
+                AutoSize = value == "true";
+                break;
+            case "textdecoration":
+                TextDecoration = Enum.Parse<TextDecoration>(value, true);
+                break;
+        }
     }
 }

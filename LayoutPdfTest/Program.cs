@@ -3,7 +3,6 @@ using System.Globalization;
 using CodeHollow.FeedReader;
 using Moss.NET.Sdk.LayoutEngine;
 using Moss.NET.Sdk.LayoutEngine.Nodes;
-using UglyToad.PdfPig.Content;
 using UglyToad.PdfPig.Outline;
 using UglyToad.PdfPig.Outline.Destinations;
 using UglyToad.PdfPig.Writer;
@@ -29,24 +28,29 @@ class Program
         var builder = new PdfDocumentBuilder();
 
         builder.Bookmarks = new([
-            new DocumentBookmarkNode("Cover",0, new ExplicitDestination(1, ExplicitDestinationType.FitPage, ExplicitDestinationCoordinates.Empty), [])
+            new DocumentBookmarkNode("Cover", 0, new ExplicitDestination(1, ExplicitDestinationType.FitPage, ExplicitDestinationCoordinates.Empty), [])
         ]);
         builder.DocumentInformation.Producer = "Totletheyn";
         builder.DocumentInformation.Title = "Issue #{0}";
         builder.DocumentInformation.CreationDate = DateTime.Now.ToString("dddd, MMMM dd, yyyy");
 
-        var layout = Layout.Create(Device.RMPP, builder);
+        Layout.Builder = builder;
+        Layout.AddFont("Jaini", "fonts/Jaini-Regular.ttf");
+        Layout.AddFont("NoticiaText", "fonts/NoticiaText-Regular.ttf");
+
+        var layout = Layout.Create(Device.RMPP);
         layout.GetRoot().Background = Colors.Creme;
 
-        layout.AddFont("Jaini", "fonts/Jaini-Regular.ttf");
-        layout.AddFont("NoticiaText", "fonts/NoticiaText-Regular.ttf");
+        var xmlLayout = LayoutLoader.LoadLayoutFromXml(File.ReadAllText("cover.xml"));
+        //xmlLayout.EnableDebugLines();
+        xmlLayout.Apply();
 
         AddHeader(layout);
         AddContentArea(layout);
         AddFooter(layout, 0);
 
         var article5 = layout.FindNode<TextNode>("content middle truncated summary");
-        article5.TruncateSize = 10;
+        //article5.TruncateSize = 10;
 
         //layout.EnableDebugLines();
         layout.Apply();

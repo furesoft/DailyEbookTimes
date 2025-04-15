@@ -28,4 +28,50 @@ public static class Colors
     public static readonly Color MediumPurple = new(123, 104, 238);
     public static readonly Color SandyBrown = new(244, 164, 96);
     public static readonly Color Creme = new Color(244, 244, 244);
+    public static readonly Color LightGray = new(211, 211, 211);
+    public static readonly Color DarkGray = new(169, 169, 169);
+    public static readonly Color LightCoral = new(240, 128, 128);
+    public static readonly Color LightGreen = new(144, 238, 144);
+    public static readonly Color LightPink = new(255, 182, 193);
+    public static readonly Color LightSalmon = new(255, 160, 122);
+
+    public static Color FromName(string name)
+    {
+        return name.ToLower() switch
+        {
+            "red" => Red,
+            "green" => Green,
+            "blue" => Blue,
+            "yellow" => Yellow,
+            "cyan" => Cyan,
+            "magenta" => Magenta,
+            "silver" => Silver,
+            "gray" => Gray,
+            "black" => Black,
+            "white" => White,
+            "darkred" => DarkRed,
+            "olive" => Olive,
+            "darkgreen" => DarkGreen,
+            "purple" => Purple,
+            "teal" => Teal,
+            "navy" => Navy,
+            "orange" => Orange,
+            "pink" => Pink,
+            "gold" => Gold,
+            "lightblue" => LightBlue,
+            "indigo" => Indigo,
+            "khaki" => Khaki,
+            "mediumseagreen" => MediumSeaGreen,
+            "mediumpurple" => MediumPurple,
+            "sandybrown" => SandyBrown,
+            "creme" => Creme,
+            "lightgray" => LightGray,
+            "darkgray" => DarkGray,
+            "lightcoral" => LightCoral,
+            "lightgreen" => LightGreen,
+            "lightpink" => LightPink,
+            "lightsalmon" => LightSalmon,
+            _ => throw new ArgumentException($"Color '{name}' not found.")
+        };
+    }
 }
