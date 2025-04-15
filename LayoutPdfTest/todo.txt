@@ -1,5 +1,2 @@
 ﻿[ ] text wrapping
-[ ] extract the selector parser/engine from AngleSharp.Css and convert it to use it with yoganodes
-    var parser = new AngleSharp.Css.Parser.CssSelectorParser();
-    var selector = parser.ParseSelector(".foo > bar[attr='baz']");
-    // selector ist ein Objektbaum, den du selbst traversieren kannst
+[ ] add attribution to flaticons in footer
