@@ -33,7 +33,7 @@ public static class LayoutLoader
         var xml = XDocument.Parse(xmlContent);
 
         var layout = Layout.CreateTemplate();
-        foreach (var child in xml.Root.Elements())
+        foreach (var child in xml.Root!.Elements())
         {
             var node = ParseNode(layout, child);
             if (node != null)
@@ -50,6 +50,7 @@ public static class LayoutLoader
         YogaNode? node;
         switch (element.Name.LocalName)
         {
+            case "setter": return null;
             case "text":
                 node = layout.CreateTextNode(element.Attribute("text")?.Value ?? string.Empty,
                     element.Attribute("name")?.Value);
@@ -66,6 +67,7 @@ public static class LayoutLoader
                 break;
             case "fragment":
                 node = LoadFragment(File.ReadAllText(element.Attribute("src")!.Value));
+                ApplyFragementSetter(element, node);
                 break;
             default:
                 if (element.FirstNode is XText t)
@@ -98,5 +100,19 @@ public static class LayoutLoader
         }
 
         return node;
+    }
+
+    private static void ApplyFragementSetter(XElement element, YogaNode node)
+    {
+        foreach (var setter in element.Elements())
+        {
+            if (setter.Name.LocalName != "setter") continue;
+
+            var query = setter.Attribute("query")!.Value;
+            var property = setter.Attribute("property")!.Value;
+            var value = setter.Value;
+
+            node.FindNode(query)?.SetAttribute(property, value);
+        }
     }
 }

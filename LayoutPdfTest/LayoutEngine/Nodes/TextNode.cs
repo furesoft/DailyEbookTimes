@@ -103,10 +103,13 @@ public class TextNode(YogaConfig config) : YogaNode(config)
         page.ResetColor();
     }
 
-    protected override void SetAttribute(string name, string value)
+    internal override void SetAttribute(string name, string value)
     {
         switch (name)
         {
+            case "text":
+                Text = value;
+                break;
             case "fontsize":
                 FontSize = int.Parse(value);
                 break;

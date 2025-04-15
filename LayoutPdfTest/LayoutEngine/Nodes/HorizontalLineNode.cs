@@ -14,7 +14,7 @@ public class HorizontalLineNode(YogaConfig config) : YogaNode(config)
         Background = LineColor;
     }
 
-    protected override void SetAttribute(string name, string value)
+    internal override void SetAttribute(string name, string value)
     {
         if (name == "lineColor")
         {

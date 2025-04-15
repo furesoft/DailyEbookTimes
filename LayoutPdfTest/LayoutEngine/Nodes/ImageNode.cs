@@ -41,7 +41,7 @@ public class ImageNode : YogaNode
         page.AddImage(img, rect);
     }
 
-    protected override void SetAttribute(string name, string value)
+    internal override void SetAttribute(string name, string value)
     {
         if (name == "src")
         {

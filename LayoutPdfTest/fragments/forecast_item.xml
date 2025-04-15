@@ -1,5 +1,5 @@
-﻿<forecastItem name="today" flexdirection="column" flexgrow="1" background="#FFFAE5" bordercolor="gray" boxshadow="gray 1">
-    <text id="day" fontsize="14" fontfamily="NoticiaText" margintop="3" color="black" fontweight="bold" alignself="center" autosize="true">Today</text>
+﻿<forecastItem flexdirection="column" flexgrow="1" background="#FFFAE5" bordercolor="gray" boxshadow="gray 1">
+    <text id="day" fontsize="14" fontfamily="NoticiaText" marginbottom="8" color="black" fontweight="bold" alignself="center" autosize="true">Today</text>
     <img id="icon" src="file://images/icons/forecast/sunny.png" width="30" height="30" alignself="center" margin="2" />
 
     <precipitation margin="5" flexdirection="row" justifycontent="spacebetween" alignitems="center">
