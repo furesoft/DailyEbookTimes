@@ -26,7 +26,7 @@
       <None Update="cover.xml">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
-      <None Update="fragments\forecast.xml">
+      <None Update="fragments\forecast_item.xml">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
     </ItemGroup>
