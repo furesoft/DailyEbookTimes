@@ -35,6 +35,7 @@ class Program
         builder.DocumentInformation.CreationDate = DateTime.Now.ToString("dddd, MMMM dd, yyyy");
 
         Layout.Builder = builder;
+        Layout.AddFont("Default", "fonts/NoticiaText-Regular.ttf");
         Layout.AddFont("Jaini", "fonts/Jaini-Regular.ttf");
         Layout.AddFont("NoticiaText", "fonts/NoticiaText-Regular.ttf");
 
@@ -201,8 +202,8 @@ class Program
         secondLeftArticle = CreateArticle(layout, Feeds[1].Items[0], "truncated");
         middleColumn.Add(secondLeftArticle);
 
-        thirdLeftArticle = CreateArticle(layout, Feeds[1].Items[1]);
-        middleColumn.Add(thirdLeftArticle);
+        var forecastStripe = LayoutLoader.LoadFragment(File.ReadAllText("template.xml"));
+        middleColumn.Add(forecastStripe);
 
         var rightColumn = layout.CreateNode("right");
         rightColumn.FlexGrow = 1;

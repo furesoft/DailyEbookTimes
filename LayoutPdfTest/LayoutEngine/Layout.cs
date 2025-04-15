@@ -1,4 +1,5 @@
 ﻿using Moss.NET.Sdk.LayoutEngine.Nodes;
+using UglyToad.PdfPig.Core;
 using UglyToad.PdfPig.Writer;
 
 namespace Moss.NET.Sdk.LayoutEngine;
@@ -7,19 +8,24 @@ public class Layout
 {
     private YogaNode root;
     private YogaConfig config;
-    private readonly PdfPageBuilder _page;
+    private readonly PdfPageBuilder? _page;
     public static PdfDocumentBuilder Builder;
     static Dictionary<string, PdfDocumentBuilder.AddedFont> _fonts = new();
 
-    private Layout(YogaConfig config, PdfPageBuilder page)
+    protected Layout(YogaConfig config, PdfPageBuilder? page, PdfRectangle pageSize = default)
     {
         this.config = config;
         _page = page;
 
+        if (page != null)
+        {
+            pageSize = page.PageSize;
+        }
+
         root = new YogaNode(config)
         {
-            Width = page.PageSize.Width,
-            Height = page.PageSize.Height,
+            Width = pageSize.Width,
+            Height = pageSize.Height,
             Margin = 10,
             Padding = 10,
             Name = "root",
@@ -41,6 +47,11 @@ public class Layout
     {
         var dimension = device.GetDimension(isLandscape);
         return new Layout(new(), Builder.AddPage(dimension.width, dimension.height));
+    }
+
+    public static Layout CreateTemplate()
+    {
+        return new Layout(new(), null);
     }
 
     public YogaNode CreateNode(string? name = null)

@@ -20,10 +20,7 @@
         </column>
 
         <column name="middle" flexgrow="2" background="White" marginleft="5" marginright="5" bordercolor="gray" boxshadow="gray 2">
-            <article flexgrow="1" flexdirection="column" height="50" padding="5">
-                <text name="title" fontsize="9" fontfamily="NoticiaText" height="20" color="red">Title</text>
-                <text name="summary" fontsize="7" fontfamily="NoticiaText" height="100">summary</text>
-            </article>
+            <fragment src="template.xml" width="100" height="100" alignself="center" />
         </column>
 
         <column name="right" flexgrow="1" background="White" boxshadow="gray 2" marginleft="10" bordercolor="gray">
