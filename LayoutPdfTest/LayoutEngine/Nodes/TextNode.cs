@@ -114,7 +114,7 @@ public class TextNode(YogaConfig config) : YogaNode(config)
                 FontFamily = value;
                 break;
             case "color":
-                Color = Colors.FromName(value);
+                Color = Colors.Parse(value);
                 break;
             case "autosize":
                 AutoSize = value == "true";

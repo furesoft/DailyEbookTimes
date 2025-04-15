@@ -123,7 +123,7 @@ public class Layout
     /// </summary>
     /// <param name="query"></param>
     /// <returns></returns>
-    /// <example>content.left.article</example>
+    /// <example>content #left article</example>
     public T? FindNode<T>(string query)
         where T : YogaNode
     {

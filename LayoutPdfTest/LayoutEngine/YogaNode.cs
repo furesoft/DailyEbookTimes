@@ -41,6 +41,8 @@ public partial class YogaNode : IEnumerable<YogaNode>
     public Color? Background { get; set; }
     public BoxShadow? BoxShadow { get; set; }
 
+    public string ID { get; set; }
+
     public YogaNode()
     {
         _print = null;
@@ -737,7 +739,7 @@ public partial class YogaNode : IEnumerable<YogaNode>
     /// </summary>
     /// <param name="query"></param>
     /// <returns></returns>
-    /// <example>content.left.article</example>
+    /// <example>content #left article</example>
     public T? FindNode<T>(string query)
         where T : YogaNode
     {
@@ -746,7 +748,15 @@ public partial class YogaNode : IEnumerable<YogaNode>
 
         foreach (var part in parts)
         {
-            currentNode = currentNode.Children.FirstOrDefault(child => child.Name == part);
+            currentNode = currentNode.Children.FirstOrDefault(child =>
+            {
+                if (part.StartsWith('#'))
+                {
+                    return child.ID == part[1..];
+                }
+
+                return child.Name == part;
+            });
             if (currentNode == null)
             {
                 return null;
@@ -855,6 +865,9 @@ public partial class YogaNode : IEnumerable<YogaNode>
                 case "width":
                     Width = double.Parse(attr.Value, CultureInfo.InvariantCulture);
                     break;
+                case "id":
+                    ID = attr.Value;
+                    break;
                 case "margintop":
                     MarginTop = double.Parse(attr.Value, CultureInfo.InvariantCulture);
                     break;
@@ -890,7 +903,7 @@ public partial class YogaNode : IEnumerable<YogaNode>
                     FlexGrow = double.Parse(attr.Value, CultureInfo.InvariantCulture);
                     break;
                 case "background":
-                    Background = Colors.FromName(attr.Value);
+                    Background = Colors.Parse(attr.Value);
                     break;
                 case "alignitems":
                     AlignItems = Enum.Parse<YogaAlign>(attr.Value, true);
@@ -908,11 +921,11 @@ public partial class YogaNode : IEnumerable<YogaNode>
                     FlexDirection = Enum.Parse<YogaFlexDirection>(attr.Value, true);
                     break;
                 case "bordercolor":
-                    BorderColor = Colors.FromName(attr.Value);
+                    BorderColor = Colors.Parse(attr.Value);
                     break;
                 case "boxshadow":
                     var spl = attr.Value.Split(' ');
-                    BoxShadow = new BoxShadow(Colors.FromName(spl[0]), int.Parse(spl[1]));
+                    BoxShadow = new BoxShadow(Colors.Parse(spl[0]), int.Parse(spl[1]));
                     break;
                 case "positiontype":
                     PositionType = Enum.Parse<YogaPositionType>(attr.Value, true);

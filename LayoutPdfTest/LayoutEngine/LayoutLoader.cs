@@ -75,7 +75,12 @@ public static class LayoutLoader
                     break;
                 }
 
-                node = layout.CreateNode(element.Attribute("name")?.Value);
+                var name = element.Attribute("name")?.Value;
+                if (name is null)
+                {
+                    name = element.Name.LocalName;
+                }
+                node = layout.CreateNode(name);
                 break;
         }
 
