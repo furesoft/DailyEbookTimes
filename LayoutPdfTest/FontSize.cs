@@ -2,9 +2,9 @@
 
 public enum FontSize
 {
-    Headline = 75,
+    Headline = 70,
     HeaderInfo = 15,
-    ArticleHeading = 18,
-    ArticleP = 14,
+    ArticleHeading = 9,
+    ArticleContent = 7,
     Footer = 7
 }

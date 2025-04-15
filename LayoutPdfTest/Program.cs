@@ -1,7 +1,10 @@
 ﻿using System.Diagnostics;
+using CodeHollow.FeedReader;
 using Moss.NET.Sdk.LayoutEngine;
 using Moss.NET.Sdk.LayoutEngine.Nodes;
 using UglyToad.PdfPig.Content;
+using UglyToad.PdfPig.Outline;
+using UglyToad.PdfPig.Outline.Destinations;
 using UglyToad.PdfPig.Writer;
 
 namespace Moss.NET.Sdk;
@@ -10,9 +13,23 @@ class Program
 {
     static void Main(string[] args)
     {
+        string[] feeds = [
+            "https://www.heise.de/rss/heise-Rubrik-IT.rdf",
+            "https://rss.nytimes.com/services/xml/rss/nyt/World.xml"];
+
+        foreach (string url in feeds)
+        {
+            var feed = FeedReader.Read(url);
+            Feeds.Add(feed);
+        }
+
         var builder = new PdfDocumentBuilder();
 
         var page = builder.AddPage(PageSize.A4, false);
+        builder.Bookmarks = new([
+            new DocumentBookmarkNode("Cover",0, new ExplicitDestination(1, ExplicitDestinationType.FitPage, ExplicitDestinationCoordinates.Empty), [])
+        ]);
+
         var layout = Layout.Create(page, builder);
         layout.GetRoot().Background = Colors.Creme;
 
@@ -21,7 +38,7 @@ class Program
 
         AddHeader(layout);
         AddContentArea(layout);
-        AddFooter(layout);
+        AddFooter(layout, 0);
 
         var article5 = layout.FindNode<TextNode>("content middle truncated summary");
         article5.TruncateSize = 10;
@@ -34,6 +51,8 @@ class Program
         File.WriteAllBytes("newPdf.pdf", documentBytes);
         Process.Start(new ProcessStartInfo("newPdf.pdf") { UseShellExecute = true });
     }
+
+    public static List<Feed> Feeds { get; set; } = [];
 
     private static YogaNode AddHeader(Layout layout)
     {
@@ -99,7 +118,7 @@ class Program
         return header;
     }
 
-    private static YogaNode AddFooter(Layout layout)
+    private static YogaNode AddFooter(Layout layout, int? pageNum = null)
     {
         var footer = layout.CreateNode("footer");
         footer.Height = 10;
@@ -109,7 +128,7 @@ class Program
         footer.MarginRight = 10;
         footer.FlexDirection = YogaFlexDirection.Row;
         footer.Display = YogaDisplay.Flex;
-        footer.JustifyContent = YogaJustify.Center;
+        footer.JustifyContent = YogaJustify.SpaceBetween;
 
         var footerText = layout.CreateTextNode("Generated with Totletheyn on Moss");
         footerText.FontSize = (int)FontSize.Footer;
@@ -120,6 +139,19 @@ class Program
         footerText.TextDecoration = TextDecoration.Strikethrough;
 
         footer.Add(footerText);
+
+        if (pageNum.HasValue)
+        {
+            var pageText = layout.CreateTextNode("Page " + pageNum, "pageNum");
+            pageText.FontSize = (int)FontSize.Footer;
+            pageText.FlexGrow = 0;
+            pageText.FontFamily = "NoticiaText";
+            pageText.AlignSelf = YogaAlign.FlexEnd;
+            pageText.AlignItems = YogaAlign.Center;
+            pageText.AutoSize = true;
+
+            footer.Add(pageText);
+        }
 
         layout.Add(footer);
 
@@ -136,53 +168,51 @@ class Program
 
         var leftColumn = layout.CreateNode("left");
         leftColumn.FlexGrow = 1;
-        leftColumn.MarginLeft = 10;
         leftColumn.MarginRight = 10;
         leftColumn.BorderColor = Colors.Gray;
         leftColumn.Background  = Colors.White;
         leftColumn.BoxShadow = new BoxShadow(Colors.Gray, 2);
 
-        var firstLeftArticle = CreateArticle(layout, "Test 1", "My Super duper test content. So great stuff here. My Super duper test content. So great stuff here");
+        var firstLeftArticle = CreateArticle(layout, Feeds[0].Items[0]);
         leftColumn.Add(firstLeftArticle);
 
-        var secondLeftArticle = CreateArticle(layout, "Test 2", "My Super duper test content. So great stuff here");
+        var secondLeftArticle = CreateArticle(layout, Feeds[0].Items[1]);
         leftColumn.Add(secondLeftArticle);
 
-        var thirdLeftArticle = CreateArticle(layout, "Test 3", "My Super duper test content. So great stuff here. My Super duper test content. So great stuff here");
+        var thirdLeftArticle = CreateArticle(layout, Feeds[0].Items[2]);
         leftColumn.Add(thirdLeftArticle);
 
         var middleColumn = layout.CreateNode("middle");
         middleColumn.FlexGrow = 2;
-        middleColumn.MarginLeft = 10;
-        middleColumn.MarginRight = 10;
+        middleColumn.MarginLeft = 5;
+        middleColumn.MarginRight = 5;
         middleColumn.BorderColor = Colors.Gray;
         middleColumn.Background  = Colors.White;
         middleColumn.BoxShadow = new BoxShadow(Colors.Gray, 2);
 
-        firstLeftArticle = CreateArticle(layout, "Test 4", "My Super duper test content. So great stuff here.My Super duper test content. So great stuff here.");
+        firstLeftArticle = CreateArticle(layout, Feeds[0].Items[3]);
         middleColumn.Add(firstLeftArticle);
 
-        secondLeftArticle = CreateArticle(layout, "Test 5", "My Super duper test content. So great stuff here. My Super duper test content. So great stuff here.", "truncated");
+        secondLeftArticle = CreateArticle(layout, Feeds[1].Items[0], "truncated");
         middleColumn.Add(secondLeftArticle);
 
-        thirdLeftArticle = CreateArticle(layout, "Test 6", "My Super duper test content. So great stuff here. My Super duper test content. So great stuff here");
+        thirdLeftArticle = CreateArticle(layout, Feeds[1].Items[1]);
         middleColumn.Add(thirdLeftArticle);
 
         var rightColumn = layout.CreateNode("right");
         rightColumn.FlexGrow = 1;
         rightColumn.MarginLeft = 10;
-        rightColumn.MarginRight = 10;
         rightColumn.BorderColor = Colors.Gray;
         rightColumn.Background  = Colors.White;
         rightColumn.BoxShadow = new BoxShadow(Colors.Gray, 2);
 
-        firstLeftArticle = CreateArticle(layout, "Test 7", "My Super duper test content. So great stuff here");
+        firstLeftArticle = CreateArticle(layout, Feeds[1].Items[2]);
         rightColumn.Add(firstLeftArticle);
 
-        secondLeftArticle = CreateArticle(layout, "Test 8", "My Super duper test content. So great stuff here");
+        secondLeftArticle = CreateArticle(layout, Feeds[1].Items[3]);
         rightColumn.Add(secondLeftArticle);
 
-        thirdLeftArticle = CreateArticle(layout, "Test 9", "My Super duper test content. So great stuff here. My Super duper test content. So great stuff here");
+        thirdLeftArticle = CreateArticle(layout, Feeds[1].Items[4]);
         rightColumn.Add(thirdLeftArticle);
 
         contentArea.Add(leftColumn);
@@ -194,7 +224,7 @@ class Program
         return contentArea;
     }
 
-    private static YogaNode CreateArticle(Layout layout, string title, string summary, string? name = "article")
+    private static YogaNode CreateArticle(Layout layout, FeedItem item, string? name = "article")
     {
         var article = layout.CreateNode(name);
 
@@ -205,14 +235,14 @@ class Program
         article.Margin = 5;
         article.Padding = 5;
 
-        var articleTitle = layout.CreateTextNode(title, "title");
+        var articleTitle = layout.CreateTextNode(item.Title, "title");
         articleTitle.FontSize = (int)FontSize.ArticleHeading;
         articleTitle.FontFamily = "NoticiaText";
         articleTitle.Height = 20;
         articleTitle.Color = Colors.Red;
 
-        var articleSummary = layout.CreateTextNode(summary, "summary");
-        articleSummary.FontSize = (int)FontSize.ArticleP;
+        var articleSummary = layout.CreateTextNode(item.Description.Replace("\n", "\\n"), "summary");
+        articleSummary.FontSize = (int)FontSize.ArticleContent;
         articleSummary.FontFamily = "NoticiaText";
         articleSummary.Height = 100;
 
