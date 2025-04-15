@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Globalization;
 using CodeHollow.FeedReader;
 using Moss.NET.Sdk.LayoutEngine;
 using Moss.NET.Sdk.LayoutEngine.Nodes;
@@ -13,6 +14,8 @@ class Program
 {
     static void Main(string[] args)
     {
+        Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
+
         string[] feeds = [
             "https://www.heise.de/rss/heise-Rubrik-IT.rdf",
             "https://rss.nytimes.com/services/xml/rss/nyt/World.xml"];
@@ -43,7 +46,7 @@ class Program
         var article5 = layout.FindNode<TextNode>("content middle truncated summary");
         article5.TruncateSize = 10;
 
-        layout.EnableDebugLines();
+        //layout.EnableDebugLines();
         layout.Apply();
 
         var documentBytes = builder.Build();
@@ -59,9 +62,7 @@ class Program
         var header = layout.CreateNode("header");
 
         header.Height = 120;
-        header.MarginTop = 20;
-        header.MarginLeft = 10;
-        header.MarginRight = 10;
+        header.MarginTop = 10;
         header.FlexGrow = 0;
 
         var headerInfo = layout.CreateNode();
@@ -134,9 +135,7 @@ class Program
         footerText.FontSize = (int)FontSize.Footer;
         footerText.FlexGrow = 0;
         footerText.FontFamily = "NoticiaText";
-        footerText.AlignSelf = YogaAlign.Center;
         footerText.AutoSize = true;
-        footerText.TextDecoration = TextDecoration.Strikethrough;
 
         footer.Add(footerText);
 
