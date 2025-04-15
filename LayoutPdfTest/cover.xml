@@ -20,7 +20,7 @@
         </column>
 
         <column name="middle" flexgrow="2" background="White" marginleft="5" marginright="5" bordercolor="gray" boxshadow="gray 2">
-            <fragment src="template.xml" width="100" height="100" alignself="center" />
+            <fragment src="fragments/forecast.xml" width="100" height="150" alignself="center" />
         </column>
 
         <column name="right" flexgrow="1" background="White" boxshadow="gray 2" marginleft="10" bordercolor="gray">
