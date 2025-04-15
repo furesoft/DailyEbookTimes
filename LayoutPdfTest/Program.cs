@@ -40,7 +40,6 @@ class Program
         Layout.AddFont("NoticiaText", "fonts/NoticiaText-Regular.ttf");
 
         var xmlLayout = LayoutLoader.LoadLayoutFromXml(File.ReadAllText("cover.xml"));
-        //xmlLayout.EnableDebugLines();
         xmlLayout.Apply();
 
         var documentBytes = builder.Build();

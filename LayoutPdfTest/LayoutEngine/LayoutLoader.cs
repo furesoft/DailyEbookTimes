@@ -25,6 +25,11 @@ public static class LayoutLoader
             }
         }
 
+        if (xml.Root.Attribute("debug")?.Value == "true")
+        {
+            layout.EnableDebugLines();
+        }
+
         return layout;
     }
 
@@ -40,6 +45,11 @@ public static class LayoutLoader
             {
                 layout.Add(node);
             }
+        }
+
+        if (xml.Root.Attribute("debug")?.Value == "true")
+        {
+            layout.EnableDebugLines();
         }
 
         return layout.GetRoot();
