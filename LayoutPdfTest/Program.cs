@@ -98,9 +98,9 @@ class Program
         dateText.AlignSelf = YogaAlign.Center;
         dateText.AutoSize = true;
 
-        var rssImg = layout.CreateImageNode("images/rss.png");
-        rssImg.Width = 10;
-        rssImg.Height = 10;
+        var rssImg = layout.CreateImageNode("file://images/rss.png");
+        rssImg.Width = 9;
+        rssImg.Height = 9;
         rssImg.AlignSelf = YogaAlign.Center;
 
         header.Add(headline);
@@ -229,10 +229,8 @@ class Program
         var article = layout.CreateNode(name);
 
         article.FlexGrow = 1;
-        article.Margin = 10;
         article.FlexDirection = YogaFlexDirection.Column;
         article.Height = 50;
-        article.Margin = 5;
         article.Padding = 5;
 
         var articleTitle = layout.CreateTextNode(item.Title, "title");

@@ -156,13 +156,13 @@ public class Layout
         throw new ArgumentException($"Font '{fontFamily}' not found.");
     }
 
-    public ImageNode CreateImageNode(string path, string? name = null)
+    public ImageNode CreateImageNode(string url, string? name = null)
     {
         return new ImageNode(config)
         {
             Name = name,
             ParentLayout = this,
-            ImagePath = path
+            ImagePath = new Uri(url)
         };
     }
 }
