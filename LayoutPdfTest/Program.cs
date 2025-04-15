@@ -32,6 +32,8 @@ class Program
             new DocumentBookmarkNode("Cover",0, new ExplicitDestination(1, ExplicitDestinationType.FitPage, ExplicitDestinationCoordinates.Empty), [])
         ]);
         builder.DocumentInformation.Producer = "Totletheyn";
+        builder.DocumentInformation.Title = "Issue #{0}";
+        builder.DocumentInformation.CreationDate = DateTime.Now.ToString("dddd, MMMM dd, yyyy");
 
         var layout = Layout.Create(Device.RMPP, builder);
         layout.GetRoot().Background = Colors.Creme;
