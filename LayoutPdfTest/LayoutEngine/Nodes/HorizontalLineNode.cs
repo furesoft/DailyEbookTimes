@@ -18,7 +18,7 @@ public class HorizontalLineNode(YogaConfig config) : YogaNode(config)
     {
         if (name == "lineColor")
         {
-            LineColor = Colors.FromName(value);
+            LineColor = Colors.Parse(value);
         }
         else if (name == "thickness")
         {

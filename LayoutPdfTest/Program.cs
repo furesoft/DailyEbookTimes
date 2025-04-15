@@ -39,22 +39,9 @@ class Program
         Layout.AddFont("Jaini", "fonts/Jaini-Regular.ttf");
         Layout.AddFont("NoticiaText", "fonts/NoticiaText-Regular.ttf");
 
-        var layout = Layout.Create(Device.RMPP);
-        layout.GetRoot().Background = Colors.Creme;
-
         var xmlLayout = LayoutLoader.LoadLayoutFromXml(File.ReadAllText("cover.xml"));
-        //xmlLayout.EnableDebugLines();
+        xmlLayout.EnableDebugLines();
         xmlLayout.Apply();
-
-        AddHeader(layout);
-        AddContentArea(layout);
-        AddFooter(layout, 0);
-
-        var article5 = layout.FindNode<TextNode>("content middle truncated summary");
-        //article5.TruncateSize = 10;
-
-        //layout.EnableDebugLines();
-        layout.Apply();
 
         var documentBytes = builder.Build();
 
@@ -202,7 +189,7 @@ class Program
         secondLeftArticle = CreateArticle(layout, Feeds[1].Items[0], "truncated");
         middleColumn.Add(secondLeftArticle);
 
-        var forecastStripe = LayoutLoader.LoadFragment(File.ReadAllText("template.xml"));
+        var forecastStripe = LayoutLoader.LoadFragment(File.ReadAllText("fragments/forecast.xml"));
         middleColumn.Add(forecastStripe);
 
         var rightColumn = layout.CreateNode("right");
