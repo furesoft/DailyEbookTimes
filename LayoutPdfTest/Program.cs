@@ -28,12 +28,12 @@ class Program
 
         var builder = new PdfDocumentBuilder();
 
-        var page = builder.AddPage(PageSize.A4, false);
         builder.Bookmarks = new([
             new DocumentBookmarkNode("Cover",0, new ExplicitDestination(1, ExplicitDestinationType.FitPage, ExplicitDestinationCoordinates.Empty), [])
         ]);
+        builder.DocumentInformation.Producer = "Totletheyn";
 
-        var layout = Layout.Create(page, builder);
+        var layout = Layout.Create(Device.RMPP, builder);
         layout.GetRoot().Background = Colors.Creme;
 
         layout.AddFont("Jaini", "fonts/Jaini-Regular.ttf");

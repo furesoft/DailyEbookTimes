@@ -38,6 +38,12 @@ public class Layout
         return new Layout(new(), page, builder);
     }
 
+    public static Layout Create(Device device, PdfDocumentBuilder builder, bool isLandscape = true)
+    {
+        var dimension = device.GetDimension(isLandscape);
+        return new Layout(new(), builder.AddPage(dimension.width, dimension.height), builder);
+    }
+
     public static Layout Create(PdfPageBuilder page, PdfDocumentBuilder builder, YogaConfig config)
     {
         return new Layout(config, page, builder);
