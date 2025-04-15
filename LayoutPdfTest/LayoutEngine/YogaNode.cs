@@ -64,7 +64,7 @@ public partial class YogaNode : IEnumerable<YogaNode>
         _nextChild = null;
         _config = new YogaConfig();
         _isDirty = false;
-        _resolvedDimensions = new YogaArray<YogaValue>(new YogaValue[] { YogaValue.Undefined, YogaValue.Undefined });
+        _resolvedDimensions = new YogaArray<YogaValue>(new YogaValue[] { YogaValue.Unset, YogaValue.Unset });
 
         Interlocked.Increment(ref _instanceCount);
     }
@@ -285,12 +285,12 @@ public partial class YogaNode : IEnumerable<YogaNode>
         var leadingPosition = default(YogaValue);
         if (axis.IsRow())
         {
-            leadingPosition = ComputedEdgeValue(_style.Position, YogaEdge.Start, YogaValue.Undefined);
+            leadingPosition = ComputedEdgeValue(_style.Position, YogaEdge.Start, YogaValue.Unset);
             if (leadingPosition.Unit != YogaUnit.Undefined)
                 return leadingPosition.Resolve(axisSize);
         }
 
-        leadingPosition = ComputedEdgeValue(_style.Position, Leading[axis], YogaValue.Undefined);
+        leadingPosition = ComputedEdgeValue(_style.Position, Leading[axis], YogaValue.Unset);
         return leadingPosition.Unit == YogaUnit.Undefined ? 0.0f : leadingPosition.Resolve(axisSize);
     }
 
@@ -299,12 +299,12 @@ public partial class YogaNode : IEnumerable<YogaNode>
         var trailingPosition = default(YogaValue);
         if (axis.IsRow())
         {
-            trailingPosition = ComputedEdgeValue(_style.Position, YogaEdge.End, YogaValue.Undefined);
+            trailingPosition = ComputedEdgeValue(_style.Position, YogaEdge.End, YogaValue.Unset);
             if (trailingPosition.Unit != YogaUnit.Undefined)
                 return trailingPosition.Resolve(axisSize);
         }
 
-        trailingPosition = ComputedEdgeValue(_style.Position, Trailing[axis], YogaValue.Undefined);
+        trailingPosition = ComputedEdgeValue(_style.Position, Trailing[axis], YogaValue.Unset);
         return trailingPosition.Unit == YogaUnit.Undefined ? 0.0f : trailingPosition.Resolve(axisSize);
     }
 
@@ -315,14 +315,14 @@ public partial class YogaNode : IEnumerable<YogaNode>
 
     public bool IsLeadingPositionDefined(YogaFlexDirection axis)
     {
-        return (axis.IsRow() && ComputedEdgeValue(_style.Position, YogaEdge.Start, YogaValue.Undefined).Unit != YogaUnit.Undefined)
-               || ComputedEdgeValue(_style.Position, Leading[axis], YogaValue.Undefined).Unit != YogaUnit.Undefined;
+        return (axis.IsRow() && ComputedEdgeValue(_style.Position, YogaEdge.Start, YogaValue.Unset).Unit != YogaUnit.Undefined)
+               || ComputedEdgeValue(_style.Position, Leading[axis], YogaValue.Unset).Unit != YogaUnit.Undefined;
     }
 
     public bool IsTrailingPositionDefined(YogaFlexDirection axis)
     {
-        return (axis.IsRow() && ComputedEdgeValue(_style.Position, YogaEdge.End, YogaValue.Undefined).Unit != YogaUnit.Undefined)
-               || ComputedEdgeValue(_style.Position, Trailing[axis], YogaValue.Undefined).Unit != YogaUnit.Undefined;
+        return (axis.IsRow() && ComputedEdgeValue(_style.Position, YogaEdge.End, YogaValue.Unset).Unit != YogaUnit.Undefined)
+               || ComputedEdgeValue(_style.Position, Trailing[axis], YogaValue.Unset).Unit != YogaUnit.Undefined;
     }
 
     public double? GetLeadingMargin(YogaFlexDirection axis, double? widthSize)
@@ -797,7 +797,7 @@ public partial class YogaNode : IEnumerable<YogaNode>
             return edges[YogaEdge.All];
 
         if (edge == YogaEdge.Start || edge == YogaEdge.End)
-            return YogaValue.Undefined;
+            return YogaValue.Unset;
 
         return defaultValue;
     }

@@ -483,7 +483,7 @@ public partial class YogaNode
         _children = new List<YogaNode>();
         _nextChild = null;
         _isDirty = false;
-        _resolvedDimensions = new YogaArray<YogaValue>(new YogaValue[] { YogaValue.Undefined, YogaValue.Undefined });
+        _resolvedDimensions = new YogaArray<YogaValue>(new YogaValue[] { YogaValue.Unset, YogaValue.Unset });
 
         if (_config.UseWebDefaults)
         {

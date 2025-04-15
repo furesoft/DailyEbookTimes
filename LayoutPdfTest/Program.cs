@@ -39,8 +39,8 @@ class Program
         Layout.AddFont("Jaini", "fonts/Jaini-Regular.ttf");
         Layout.AddFont("NoticiaText", "fonts/NoticiaText-Regular.ttf");
 
-        var xmlLayout = LayoutLoader.LoadLayoutFromXml(File.ReadAllText("cover.xml"));
-        xmlLayout.Apply();
+        var coverLayout = LayoutLoader.LoadLayoutFromXml(File.ReadAllText("cover.xml"));
+        coverLayout.Apply();
 
         var documentBytes = builder.Build();
 

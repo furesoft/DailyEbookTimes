@@ -12,19 +12,19 @@ public sealed class YogaStyle
 {
     private static readonly YogaValue[] DefaultEdgeValuesUnit = new YogaValue[]
     {
-        YogaValue.Undefined,
-        YogaValue.Undefined,
-        YogaValue.Undefined,
-        YogaValue.Undefined,
-        YogaValue.Undefined,
-        YogaValue.Undefined,
-        YogaValue.Undefined,
-        YogaValue.Undefined,
-        YogaValue.Undefined,
+        YogaValue.Unset,
+        YogaValue.Unset,
+        YogaValue.Unset,
+        YogaValue.Unset,
+        YogaValue.Unset,
+        YogaValue.Unset,
+        YogaValue.Unset,
+        YogaValue.Unset,
+        YogaValue.Unset,
     };
 
     private static readonly YogaValue[] DefaultDimensionValuesAutoUnit = new YogaValue[] { YogaValue.Auto, YogaValue.Auto };
-    private static readonly YogaValue[] DefaultDimensionValuesUnit = new YogaValue[] { YogaValue.Undefined, YogaValue.Undefined };
+    private static readonly YogaValue[] DefaultDimensionValuesUnit = new YogaValue[] { YogaValue.Unset, YogaValue.Unset };
 
     public YogaDirection Direction;
     public YogaFlexDirection FlexDirection;

@@ -27,8 +27,8 @@ public class TextNode(YogaConfig config) : YogaNode(config)
             }
             else
             {
-                Width = YogaValue.Undefined;
-                Height = YogaValue.Undefined;
+                Width = YogaValue.Unset;
+                Height = YogaValue.Unset;
             }
         }
     }
