@@ -1,8 +1,8 @@
 ﻿<forecastItem flexdirection="column" flexgrow="1" background="#FFFAE5" bordercolor="gray" boxshadow="gray 1">
-    <text id="day" fontsize="14" fontfamily="NoticiaText" marginbottom="7" color="black" fontweight="bold" alignself="center" autosize="true">Today</text>
+    <text id="day" fontsize="13" fontfamily="NoticiaText" marginbottom="7" color="black" fontweight="bold" alignself="center" autosize="true">Today</text>
     <img id="icon" src="file://images/icons/forecast/sunny.png" width="30" height="30" alignself="center" margin="1" />
 
-    <temperature margin="6" flexdirection="row" alignitems="center" alignself="center">
+    <temperature margin="6" flexdirection="row" alignitems="center" alignself="center" gap="3">
         <text name="max" fontsize="12" fontfamily="NoticiaText" autosize="true" alignself="flexend" color="red">15 °C</text>
         <text fontsize="12" fontfamily="NoticiaText" autosize="true" alignself="flexend">/</text>
         <text name="min" fontsize="8" fontfamily="NoticiaText" autosize="true" alignself="flexend" color="blue">2 °C</text>

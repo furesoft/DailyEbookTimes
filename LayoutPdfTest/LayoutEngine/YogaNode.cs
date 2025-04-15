@@ -43,6 +43,11 @@ public partial class YogaNode : IEnumerable<YogaNode>
 
     public string ID { get; set; }
 
+    /// <summary>
+    /// The gap between each children
+    /// </summary>
+    public YogaValue Gap { get; set; }
+
     public YogaNode()
     {
         _print = null;
@@ -861,7 +866,27 @@ public partial class YogaNode : IEnumerable<YogaNode>
 
     public virtual void ReCalculate(PdfPageBuilder page)
     {
+        if (Gap.Unit != YogaUnit.Undefined)
+        {
+            SetChildGaps();
+        }
+    }
 
+    private void SetChildGaps()
+    {
+        for (int i = 0; i < Children.Count - 1; i++)
+        {
+            var child = Children[i];
+
+            if (FlexDirection == YogaFlexDirection.Column)
+            {
+                child.MarginBottom = Gap;
+            }
+            else if(FlexDirection == YogaFlexDirection.Row)
+            {
+                child.MarginRight = Gap;
+            }
+        }
     }
 
     public void SetAttributes(XElement element)
@@ -881,6 +906,9 @@ public partial class YogaNode : IEnumerable<YogaNode>
                     break;
                 case "margintop":
                     MarginTop = double.Parse(attr.Value, CultureInfo.InvariantCulture);
+                    break;
+                case "gap":
+                    Gap = double.Parse(attr.Value, CultureInfo.InvariantCulture);
                     break;
                 case "marginbottom":
                     MarginBottom = double.Parse(attr.Value, CultureInfo.InvariantCulture);
