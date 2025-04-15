@@ -896,47 +896,47 @@ public partial class YogaNode : IEnumerable<YogaNode>
             switch (attr.Name.LocalName.ToLower())
             {
                 case "height":
-                    Height = double.Parse(attr.Value, CultureInfo.InvariantCulture);
+                    Height = YogaValue.Parse(attr.Value);
                     break;
                 case "width":
-                    Width = double.Parse(attr.Value, CultureInfo.InvariantCulture);
+                    Width = YogaValue.Parse(attr.Value);
                     break;
                 case "id":
                     ID = attr.Value;
                     break;
                 case "margintop":
-                    MarginTop = double.Parse(attr.Value, CultureInfo.InvariantCulture);
+                    MarginTop = YogaValue.Parse(attr.Value);
                     break;
                 case "gap":
-                    Gap = double.Parse(attr.Value, CultureInfo.InvariantCulture);
+                    Gap = YogaValue.Parse(attr.Value);
                     break;
                 case "marginbottom":
-                    MarginBottom = double.Parse(attr.Value, CultureInfo.InvariantCulture);
+                    MarginBottom = YogaValue.Parse(attr.Value);
                     break;
                 case "margin":
-                    Margin = double.Parse(attr.Value, CultureInfo.InvariantCulture);
+                    Margin = YogaValue.Parse(attr.Value);
                     break;
                 case "marginright":
-                    MarginRight = double.Parse(attr.Value, CultureInfo.InvariantCulture);
+                    MarginRight = YogaValue.Parse(attr.Value);
                     break;
                 case "marginleft":
-                    MarginLeft = double.Parse(attr.Value, CultureInfo.InvariantCulture);
+                    MarginLeft = YogaValue.Parse(attr.Value);
                     break;
 
                 case "padding":
-                    Padding = double.Parse(attr.Value, CultureInfo.InvariantCulture);
+                    Padding = YogaValue.Parse(attr.Value);
                     break;
                 case "paddingtop":
-                    PaddingTop = double.Parse(attr.Value, CultureInfo.InvariantCulture);
+                    PaddingTop = YogaValue.Parse(attr.Value);
                     break;
                 case "paddingbottom":
-                    PaddingBottom = double.Parse(attr.Value, CultureInfo.InvariantCulture);
+                    PaddingBottom = YogaValue.Parse(attr.Value);
                     break;
                 case "paddingright":
-                    PaddingRight = double.Parse(attr.Value, CultureInfo.InvariantCulture);
+                    PaddingRight = YogaValue.Parse(attr.Value);
                     break;
                 case "paddingleft":
-                    PaddingLeft = double.Parse(attr.Value, CultureInfo.InvariantCulture);
+                    PaddingLeft = YogaValue.Parse(attr.Value);
                     break;
                 case "flexgrow":
                     FlexGrow = double.Parse(attr.Value, CultureInfo.InvariantCulture);
