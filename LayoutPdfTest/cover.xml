@@ -20,7 +20,11 @@
         </column>
 
         <column id="middle" flexgrow="2" background="White" marginleft="5" marginright="5" bordercolor="gray" boxshadow="gray 2">
-            <weather flexdirection="row" justifycontent="spaceevenly" alignitems="center" />
+            <forecastStrip flexdirection="row" justifycontent="spaceevenly" alignitems="center" datasource="weather">
+                <fragment src="fragments/forecast_item.xml" width="100" height="145" alignself="center" background="darkgray" boxshadow="gray 1" />
+                <fragment src="fragments/forecast_item.xml" width="100" height="145" alignself="center" background="lightblue" boxshadow="gray 1" />
+                <fragment src="fragments/forecast_item.xml" width="100" height="145" alignself="center" background="green" boxshadow="gray 1" />
+            </forecastStrip>
         </column>
 
         <column id="right" flexgrow="1" background="White" boxshadow="gray 2" marginleft="10" bordercolor="gray">

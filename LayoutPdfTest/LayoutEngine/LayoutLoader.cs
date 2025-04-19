@@ -6,13 +6,13 @@ using System.Xml.Linq;
 
 public static class LayoutLoader
 {
-    private static readonly Dictionary<string, Component> Components = new();
+    private static readonly Dictionary<string, IDataSource> DataSources = new();
 
-    public static void AddComponent<T>()
-        where T:Component, new()
+    public static void AddDataSource<T>()
+        where T:IDataSource, new()
     {
         var component = new T();
-        Components.Add(component.Tag, component);
+        DataSources.Add(component.Name, component);
     }
 
     public static Layout LoadLayoutFromXml(string xmlContent)
@@ -103,14 +103,8 @@ public static class LayoutLoader
                     name = element.Name.LocalName;
                 }
 
-                if (Components.TryGetValue(name, out var component))
-                {
-                    node = LoadFragment(component.GetLayout());
-                    component.AfterLoad(node);
-                    break;
-                }
-
                 node = layout.CreateNode(name);
+
                 break;
         }
 
@@ -125,6 +119,12 @@ public static class LayoutLoader
             {
                 node.Add(childNode);
             }
+        }
+
+        if (element.Attribute("datasource") is not null
+            && DataSources.TryGetValue(element.Attribute("datasource")!.Value, out var dataSource))
+        {
+            dataSource.ApplyData(node);
         }
 
         return node;

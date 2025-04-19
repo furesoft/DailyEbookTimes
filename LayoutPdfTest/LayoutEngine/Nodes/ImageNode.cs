@@ -25,8 +25,8 @@ public class ImageNode : YogaNode
         if (Src is { IsAbsoluteUri: true, Scheme: "http" or "https" })
         {
             //Todo: convert to moss rest template
-            var template = new WebClient();
-            imageBytes = template.DownloadData(Src);
+            var template = new RestTemplate();
+            imageBytes = template.GetBytes(Src.ToString());
         }
 
         if (Src.IsFile)

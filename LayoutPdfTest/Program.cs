@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics;
 using System.Globalization;
 using CodeHollow.FeedReader;
+using Moss.NET.Sdk.DataSources;
 using Moss.NET.Sdk.LayoutEngine;
-using Moss.NET.Sdk.LayoutEngine.Nodes;
 using UglyToad.PdfPig.Outline;
 using UglyToad.PdfPig.Outline.Destinations;
 using UglyToad.PdfPig.Writer;
@@ -39,7 +39,7 @@ class Program
         Layout.AddFont("Jaini", "fonts/Jaini-Regular.ttf");
         Layout.AddFont("NoticiaText", "fonts/NoticiaText-Regular.ttf");
 
-        LayoutLoader.AddComponent<WeatherComponent>();
+        LayoutLoader.AddDataSource<WeatherDataSource>();
 
         var coverLayout = LayoutLoader.LoadLayoutFromXml(File.ReadAllText("cover.xml"));
         coverLayout.Apply();
