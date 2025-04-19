@@ -3,6 +3,7 @@ using System.Globalization;
 using CodeHollow.FeedReader;
 using Moss.NET.Sdk.DataSources;
 using Moss.NET.Sdk.LayoutEngine;
+using Moss.NET.Sdk.LayoutEngine.Nodes;
 using UglyToad.PdfPig.Outline;
 using UglyToad.PdfPig.Outline.Destinations;
 using UglyToad.PdfPig.Writer;
@@ -44,6 +45,12 @@ class Program
 
         var coverLayout = LayoutLoader.LoadLayoutFromXml(File.ReadAllText("cover.xml"));
         coverLayout.Apply();
+
+        var contentLayout = LayoutLoader.LoadLayoutFromXml(File.ReadAllText("content.xml"));
+        var pageIndex = Layout.Builder.Pages.Last().Value.PageNumber - 1;
+        contentLayout.FindNode<TextNode>("footer #page")!.Text = $"Page {pageIndex}";
+        contentLayout.EnableDebugLines();
+        contentLayout.Apply();
 
         var documentBytes = builder.Build();
 
