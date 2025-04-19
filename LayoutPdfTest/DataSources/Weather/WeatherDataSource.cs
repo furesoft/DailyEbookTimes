@@ -3,6 +3,7 @@ using System.Text.Json.Serialization;
 using Moss.NET.Sdk.DataSources.Weather.Model;
 using Moss.NET.Sdk.LayoutEngine;
 using Moss.NET.Sdk.LayoutEngine.Nodes;
+using UglyToad.PdfPig.Writer;
 
 namespace Moss.NET.Sdk.DataSources;
 
@@ -12,7 +13,7 @@ public class WeatherDataSource : IDataSource
 
     private const string ApiUrl =
         "https://api.open-meteo.com/v1/forecast?latitude=49.1113&longitude=9.7391&hourly=temperature_2m,relative_humidity_2m,wind_speed_10m,pressure_msl,precipitation_probability,weathercode&current=temperature_2m,relative_humidity_2m,wind_speed_10m,pressure_msl,precipitation_probability,weathercode&daily=temperature_2m_max,temperature_2m_min,sunrise,sunset,uv_index_max,precipitation_sum,windspeed_10m_max,windgusts_10m_max&forecast_days=3";
-    public void ApplyData(YogaNode node)
+    public void ApplyData(YogaNode node, PdfPageBuilder page, PdfDocumentBuilder documentBuilder)
     {
         var template = new RestTemplate();
         var response = template.GetString(ApiUrl);

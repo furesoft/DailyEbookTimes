@@ -3,6 +3,7 @@ using System.Xml.Linq;
 using CodeHollow.FeedReader;
 using Moss.NET.Sdk.LayoutEngine;
 using Moss.NET.Sdk.LayoutEngine.Nodes;
+using UglyToad.PdfPig.Writer;
 
 namespace Moss.NET.Sdk.DataSources;
 
@@ -17,7 +18,7 @@ public class XkcdDataSource : IDataSource
         feed = FeedReader.Read(URL);
     }
 
-    public void ApplyData(YogaNode node)
+    public void ApplyData(YogaNode node, PdfPageBuilder page, PdfDocumentBuilder documentBuilder)
     {
         if (node is ImageNode img)
         {

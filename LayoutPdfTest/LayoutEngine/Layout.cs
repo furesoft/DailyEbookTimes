@@ -8,14 +8,14 @@ public class Layout
 {
     private YogaNode root;
     private YogaConfig config;
-    private readonly PdfPageBuilder? _page;
+    public readonly PdfPageBuilder? Page;
     public static PdfDocumentBuilder Builder;
     static Dictionary<string, PdfDocumentBuilder.AddedFont> _fonts = new();
 
     protected Layout(YogaConfig config, PdfPageBuilder? page, PdfRectangle pageSize = default)
     {
         this.config = config;
-        _page = page;
+        Page = page;
 
         if (page != null)
         {
@@ -80,11 +80,11 @@ public class Layout
 
     public void Apply()
     {
-        ReCalculate(root, _page);
+        ReCalculate(root, Page);
         root.CalculateLayout();
 
-        root.Draw(_page, 0, 0);
-        DrawNode(root, _page);
+        root.Draw(Page, 0, 0);
+        DrawNode(root, Page);
     }
 
     private static void DrawNode(YogaNode root, PdfPageBuilder page, double offsetX = 0, double offsetY = 0)
