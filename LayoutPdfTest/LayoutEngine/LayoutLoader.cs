@@ -124,7 +124,7 @@ public static class LayoutLoader
         if (element.Attribute("datasource") is not null
             && DataSources.TryGetValue(element.Attribute("datasource")!.Value, out var dataSource))
         {
-            dataSource.ApplyData(node, layout.Page!, Layout.Builder);
+            dataSource.ApplyData(node, layout.Page!, element);
         }
 
         return node;

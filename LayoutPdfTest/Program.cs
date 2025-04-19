@@ -49,7 +49,8 @@ class Program
         var contentLayout = LayoutLoader.LoadLayoutFromXml(File.ReadAllText("content.xml"));
         var pageIndex = Layout.Builder.Pages.Last().Value.PageNumber - 1;
         contentLayout.FindNode<TextNode>("footer #page")!.Text = $"Page {pageIndex}";
-        contentLayout.EnableDebugLines();
+        //contentLayout.EnableDebugLines();
+
         contentLayout.Apply();
 
         var documentBytes = builder.Build();

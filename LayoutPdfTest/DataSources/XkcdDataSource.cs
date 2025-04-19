@@ -18,7 +18,7 @@ public class XkcdDataSource : IDataSource
         feed = FeedReader.Read(URL);
     }
 
-    public void ApplyData(YogaNode node, PdfPageBuilder page, PdfDocumentBuilder documentBuilder)
+    public void ApplyData(YogaNode node, PdfPageBuilder page, XElement element)
     {
         if (node is ImageNode img)
         {

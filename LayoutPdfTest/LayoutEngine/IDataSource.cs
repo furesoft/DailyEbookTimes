@@ -1,9 +1,10 @@
-﻿using UglyToad.PdfPig.Writer;
+﻿using System.Xml.Linq;
+using UglyToad.PdfPig.Writer;
 
 namespace Moss.NET.Sdk.LayoutEngine;
 
 public interface IDataSource
 {
     string Name { get; }
-    void ApplyData(YogaNode node, PdfPageBuilder page, PdfDocumentBuilder documentBuilder);
+    void ApplyData(YogaNode node, PdfPageBuilder page, XElement element);
 }
