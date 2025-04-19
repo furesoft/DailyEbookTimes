@@ -9,4 +9,10 @@ public class RestTemplate
         var template = new WebClient();
         return template.DownloadData(url);
     }
+
+    public string GetString(string url)
+    {
+        var template = new WebClient();
+        return template.DownloadString(url);
+    }
 }
