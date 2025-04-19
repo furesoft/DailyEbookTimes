@@ -87,7 +87,7 @@ public static class LayoutLoader
                 break;
             case "fragment":
                 node = LoadFragment(File.ReadAllText(element.Attribute("src")!.Value));
-                ApplyFragementSetter(element, node);
+                ApplyFragmentSetter(element, node);
                 break;
             default:
                 if (element.FirstNode is XText t)
@@ -130,7 +130,7 @@ public static class LayoutLoader
         return node;
     }
 
-    private static void ApplyFragementSetter(XElement element, YogaNode node)
+    private static void ApplyFragmentSetter(XElement element, YogaNode node)
     {
         foreach (var setter in element.Elements())
         {
