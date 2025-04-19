@@ -83,7 +83,7 @@ public static class LayoutLoader
                 node = layout.CreateHorizontalLine();
                 break;
             case "img":
-                node = layout.CreateImageNode(element.Attribute("src")!.Value, element.Attribute("name")?.Value);
+                node = layout.CreateImageNode(element.Attribute("src")?.Value ?? "http://localhost/", element.Attribute("name")?.Value);
                 break;
             case "fragment":
                 node = LoadFragment(File.ReadAllText(element.Attribute("src")!.Value));

@@ -40,6 +40,7 @@ class Program
         Layout.AddFont("NoticiaText", "fonts/NoticiaText-Regular.ttf");
 
         LayoutLoader.AddDataSource<WeatherDataSource>();
+        LayoutLoader.AddDataSource<XkcdDataSource>();
 
         var coverLayout = LayoutLoader.LoadLayoutFromXml(File.ReadAllText("cover.xml"));
         coverLayout.Apply();
