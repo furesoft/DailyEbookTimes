@@ -1,11 +1,11 @@
 ﻿<layout device="rmpp" background="creme" isLandscape="true">
-    <header name="header" height="40" margintop="10" flexgrow="0">
+    <header name="header" height="40" margintop="2" flexgrow="0">
         <section name="headerInfo" flexdirection="row" justifycontent="spacebetween" alignitems="center" margin="10">
             <text fontfamily="Jaini" fontsize="11" alignself="flexstart">Issue #{0}</text>
             <text name="headline" fontSize="11" fontFamily="Jaini" alignSelf="center" autosize="true" positiontype="relative" marginBottom="5" textDecoration="underline">Daily E-Book Times</text>
             <text fontfamily="Jaini" fontsize="11" alignself="center" autosize="true">Thursday, April 15, 2025</text>
         </section>
-        <hr marginleft="10" marginright="10" thickness="1" />
+        <hr marginleft="10" marginright="10" />
     </header>
 
     <content flexdirection="row" flexGrow="1" margin="10" marginbottom="1">

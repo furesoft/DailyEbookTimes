@@ -44,12 +44,12 @@ class Program
         LayoutLoader.AddDataSource<XkcdDataSource>();
 
         var coverLayout = LayoutLoader.LoadLayoutFromXml(File.ReadAllText("cover.xml"));
+        //coverLayout.EnableDebugLines();
         coverLayout.Apply();
 
         var contentLayout = LayoutLoader.LoadLayoutFromXml(File.ReadAllText("content.xml"));
         var pageIndex = Layout.Builder.Pages.Last().Value.PageNumber - 1;
         contentLayout.FindNode<TextNode>("footer #page")!.Text = $"Page {pageIndex}";
-        //contentLayout.EnableDebugLines();
 
         contentLayout.Apply();
 
