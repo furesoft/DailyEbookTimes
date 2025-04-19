@@ -39,6 +39,8 @@ class Program
         Layout.AddFont("Jaini", "fonts/Jaini-Regular.ttf");
         Layout.AddFont("NoticiaText", "fonts/NoticiaText-Regular.ttf");
 
+        LayoutLoader.AddComponent<WeatherComponent>();
+
         var coverLayout = LayoutLoader.LoadLayoutFromXml(File.ReadAllText("cover.xml"));
         coverLayout.Apply();
 

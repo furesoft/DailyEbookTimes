@@ -6,6 +6,15 @@ using System.Xml.Linq;
 
 public static class LayoutLoader
 {
+    private static readonly Dictionary<string, Component> Components = new();
+
+    public static void AddComponent<T>()
+        where T:Component, new()
+    {
+        var component = new T();
+        Components.Add(component.Tag, component);
+    }
+
     public static Layout LoadLayoutFromXml(string xmlContent)
     {
         var xml = XDocument.Parse(xmlContent);
@@ -51,6 +60,7 @@ public static class LayoutLoader
         {
             layout.EnableDebugLines();
         }
+        layout.GetRoot().Name = xml.Root.Name.LocalName;
 
         return layout.GetRoot();
     }
@@ -92,6 +102,14 @@ public static class LayoutLoader
                 {
                     name = element.Name.LocalName;
                 }
+
+                if (Components.TryGetValue(name, out var component))
+                {
+                    node = LoadFragment(component.GetLayout());
+                    component.AfterLoad(node);
+                    break;
+                }
+
                 node = layout.CreateNode(name);
                 break;
         }

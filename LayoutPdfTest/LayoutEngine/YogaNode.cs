@@ -770,6 +770,30 @@ public partial class YogaNode : IEnumerable<YogaNode>
         return currentNode;
     }
 
+    public IEnumerable<YogaNode> FindNodes(string query)
+    {
+        var parts = query.Split(' ');
+        var currentNodes = new List<YogaNode> { this };
+
+        foreach (var part in parts)
+        {
+            currentNodes = currentNodes
+                .SelectMany(node => node.Children)
+                .Where(child =>
+                {
+                    if (part.StartsWith('#'))
+                    {
+                        return child.ID == part[1..];
+                    }
+
+                    return child.Name == part;
+                })
+                .ToList();
+        }
+
+        return currentNodes;
+    }
+
     /// <summary>
     /// Finds a node in the layout tree by a query.
     /// </summary>
@@ -780,6 +804,12 @@ public partial class YogaNode : IEnumerable<YogaNode>
         where T : YogaNode
     {
         return (T?)FindNode(query);
+    }
+
+    public IEnumerable<T?> FindNodes<T>(string query)
+        where T : YogaNode
+    {
+        return (IEnumerable<T?>)FindNodes(query);
     }
 
     private static YogaValue ComputedEdgeValue(YogaArray<YogaValue> edges, YogaEdge edge, YogaValue defaultValue)

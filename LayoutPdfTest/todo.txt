@@ -1,2 +1,2 @@
 ﻿[ ] text wrapping
-[ ] add attribution to flaticons in footer
+[ ] real weather data
