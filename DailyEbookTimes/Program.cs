@@ -27,9 +27,6 @@ class Program
 
         var builder = new PdfDocumentBuilder();
 
-        builder.Bookmarks = new([
-            new DocumentBookmarkNode("Cover", 0, new ExplicitDestination(1, ExplicitDestinationType.FitPage, ExplicitDestinationCoordinates.Empty), [])
-        ]);
         builder.DocumentInformation.Producer = "Totletheyn";
         builder.DocumentInformation.Title = "Issue 1";
         builder.DocumentInformation.CreationDate = DateTime.Now.ToString("dddd, MMMM dd, yyyy");
@@ -51,13 +48,30 @@ class Program
         coverLayout.Apply();
 
         var contentLayout = LayoutLoader.Load("layouts/content.xml");
-
+        contentLayout.Name = "Page 1";
         contentLayout.Apply();
 
+        AddBookmarks(coverLayout, contentLayout);
         var documentBytes = builder.Build();
 
         File.WriteAllBytes("newPdf.pdf", documentBytes);
         Process.Start(new ProcessStartInfo("newPdf.pdf") { UseShellExecute = true });
+    }
+
+    private static void AddBookmarks(params Layout[] layouts)
+    {
+        var nodes = new List<DocumentBookmarkNode>();
+
+        foreach (var layout in layouts)
+        {
+            nodes.Add(new DocumentBookmarkNode(layout.Name, 0,
+                new ExplicitDestination(layout.Page!.PageNumber, ExplicitDestinationType.FitPage,
+                    ExplicitDestinationCoordinates.Empty),
+                [])
+            );
+        }
+
+        Layout.Builder.Bookmarks = new(nodes);
     }
 
     public static List<Feed> Feeds { get; set; } = [];

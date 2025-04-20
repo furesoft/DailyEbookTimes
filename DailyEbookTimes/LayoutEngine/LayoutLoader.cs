@@ -1,8 +1,7 @@
 ﻿using Moss.NET.Sdk.LayoutEngine.Nodes;
+using System.Xml.Linq;
 
 namespace Moss.NET.Sdk.LayoutEngine;
-
-using System.Xml.Linq;
 
 public static class LayoutLoader
 {
@@ -22,6 +21,11 @@ public static class LayoutLoader
         var device = Enum.Parse<Device>(xml.Root!.Attribute("device")!.Value, true);
         var isLandscape = xml.Root.Attribute("isLandscape")?.Value == "true";
         var layout = Layout.Create(device, isLandscape);
+
+        if (xml.Root.Attribute("name") != null)
+        {
+            layout.Name = xml.Root.Attribute("name")!.Value;
+        }
 
         layout.GetRoot().SetAttributes(xml.Root);
 

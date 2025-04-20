@@ -1,6 +1,6 @@
-﻿<layout device="rmpp" background="creme" isLandscape="true">
+﻿<layout device="rmpp" background="creme" isLandscape="true" name="Cover">
     <header name="header" height="120" margintop="10" flexgrow="0">
-        <text name="headline" fontSize="70" fontFamily="Jaini" alignSelf="center" autosize="true" positiontype="relative" marginBottom="5">Daily E-Book Times</text>
+        <headline fontSize="70" fontFamily="Jaini" alignSelf="center" autosize="true" positiontype="relative" marginBottom="5">Daily E-Book Times</headline>
 
         <hr marginleft="10" marginright="10" />
         <section name="headerInfo" flexdirection="row" justifycontent="spacebetween" alignitems="center" margin="10">
@@ -14,8 +14,8 @@
     <content flexdirection="row" flexGrow="1" margin="10" marginbottom="1">
         <column id="left" flexgrow="1" background="White" marginright="10" bordercolor="gray" boxshadow="gray 2">
             <article flexgrow="1" flexdirection="column" height="50" padding="5">
-                <text name="title" fontsize="9" fontfamily="NoticiaText" height="20" color="red">Title</text>
-                <summary name="summary" fontsize="7" fontfamily="NoticiaText" height="100">My Summary</summary>
+                <title fontsize="9" fontfamily="NoticiaText" height="20" color="red">Title</title>
+                <summary fontsize="7" fontfamily="NoticiaText" height="100">My Summary</summary>
             </article>
         </column>
 
@@ -31,8 +31,8 @@
 
         <column id="right" flexgrow="1" background="White" boxshadow="gray 2" marginleft="10" bordercolor="gray">
             <article flexgrow="1" flexdirection="column" height="50" padding="5">
-                <text name="title" fontsize="9" fontfamily="NoticiaText" height="20" color="red">Title</text>
-                <text name="summary" fontsize="7" fontfamily="NoticiaText" height="100">summary</text>
+                <title fontsize="9" fontfamily="NoticiaText" height="20" color="red">Title</title>
+                <summary fontsize="7" fontfamily="NoticiaText" height="100">summary</summary>
             </article>
         </column>
     </content>
