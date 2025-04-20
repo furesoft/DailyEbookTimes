@@ -32,25 +32,25 @@ class Program
             new DocumentBookmarkNode("Cover", 0, new ExplicitDestination(1, ExplicitDestinationType.FitPage, ExplicitDestinationCoordinates.Empty), [])
         ]);
         builder.DocumentInformation.Producer = "Totletheyn";
-        builder.DocumentInformation.Title = "Issue #{0}";
+        builder.DocumentInformation.Title = "Issue 1";
         builder.DocumentInformation.CreationDate = DateTime.Now.ToString("dddd, MMMM dd, yyyy");
 
         Layout.Builder = builder;
-        Layout.AddFont("Default", "fonts/NoticiaText-Regular.ttf");
-        Layout.AddFont("Jaini", "fonts/Jaini-Regular.ttf");
-        Layout.AddFont("NoticiaText", "fonts/NoticiaText-Regular.ttf");
+        Layout.AddFont("Default", "Assets/fonts/NoticiaText-Regular.ttf");
+        Layout.AddFont("Jaini", "Assets/fonts/Jaini-Regular.ttf");
+        Layout.AddFont("NoticiaText", "Assets/fonts/NoticiaText-Regular.ttf");
 
+        Layout.PathResolver.Base = "Assets/";
         LayoutLoader.AddDataSource<WeatherDataSource>();
         LayoutLoader.AddDataSource<XkcdDataSource>();
         LayoutLoader.AddDataSource<NasaDataSource>();
+        LayoutLoader.AddDataSource<Meta>();
 
-        var coverLayout = LayoutLoader.LoadLayoutFromXml(File.ReadAllText("cover.xml"));
+        var coverLayout = LayoutLoader.Load("layouts/cover.xml");
         //coverLayout.EnableDebugLines();
         coverLayout.Apply();
 
-        var contentLayout = LayoutLoader.LoadLayoutFromXml(File.ReadAllText("content.xml"));
-        var pageIndex = Layout.Builder.Pages.Last().Value.PageNumber - 1;
-        contentLayout.FindNode<TextNode>("footer #page")!.Text = $"Page {pageIndex}";
+        var contentLayout = LayoutLoader.Load("layouts/content.xml");
 
         contentLayout.Apply();
 
@@ -200,7 +200,7 @@ class Program
         secondLeftArticle = CreateArticle(layout, Feeds[1].Items[0], "truncated");
         middleColumn.Add(secondLeftArticle);
 
-        var forecastStripe = LayoutLoader.LoadFragment(File.ReadAllText("fragments/forecast.xml"));
+        var forecastStripe = LayoutLoader.LoadFragmentFromXml(File.ReadAllText("fragments/forecast.xml"));
         middleColumn.Add(forecastStripe);
 
         var rightColumn = layout.CreateNode("right");
