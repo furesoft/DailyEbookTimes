@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LayoutPdfTest", "LayoutPdfTest\LayoutPdfTest.csproj", "{F3DE77A7-569B-4CBB-9477-1E9ACDEF4667}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DailyEbookTimes", "DailyEbookTimes\DailyEbookTimes.csproj", "{F3DE77A7-569B-4CBB-9477-1E9ACDEF4667}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
