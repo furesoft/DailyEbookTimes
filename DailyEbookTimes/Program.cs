@@ -54,8 +54,9 @@ class Program
         AddBookmarks(coverLayout, contentLayout);
         var documentBytes = builder.Build();
 
-        File.WriteAllBytes("newPdf.pdf", documentBytes);
-        Process.Start(new ProcessStartInfo("newPdf.pdf") { UseShellExecute = true });
+        var samplePdf = "../../../Sample.pdf";
+        File.WriteAllBytes(samplePdf, documentBytes);
+        Process.Start(new ProcessStartInfo(Path.GetFullPath(samplePdf)) { UseShellExecute = true });
     }
 
     private static void AddBookmarks(params Layout[] layouts)
