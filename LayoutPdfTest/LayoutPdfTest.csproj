@@ -10,6 +10,7 @@
 
     <ItemGroup>
       <PackageReference Include="CodeHollow.FeedReader" Version="1.2.6" />
+      <PackageReference Include="HtmlAgilityPack" Version="1.12.1" />
       <PackageReference Include="PdfPig" Version="0.1.11-alpha-20250413-58085" />
     </ItemGroup>
 

@@ -42,6 +42,7 @@ class Program
 
         LayoutLoader.AddDataSource<WeatherDataSource>();
         LayoutLoader.AddDataSource<XkcdDataSource>();
+        LayoutLoader.AddDataSource<NasaDataSource>();
 
         var coverLayout = LayoutLoader.LoadLayoutFromXml(File.ReadAllText("cover.xml"));
         //coverLayout.EnableDebugLines();
