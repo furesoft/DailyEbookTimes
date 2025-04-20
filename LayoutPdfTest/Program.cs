@@ -44,6 +44,7 @@ class Program
         LayoutLoader.AddDataSource<WeatherDataSource>();
         LayoutLoader.AddDataSource<XkcdDataSource>();
         LayoutLoader.AddDataSource<NasaDataSource>();
+        LayoutLoader.AddDataSource<JokeDataSource>();
         LayoutLoader.AddDataSource<Meta>();
 
         var coverLayout = LayoutLoader.Load("layouts/cover.xml");
