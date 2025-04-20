@@ -28,7 +28,7 @@ public class Meta : IDataSource
             "title" => Layout.Builder.DocumentInformation.Title!,
             "creation-date" => Layout.Builder.DocumentInformation.CreationDate!,
             "producer" => Layout.Builder.DocumentInformation.Producer,
-            "page" => "Page " + (node.ParentLayout.Page?.PageNumber ?? 0),
+            "page" => "Page " + (node.ParentLayout.Page?.PageNumber - 1 ?? 0),
             _ => throw new ArgumentException($"meta attribute '{metaAttribute}' not found")
         };
     }

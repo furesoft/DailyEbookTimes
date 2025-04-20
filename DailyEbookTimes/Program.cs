@@ -41,6 +41,7 @@ class Program
         LayoutLoader.AddDataSource<XkcdDataSource>();
         LayoutLoader.AddDataSource<NasaDataSource>();
         LayoutLoader.AddDataSource<JokeDataSource>();
+        LayoutLoader.AddDataSource<ComicDataSource>();
         LayoutLoader.AddDataSource<Meta>();
 
         var coverLayout = LayoutLoader.Load("layouts/cover.xml");
