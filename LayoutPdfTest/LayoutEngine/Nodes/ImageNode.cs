@@ -1,12 +1,11 @@
-﻿using System.Net;
-using UglyToad.PdfPig.Core;
+﻿using UglyToad.PdfPig.Core;
 using UglyToad.PdfPig.Writer;
 
 namespace Moss.NET.Sdk.LayoutEngine.Nodes;
 
 public class ImageNode(YogaConfig config) : YogaNode(config)
 {
-    public required Uri Src { get; set; }
+    public required string Src { get; set; }
 
     public override void Draw(PdfPageBuilder page, double absoluteX, double absoluteY)
     {
@@ -18,17 +17,15 @@ public class ImageNode(YogaConfig config) : YogaNode(config)
         base.Draw(page, absoluteX, absoluteY);
 
         byte[] imageBytes = null;
-        var url = Src.ToString();
-        if (Src is { IsAbsoluteUri: true, Scheme: "http" or "https" })
-        {
-            //Todo: convert to moss rest template
-            var template = new RestTemplate();
-            imageBytes = template.GetBytes(url);
-        }
 
-        if (Src.IsFile)
+        if (Src.StartsWith("http") || Src.StartsWith("https"))
         {
-            imageBytes = File.ReadAllBytes(url.Replace("file://", ""));
+            var template = new RestTemplate();
+            imageBytes = template.GetBytes(Src);
+        }
+        else
+        {
+            imageBytes = LayoutEngine.Layout.PathResolver.ReadBytes(Src);
         }
 
         var boxPos = new PdfPoint(absoluteX, page.PageSize.Height - absoluteY - LayoutHeight);
@@ -36,18 +33,17 @@ public class ImageNode(YogaConfig config) : YogaNode(config)
 
         PdfPageBuilder.AddedImage img = null;
 
-        if (url.EndsWith(".png"))
+        if (Src.EndsWith(".png"))
         {
             img = page.AddPng(new MemoryStream(imageBytes), rect);
         }
-        else if (url.EndsWith(".jpg") ||
-                 url.EndsWith(".jpeg"))
+        else if (Src.EndsWith(".jpg") || Src.EndsWith(".jpeg"))
         {
             img = page.AddJpeg(new MemoryStream(imageBytes), rect);
         }
         else
         {
-            throw new ArgumentException($"invalid image format '{url}'");
+            throw new ArgumentException($"invalid image format '{Src}'");
         }
 
         page.AddImage(img, rect);
@@ -57,7 +53,7 @@ public class ImageNode(YogaConfig config) : YogaNode(config)
     {
         if (name == "src")
         {
-            Src = new Uri(value);
+            Src = value;
         }
     }
 }
