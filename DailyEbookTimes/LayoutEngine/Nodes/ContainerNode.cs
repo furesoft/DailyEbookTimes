@@ -1,6 +1,4 @@
-﻿using UglyToad.PdfPig.Writer;
-
-namespace Moss.NET.Sdk.LayoutEngine.Nodes;
+﻿namespace Moss.NET.Sdk.LayoutEngine.Nodes;
 
 public class ContainerNode : YogaNode
 {
@@ -18,7 +16,7 @@ public class ContainerNode : YogaNode
         titleNode.Margin = 5;
         titleNode.AutoSize = true;
 
-        copyrightNode = ParentLayout.CreateTextNode("© ", "copyright");
+        copyrightNode = ParentLayout.CreateTextNode("", "copyright");
         copyrightNode.AlignSelf = YogaAlign.FlexEnd;
         copyrightNode.PositionType = YogaPositionType.Relative;
         copyrightNode.FontFamily = "NoticiaText";
@@ -26,8 +24,7 @@ public class ContainerNode : YogaNode
         copyrightNode.AutoSize = true;
         copyrightNode.MarginTop = 5;
 
-        Content.FlexGrow = 1;
-        Content.Margin= 5;
+        Content.Margin= 2;
 
         Margin = 5;
 
@@ -53,7 +50,15 @@ public class ContainerNode : YogaNode
     public required string Copyright
     {
         get => copyrightNode.Text;
-        set => copyrightNode.Text = "© " + value;
+        set
+        {
+            if (string.IsNullOrEmpty(value))
+            {
+                return;
+            }
+
+            copyrightNode.Text = "© " + value;
+        }
     }
 
     public YogaNode Content { get; }

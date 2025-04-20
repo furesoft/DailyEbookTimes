@@ -25,7 +25,7 @@ public class ComicDataSource : IDataSource
         img.Height = 200;
 
         container.Content.Add(img);
-        container.Copyright = "GoComics";
+        container.Copyright = "GoComics.com";
         container.Title = "Comic";
         container.Width = img.Width;
     }
@@ -40,6 +40,6 @@ public class ComicDataSource : IDataSource
             .Where(_ => _.GetAttributeValue("class", "").StartsWith("Comic_comic__image"))
             .Select(x => x.GetAttributeValue("src", ""));
 
-        return imageNode.First();
+        return imageNode.First().Replace("quality=85", "quality=100");
     }
 }

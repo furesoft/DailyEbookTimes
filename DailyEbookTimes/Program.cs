@@ -28,7 +28,7 @@ class Program
         var builder = new PdfDocumentBuilder();
 
         builder.DocumentInformation.Producer = "Totletheyn";
-        builder.DocumentInformation.Title = "Issue 1";
+        builder.DocumentInformation.Title = "Issue #1";
         builder.DocumentInformation.CreationDate = DateTime.Now.ToString("dddd, MMMM dd, yyyy");
 
         Layout.Builder = builder;
@@ -42,7 +42,6 @@ class Program
         LayoutLoader.AddDataSource<NasaDataSource>();
         LayoutLoader.AddDataSource<JokeDataSource>();
         LayoutLoader.AddDataSource<ComicDataSource>();
-        LayoutLoader.AddDataSource<Meta>();
 
         var coverLayout = LayoutLoader.Load("layouts/cover.xml");
         //coverLayout.EnableDebugLines();
