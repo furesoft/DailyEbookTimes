@@ -743,6 +743,58 @@ public partial class YogaNode : IEnumerable<YogaNode>
         return value.Unit == YogaUnit.Auto ? 0F : value.Resolve(ownerSize);
     }
 
+    public bool Is(string name) => Name == name;
+
+    public IEnumerable<YogaNode> Descendants()
+    {
+        foreach (var child in Children)
+        {
+            yield return child;
+            foreach (var descendant in child.Descendants())
+            {
+                yield return descendant;
+            }
+        }
+    }
+
+    public IEnumerable<YogaNode> Descendants(string name)
+    {
+        foreach (var child in Children.Where(c => c.Name == name))
+        {
+            yield return child;
+            foreach (var descendant in child.Descendants(name))
+            {
+                yield return descendant;
+            }
+        }
+    }
+
+    public IEnumerable<YogaNode> Descendants<T>()
+        where T : YogaNode
+    {
+        foreach (var child in Children.OfType<T>())
+        {
+            yield return child;
+            foreach (var descendant in child.Descendants<T>())
+            {
+                yield return descendant;
+            }
+        }
+    }
+
+    public IEnumerable<YogaNode> Descendants<T>(string name)
+        where T : YogaNode
+    {
+        foreach (var child in Children.OfType<T>().Where(c => c.Name == name))
+        {
+            yield return child;
+            foreach (var descendant in child.Descendants<T>(name))
+            {
+                yield return descendant;
+            }
+        }
+    }
+
     /// <summary>
     /// Finds a node in the layout tree by a query.
     /// </summary>

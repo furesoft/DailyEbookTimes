@@ -12,7 +12,7 @@
     </header>
 
     <content flexdirection="row" flexGrow="1" margin="10" marginbottom="1">
-        <column id="left" flexgrow="1" background="White" marginright="10" bordercolor="gray" boxshadow="gray 2">
+        <column id="left" flexgrow="1" background="White" marginright="10" bordercolor="gray" boxshadow="gray 2" width="100">
             <article flexgrow="1" flexdirection="column" height="50" padding="5">
                 <title fontsize="9" fontfamily="NoticiaText" height="20" color="red">Title</title>
                 <summary fontsize="7" fontfamily="NoticiaText" height="100">My Summary</summary>
@@ -29,7 +29,7 @@
             <container datasource="xkcd" />
         </column>
 
-        <column id="right" flexgrow="1" background="White" boxshadow="gray 2" marginleft="10" bordercolor="gray">
+        <column id="right" flexgrow="1" background="White" boxshadow="gray 2" marginleft="10" bordercolor="gray" width="100">
             <article flexgrow="1" flexdirection="column" height="50" padding="5">
                 <title fontsize="9" fontfamily="NoticiaText" height="20" color="red">Title</title>
                 <summary fontsize="7" fontfamily="NoticiaText" height="100" textwrapping="wrap">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.  Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.  Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</summary>
