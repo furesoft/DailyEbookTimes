@@ -9,7 +9,7 @@
     </header>
 
     <content flexdirection="column" flexGrow="1" margin="10" marginbottom="1">
-        <container datasource="nasa" />
+        <container datasource="xkcd" />
         <container datasource="joke" />
         <container datasource="comic" />
     </content>

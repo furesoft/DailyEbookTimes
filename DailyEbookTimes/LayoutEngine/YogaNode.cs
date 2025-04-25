@@ -890,40 +890,10 @@ public partial class YogaNode : IEnumerable<YogaNode>
 
     private PdfRectangle GetContentBounds(double absoluteX, double absoluteY, PdfPageBuilder page)
     {
-        double mleft,mright,mtop,mbottom;
-        mleft = mright = mtop = mbottom = 0;
-
-        if (Margin.Value.HasValue)
-        {
-            var resolvedMargin = Margin.Resolve(LayoutHeight);
-            mleft = mright = mtop = mbottom = resolvedMargin ?? 0;
-        }
-
-        if (MarginLeft.Value.HasValue)
-        {
-            var resolvedMarginLeft = MarginLeft.Resolve(LayoutWidth);
-            mleft = resolvedMarginLeft ?? 0;
-        }
-        if (MarginRight.Value.HasValue)
-        {
-            var resolvedMarginRight = MarginRight.Resolve(LayoutWidth);
-            mright = resolvedMarginRight ?? 0;
-        }
-        if (MarginTop.Value.HasValue)
-        {
-            var resolvedMarginTop = MarginTop.Resolve(LayoutHeight);
-            mtop = resolvedMarginTop ?? 0;
-        }
-        if (MarginBottom.Value.HasValue)
-        {
-            var resolvedMarginBottom = MarginBottom.Resolve(LayoutHeight);
-            mbottom = resolvedMarginBottom ?? 0;
-        }
-
         var boxPos = new PdfPoint(absoluteX, page.PageSize.Height - absoluteY - LayoutHeight);
         return new PdfRectangle(
-            new PdfPoint(boxPos.X + mleft, boxPos.Y - mtop),
-            new PdfPoint(boxPos.X + LayoutWidth - mright, boxPos.Y + LayoutHeight - mbottom)
+            new PdfPoint(boxPos.X, boxPos.Y),
+            new PdfPoint(boxPos.X + LayoutWidth, boxPos.Y + LayoutHeight)
         );
     }
 
