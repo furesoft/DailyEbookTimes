@@ -41,6 +41,8 @@ public partial class YogaNode : IEnumerable<YogaNode>
     public Color? Background { get; set; }
     public BoxShadow? BoxShadow { get; set; }
 
+    public PdfRectangle Bounds { get; private set; }
+
     public string ID { get; set; }
 
     /// <summary>
@@ -819,23 +821,64 @@ public partial class YogaNode : IEnumerable<YogaNode>
         if (edges[edge].Unit != YogaUnit.Undefined)
             return edges[edge];
 
-        if ((edge == YogaEdge.Top || edge == YogaEdge.Bottom) && edges[YogaEdge.Vertical].Unit != YogaUnit.Undefined)
+        if (edge is YogaEdge.Top or YogaEdge.Bottom && edges[YogaEdge.Vertical].Unit != YogaUnit.Undefined)
             return edges[YogaEdge.Vertical];
 
-        if ((edge == YogaEdge.Left || edge == YogaEdge.Right || edge == YogaEdge.Start || edge == YogaEdge.End) && edges[YogaEdge.Horizontal].Unit != YogaUnit.Undefined)
+        if (edge is YogaEdge.Left or YogaEdge.Right or YogaEdge.Start or YogaEdge.End && edges[YogaEdge.Horizontal].Unit != YogaUnit.Undefined)
             return edges[YogaEdge.Horizontal];
 
         if (edges[YogaEdge.All].Unit != YogaUnit.Undefined)
             return edges[YogaEdge.All];
 
-        if (edge == YogaEdge.Start || edge == YogaEdge.End)
+        if (edge is YogaEdge.Start or YogaEdge.End)
             return YogaValue.Unset;
 
         return defaultValue;
     }
 
+    private PdfRectangle GetContentBounds(double absoluteX, double absoluteY, PdfPageBuilder page)
+    {
+        double mleft,mright,mtop,mbottom;
+        mleft = mright = mtop = mbottom = 0;
+
+        if (Margin.Value.HasValue)
+        {
+            var resolvedMargin = Margin.Resolve(LayoutHeight);
+            mleft = mright = mtop = mbottom = resolvedMargin ?? 0;
+        }
+
+        if (MarginLeft.Value.HasValue)
+        {
+            var resolvedMarginLeft = MarginLeft.Resolve(LayoutWidth);
+            mleft = resolvedMarginLeft ?? 0;
+        }
+        if (MarginRight.Value.HasValue)
+        {
+            var resolvedMarginRight = MarginRight.Resolve(LayoutWidth);
+            mright = resolvedMarginRight ?? 0;
+        }
+        if (MarginTop.Value.HasValue)
+        {
+            var resolvedMarginTop = MarginTop.Resolve(LayoutHeight);
+            mtop = resolvedMarginTop ?? 0;
+        }
+        if (MarginBottom.Value.HasValue)
+        {
+            var resolvedMarginBottom = MarginBottom.Resolve(LayoutHeight);
+            mbottom = resolvedMarginBottom ?? 0;
+        }
+
+        var boxPos = new PdfPoint(absoluteX, page.PageSize.Height - absoluteY - LayoutHeight);
+        return new PdfRectangle(
+            new PdfPoint(boxPos.X + mleft, boxPos.Y - mtop),
+            new PdfPoint(boxPos.X + LayoutWidth - mright, boxPos.Y + LayoutHeight - mbottom)
+        );
+    }
+
     public virtual void Draw(PdfPageBuilder page, double absoluteX, double absoluteY)
     {
+        Bounds = GetContentBounds(absoluteX, absoluteY, page);
+
         if (Display == YogaDisplay.None)
         {
             return;
@@ -870,7 +913,7 @@ public partial class YogaNode : IEnumerable<YogaNode>
     {
         for (int i = 0; i < 5; i++)
         {
-            double offset = BoxShadow.Offset * (i + 1) / 5.0;
+            double offset = BoxShadow!.Offset * (i + 1) / 5.0;
 
             var r = (byte)Math.Min(BoxShadow.Color.r + i * 20, 255);
             var g = (byte)Math.Min(BoxShadow.Color.g + i * 20, 255);

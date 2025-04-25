@@ -47,8 +47,7 @@ public class TextNode(YogaConfig config, Layout parentLayout) : YogaNode(config,
         var rightMost = measuredText.Max(g => g.GlyphRectangle.Right);
         var textWidth = rightMost - leftMost;
 
-        var textHeight = measuredText.Max(glyph => glyph.GlyphRectangle.Top)
-                         - measuredText.Min(glyph => glyph.GlyphRectangle.Bottom);
+        var textHeight = measuredText.Max(glyph => glyph.GlyphRectangle.Top) - measuredText.Min(glyph => glyph.GlyphRectangle.Bottom);
 
         if (Width is { Unit: YogaUnit.Auto, Value: 1 })
             Width = textWidth;
