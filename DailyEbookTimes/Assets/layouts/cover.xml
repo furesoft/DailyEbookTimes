@@ -39,7 +39,7 @@
         </column>
     </content>
 
-    <footer height="10" marginbottom="5" margintop="5" marginleft="10" marginright="10" display="flex" flexdirection="row" justifyContent="spacebetween">
+    <footer height="10" margintop="5" marginleft="10" marginright="10" display="flex" flexdirection="row" justifyContent="spacebetween">
         <text id="footerText" fontsize="7" fontfamily="NoticiaText" autosize="true" flexgrow="0" >Generated with Totletheyn on Moss</text>
         <text id="citation" fontSize="7" fontfamily="NoticiaText" autosize="true" flexgrow="0" alignself="flexend" alignitems="center">Icons © flaticon.com</text>
     </footer>
