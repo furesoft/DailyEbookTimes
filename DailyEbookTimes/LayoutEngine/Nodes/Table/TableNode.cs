@@ -32,7 +32,7 @@ public class TableNode : YogaNode
         return headerRow;
     }
 
-    public void AddColumn(string? header = null)
+    public YogaNode AddColumn(string? header = null)
     {
         var cell = headerRow.AddCell();
 
@@ -43,6 +43,8 @@ public class TableNode : YogaNode
             headerTextNode.AlignSelf = YogaAlign.Center;
             cell.Add(headerTextNode);
         }
+
+        return cell;
     }
 
     public override void ReCalculate(PdfPageBuilder page)

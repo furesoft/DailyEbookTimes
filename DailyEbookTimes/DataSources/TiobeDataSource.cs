@@ -44,7 +44,9 @@ public class TiobeDataSource : IDataSource
 
         var tableNode = node.ParentLayout.CreateTableNode("table");
         tableNode.AddColumn("Rank");
-        tableNode.AddColumn("Change");
+
+        var changeCol = tableNode.AddColumn("Change");
+
         tableNode.AddColumn("Language");
         tableNode.AddColumn("Rating");
 
