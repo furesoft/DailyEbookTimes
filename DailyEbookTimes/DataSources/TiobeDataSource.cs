@@ -54,6 +54,8 @@ public class TiobeDataSource : IDataSource
         tableNode.AddColumn("Rating", YogaAlign.FlexStart);
         tableNode.AddColumn("Change", YogaAlign.FlexStart);
 
+        tableNode.GetHeaderRow().Background = Colors.Gray;
+
         foreach (var row in rows.Take(maxItems))
         {
             var cells = row.SelectNodes("td")!;
@@ -111,6 +113,8 @@ public class TiobeDataSource : IDataSource
             changeValueTextNode.AutoSize = true;
             cell.Add(changeValueTextNode);
         }
+
+        tableNode.AlternateColor(Colors.White, Colors.LightGray);
 
         container.Content.Add(tableNode);
     }

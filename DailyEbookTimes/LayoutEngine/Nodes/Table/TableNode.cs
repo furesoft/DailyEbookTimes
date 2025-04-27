@@ -16,7 +16,6 @@ public class TableNode : YogaNode
     {
         TableRowNode row = new(Config, ParentLayout)
         {
-            MarginBottom = 5,
             Name = name
         };
 
@@ -40,6 +39,7 @@ public class TableNode : YogaNode
         {
             var headerTextNode = ParentLayout.CreateTextNode(header);
             headerTextNode.AutoSize = true;
+            headerTextNode.FontSize = 13;
             headerTextNode.AlignSelf = align ?? YogaAlign.Center;
             cell.Add(headerTextNode);
         }
@@ -56,6 +56,23 @@ public class TableNode : YogaNode
             foreach (var cell in headerRow)
             {
                 cell.GetChild(0).Display = YogaDisplay.None;
+            }
+        }
+    }
+
+    public void AlternateColor(Color first, Color second)
+    {
+        var startIndex = 1;
+        if (headerRow.Display == YogaDisplay.None)
+        {
+            startIndex = 0;
+        }
+
+        for (int i = startIndex; i < Count; i++)
+        {
+            if (this[i] is TableRowNode tableRow)
+            {
+                tableRow.Background = i % 2 == 0 ? first : second;
             }
         }
     }
