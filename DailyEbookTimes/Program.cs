@@ -16,8 +16,7 @@ class Program
         Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
 
         string[] feeds = [
-            "https://www.heise.de/rss/heise-Rubrik-IT.rdf",
-            "https://rss.nytimes.com/services/xml/rss/nyt/World.xml"];
+            "https://www.heise.de/rss/heise-Rubrik-IT.rdf"];
 
         foreach (string url in feeds)
         {
@@ -42,6 +41,7 @@ class Program
         LayoutLoader.AddDataSource<NasaDataSource>();
         LayoutLoader.AddDataSource<JokeDataSource>();
         LayoutLoader.AddDataSource<ComicDataSource>();
+        LayoutLoader.AddDataSource<TiobeDataSource>();
 
         var coverLayout = LayoutLoader.Load("layouts/cover.xml");
         //coverLayout.EnableDebugLines();

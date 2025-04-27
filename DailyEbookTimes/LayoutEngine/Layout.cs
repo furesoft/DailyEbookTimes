@@ -1,4 +1,5 @@
 ﻿using Moss.NET.Sdk.LayoutEngine.Nodes;
+using Moss.NET.Sdk.LayoutEngine.Nodes.Table;
 using UglyToad.PdfPig.Core;
 using UglyToad.PdfPig.Writer;
 
@@ -70,6 +71,14 @@ public class Layout
         {
             Name = name,
             Text = text
+        };
+    }
+
+    public TableNode CreateTableNode(string? name = null)
+    {
+        return new TableNode(config, this)
+        {
+            Name = name
         };
     }
 
