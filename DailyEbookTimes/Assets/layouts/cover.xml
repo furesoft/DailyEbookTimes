@@ -12,17 +12,15 @@
     </header>
 
     <content flexdirection="row" flexGrow="1" margin="10" marginbottom="1">
-        <column id="left" flexgrow="1" background="White" marginright="10" bordercolor="gray" boxshadow="gray 2">
-            <fragment src="layouts/fragments/article.xml" />
+        <column id="left" flexgrow="1" background="White" marginright="10" bordercolor="gray" boxshadow="gray 2" justifycontent="spacebetween">
             <fragment src="layouts/fragments/article.xml" />
             <fragment src="layouts/fragments/article.xml" />
         </column>
 
-        <middle flexgrow="2" marginleft="5" marginright="5" gap="10">
-            <container flexgrow="1" height="100" alignself="center" datasource="nasa" />
+        <middle flexgrow="1" marginleft="5" marginright="5" gap="3">
+            <container alignself="center" datasource="nasa" />
 
-            <column id="middle" background="White" bordercolor="gray" boxshadow="gray 2">
-                <fragment src="layouts/fragments/article.xml" />
+            <column id="middle" background="White" bordercolor="gray" boxshadow="gray 2" flexgrow="1">
                 <fragment src="layouts/fragments/article.xml" />
                 <fragment src="layouts/fragments/article.xml" />
             </column>

@@ -6,6 +6,8 @@ namespace Moss.NET.Sdk.LayoutEngine.Nodes;
 public class TextNode(YogaConfig config, Layout parentLayout) : YogaNode(config, parentLayout)
 {
     public double FontSize { get; set; } = 10;
+
+    public double LineSpacing { get; set; } = 1.6;
     public object? Text { get; set; }
     public string? TextFormat { get; set; }
     public string FontFamily { get; set; } = "Default";
@@ -134,18 +136,26 @@ public class TextNode(YogaConfig config, Layout parentLayout) : YogaNode(config,
 
         for (var i = 0; i < lines.Count; i++)
         {
-            page.AddText(lines[i], FontSize, new PdfPoint(absoluteX, y - i * lineHeight), font);
+            var lineOffset = i * lineHeight * LineSpacing;
+            page.AddText(lines[i], FontSize, new PdfPoint(absoluteX, y - lineOffset), font);
+
             if (IsBold)
             {
-                double[] offsets = [0, 0.3, -0.3, 0.3, -0.3];
-                foreach (var dx in offsets)
-                {
-                    page.AddText(lines[i], FontSize, new PdfPoint(absoluteX + dx, y - i * lineHeight), font);
-                }
+                DrawBoldText(page, absoluteX, lines, i, y, lineHeight * LineSpacing, font);
             }
         }
 
         page.ResetColor();
+    }
+
+    private void DrawBoldText(PdfPageBuilder page, double absoluteX, List<string> lines, int i, double y, double lineHeight,
+        PdfDocumentBuilder.AddedFont font)
+    {
+        double[] offsets = [0, 0.3, -0.3, 0.3, -0.3];
+        foreach (var dx in offsets)
+        {
+            page.AddText(lines[i], FontSize, new PdfPoint(absoluteX + dx, y - i * lineHeight + LineSpacing), font);
+        }
     }
 
     internal override void SetAttribute(string name, string value)
@@ -178,6 +188,9 @@ public class TextNode(YogaConfig config, Layout parentLayout) : YogaNode(config,
                 break;
             case "textwrapping":
                 TextWrapping = Enum.Parse<TextWrapping>(value, true);
+                break;
+            case "linespacing":
+                LineSpacing = double.Parse(value);
                 break;
         }
     }

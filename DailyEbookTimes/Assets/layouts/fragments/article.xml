@@ -1,4 +1,4 @@
-﻿<article flexgrow="1" flexdirection="column" padding="5" alignself="stretch" width="auto" height="auto">
-    <title fontsize="13" fontfamily="NoticiaText" color="red" textwrapping="wrap" flexgrow="1" alignself="stretch">Title</title>
+﻿<article flexdirection="column" padding="5" alignself="stretch" width="auto" height="auto">
+    <title fontsize="11" height="50" fontfamily="NoticiaText" textwrapping="wrap" flexgrow="1" alignself="stretch">Title</title>
     <summary fontsize="7" fontfamily="NoticiaText" textwrapping="wrap" flexgrow="1" alignself="stretch">My Summary</summary>
 </article>

@@ -11,8 +11,8 @@ class Program
         Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
 
         string[] feeds = [
-            "https://www.heise.de/rss/heise-Rubrik-IT.rdf",
-            //"https://rss.golem.de/rss.php?ms=softwareentwicklung&feed=RSS2.0",
+            //"https://www.heise.de/rss/heise-Rubrik-IT.rdf",
+            "https://rss.golem.de/rss.php?ms=softwareentwicklung&feed=RSS2.0",
             //"https://css-tricks.com/feed/",
             //"https://dev.to/feed/"
         ];
