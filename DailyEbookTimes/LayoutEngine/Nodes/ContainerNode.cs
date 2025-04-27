@@ -41,15 +41,15 @@ public class ContainerNode : YogaNode
         }
     }
 
-    public required string Title
+    public required string? Title
     {
-        get => TitleNode.Text;
+        get => TitleNode.Text?.ToString();
         set => TitleNode.Text = value;
     }
 
-    public required string Copyright
+    public required string? Copyright
     {
-        get => CopyrightNode.Text;
+        get => CopyrightNode.Text?.ToString();
         set
         {
             if (string.IsNullOrEmpty(value))

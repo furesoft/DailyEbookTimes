@@ -111,19 +111,22 @@ public class TiobeDataSource : IDataSource
             cell.Add(languageNode);
 
             cell = rowNode.AddCell();
-            var rating = cells[5].InnerText.Trim();
+            var rating = cells[5].InnerText.Trim().TrimStart('+', '-').TrimEnd('%');
             var ratingTextNode = node.ParentLayout.CreateTextNode(rating);
             ratingTextNode.FontSize = 10;
             ratingTextNode.FontFamily = "NoticiaText";
             ratingTextNode.AutoSize = true;
+            ratingTextNode.TextFormat = "{0} %";
             cell.Add(ratingTextNode);
 
             cell = rowNode.AddCell();
-            var changeValue = cells[6].InnerText.Trim();
-            var changeValueTextNode = node.ParentLayout.CreateTextNode(changeValue);
+            var changeValue = cells[6].InnerText.Trim().TrimStart('+', '-').TrimEnd('%');
+            var changeValueTextNode = node.ParentLayout.CreateTextNode(double.Parse(changeValue));
             changeValueTextNode.FontSize = 10;
             changeValueTextNode.FontFamily = "NoticiaText";
             changeValueTextNode.AutoSize = true;
+            changeValueTextNode.TextFormat = "{0:+0.00;-0.00} %";
+
             cell.Add(changeValueTextNode);
         }
     }

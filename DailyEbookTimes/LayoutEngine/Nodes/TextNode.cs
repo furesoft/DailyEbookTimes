@@ -6,7 +6,8 @@ namespace Moss.NET.Sdk.LayoutEngine.Nodes;
 public class TextNode(YogaConfig config, Layout parentLayout) : YogaNode(config, parentLayout)
 {
     public double FontSize { get; set; } = 10;
-    public string? Text { get; set; }
+    public object? Text { get; set; }
+    public string? TextFormat { get; set; }
     public string FontFamily { get; set; } = "Default";
 
     public bool IsBold { get; set; }
@@ -38,7 +39,7 @@ public class TextNode(YogaConfig config, Layout parentLayout) : YogaNode(config,
 
     public override void ReCalculate(PdfPageBuilder page)
     {
-        if (string.IsNullOrEmpty(Text))
+        if (string.IsNullOrEmpty(Text?.ToString()))
         {
             return;
         }
@@ -61,17 +62,22 @@ public class TextNode(YogaConfig config, Layout parentLayout) : YogaNode(config,
 
     private string GetActualString()
     {
-        if (TruncateSize > 0 && Text.Length > TruncateSize)
+        if (TextFormat is not null)
         {
-            Text = Text[..TruncateSize] + " ...";
+            return string.Format(TextFormat, Text);
         }
 
-        return Text;
+        if (Text is null)
+        {
+            return "";
+        }
+
+        return Text?.ToString();
     }
 
     public override void Draw(PdfPageBuilder page, double absoluteX, double absoluteY)
     {
-        if (Display == YogaDisplay.None || string.IsNullOrEmpty(Text))
+        if (Display == YogaDisplay.None || Text is null || string.IsNullOrEmpty(Text.ToString()))
             return;
 
         base.Draw(page, absoluteX, absoluteY);
@@ -148,6 +154,9 @@ public class TextNode(YogaConfig config, Layout parentLayout) : YogaNode(config,
         {
             case "text":
                 Text = value;
+                break;
+            case "textformat":
+                TextFormat = value;
                 break;
             case "fontsize":
                 FontSize = int.Parse(value);

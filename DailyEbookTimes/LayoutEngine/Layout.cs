@@ -65,7 +65,7 @@ public class Layout
         };
     }
 
-    public TextNode CreateTextNode(string text, string? name = null)
+    public TextNode CreateTextNode(object text, string? name = null)
     {
         return new TextNode(config, this)
         {
