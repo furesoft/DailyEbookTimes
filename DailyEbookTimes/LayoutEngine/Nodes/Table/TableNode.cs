@@ -4,12 +4,12 @@ namespace Moss.NET.Sdk.LayoutEngine.Nodes.Table;
 
 public class TableNode : YogaNode
 {
-    private TableRowNode headerRow;
+    public readonly TableRowNode HeaderRow;
 
     public TableNode(YogaConfig config, Layout parentLayout) : base(config, parentLayout)
     {
         FlexDirection = YogaFlexDirection.Column;
-        headerRow = AddRow("header");
+        HeaderRow = AddRow("header");
     }
 
     public TableRowNode AddRow(string? name = null)
@@ -23,17 +23,10 @@ public class TableNode : YogaNode
         return row;
     }
 
-    /// <summary>
-    /// Display a header row with the column names. Call this after adding all columns.
-    /// </summary>
-    public TableRowNode GetHeaderRow()
-    {
-        return headerRow;
-    }
 
     public YogaNode AddColumn(string? header = null, YogaAlign? align = null, bool isBold = true)
     {
-        var cell = headerRow.AddCell();
+        var cell = HeaderRow.AddCell();
 
         if (header != null)
         {
@@ -53,9 +46,9 @@ public class TableNode : YogaNode
     {
         base.ReCalculate(page);
 
-        if (headerRow.Display == YogaDisplay.None)
+        if (HeaderRow.Display == YogaDisplay.None)
         {
-            foreach (var cell in headerRow)
+            foreach (var cell in HeaderRow)
             {
                 cell.GetChild(0).Display = YogaDisplay.None;
             }
@@ -65,7 +58,7 @@ public class TableNode : YogaNode
     public void AlternateColor(Color first, Color second)
     {
         var startIndex = 1;
-        if (headerRow.Display == YogaDisplay.None)
+        if (HeaderRow.Display == YogaDisplay.None)
         {
             startIndex = 0;
         }
@@ -81,7 +74,7 @@ public class TableNode : YogaNode
 
     public TextNode GetColumn(int index)
     {
-        if (headerRow[index] is TableCellNode cell)
+        if (HeaderRow[index] is TableCellNode cell)
         {
             return (cell.GetChild(0) as TextNode)!;
         }

@@ -28,7 +28,7 @@ public class TableRowNode : YogaNode
         {
             var cell = this[index];
 
-            cell.Width = YogaValue.Percent(1.0 / table.GetHeaderRow().Children.Count * 100);
+            cell.Width = YogaValue.Percent(1.0 / table.HeaderRow.Children.Count * 100);
         }
     }
 }

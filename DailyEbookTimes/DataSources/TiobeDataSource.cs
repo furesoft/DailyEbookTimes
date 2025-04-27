@@ -56,7 +56,7 @@ public class TiobeDataSource : IDataSource
         tableNode.AddColumn("Rating", YogaAlign.FlexStart);
         tableNode.AddColumn("Change", YogaAlign.FlexStart);
 
-        tableNode.GetHeaderRow().Background = Colors.Gray;
+        tableNode.HeaderRow.Background = Colors.Gray;
 
         foreach (var row in rows.Take(maxItems))
         {
