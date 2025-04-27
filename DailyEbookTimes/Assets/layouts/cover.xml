@@ -1,4 +1,4 @@
-﻿<layout device="rmpp" background="creme" isLandscape="true" name="Cover" margin="5" debug="true">
+﻿<layout device="rmpp" background="creme" isLandscape="true" name="Cover" margin="5" debug="false">
     <header name="header" height="120" margintop="10" flexgrow="0">
         <headline fontSize="70" fontFamily="Jaini" alignSelf="center" autosize="true" positiontype="relative" marginBottom="5">Daily E-Book Times</headline>
 

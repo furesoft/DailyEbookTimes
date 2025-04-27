@@ -1,5 +1,4 @@
-﻿using System.Net.Http;
-using System.Xml.Linq;
+﻿using System.Xml.Linq;
 using HtmlAgilityPack;
 using Moss.NET.Sdk.LayoutEngine;
 using Moss.NET.Sdk.LayoutEngine.Nodes;
@@ -20,6 +19,9 @@ public class TiobeDataSource : IDataSource
 
         container.Content.FlexDirection = YogaFlexDirection.Column;
         container.Content.JustifyContent = YogaJustify.FlexStart;
+        container.Content.BorderColor = Colors.Black;
+        container.Content.BorderStyle = BorderStyle.Dashed;
+        container.Content.Padding = 5;
 
         var url = "https://www.tiobe.com";
         var httpClient = new RestTemplate();

@@ -160,6 +160,7 @@ public partial class YogaNode : IEnumerable<YogaNode>
     }
 
     public Color? BorderColor { get; set; }
+    public BorderStyle BorderStyle { get; set; } = BorderStyle.Solid;
     public string? Name { get; set; }
 
     public YogaPrint PrintFunction
@@ -923,12 +924,93 @@ public partial class YogaNode : IEnumerable<YogaNode>
 
         if (BorderColor != null)
         {
-            page.SetStrokeColor(BorderColor.r, BorderColor.g, BorderColor.b);
-
-            var boxPos = new PdfPoint(absoluteX, page.PageSize.Height - absoluteY - LayoutHeight);
-            page.DrawRectangle(boxPos, LayoutWidth, LayoutHeight, 1);
-            page.ResetColor();
+            DrawBorder(page, absoluteX, absoluteY);
         }
+    }
+
+    private void DrawBorder(PdfPageBuilder page, double absoluteX, double absoluteY)
+    {
+        page.SetStrokeColor(BorderColor!.r, BorderColor.g, BorderColor.b);
+        var boxPos = new PdfPoint(absoluteX, page.PageSize.Height - absoluteY - LayoutHeight);
+
+        if (BorderStyle == BorderStyle.Dotted)
+        {
+            DrawDottedBorder(page, boxPos);
+        }
+        else if (BorderStyle == BorderStyle.Dashed)
+        {
+            DrawDashedBorder(page, boxPos);
+        }
+        else
+        {
+            page.DrawRectangle(boxPos, LayoutWidth, LayoutHeight, 1);
+        }
+
+        page.ResetColor();
+    }
+
+    private void DrawDashedBorder(PdfPageBuilder page, PdfPoint boxPos)
+    {
+        var dashLength = 5.0;
+        var gapLength = 3.0;
+
+        // Top
+        for (double x = 0; x < LayoutWidth; x += dashLength + gapLength)
+        {
+            page.DrawLine(
+                new PdfPoint(boxPos.X + x, boxPos.Y),
+                new PdfPoint(Math.Min(boxPos.X + x + dashLength, boxPos.X + LayoutWidth), boxPos.Y),
+                1
+            );
+        }
+
+        // Bottom
+        for (double x = 0; x < LayoutWidth; x += dashLength + gapLength)
+        {
+            page.DrawLine(
+                new PdfPoint(boxPos.X + x, boxPos.Y + LayoutHeight),
+                new PdfPoint(Math.Min(boxPos.X + x + dashLength, boxPos.X + LayoutWidth), boxPos.Y + LayoutHeight),
+                1
+            );
+        }
+
+        // Left
+        for (double y = 0; y < LayoutHeight; y += dashLength + gapLength)
+        {
+            page.DrawLine(
+                new PdfPoint(boxPos.X, boxPos.Y + y),
+                new PdfPoint(boxPos.X, Math.Min(boxPos.Y + y + dashLength, boxPos.Y + LayoutHeight)),
+                1
+            );
+        }
+
+        // Right
+        for (double y = 0; y < LayoutHeight; y += dashLength + gapLength)
+        {
+            page.DrawLine(
+                new PdfPoint(boxPos.X + LayoutWidth, boxPos.Y + y),
+                new PdfPoint(boxPos.X + LayoutWidth, Math.Min(boxPos.Y + y + dashLength, boxPos.Y + LayoutHeight)),
+                1
+            );
+        }
+    }
+
+    private void DrawDottedBorder(PdfPageBuilder page, PdfPoint boxPos)
+    {
+        var radius = 0.7;
+        var spacing = 3.0;
+        // Top
+        for (double x = 0; x < LayoutWidth; x += spacing)
+            page.DrawCircle(new PdfPoint(boxPos.X + x, boxPos.Y), radius, 1);
+        // Bottom
+        for (double x = 0; x < LayoutWidth; x += spacing)
+            page.DrawCircle(new PdfPoint(boxPos.X + x, boxPos.Y + LayoutHeight), radius, 1);
+        // Left
+        for (double y = 0; y < LayoutHeight; y += spacing)
+            page.DrawCircle(new PdfPoint(boxPos.X, boxPos.Y + y), radius, 1);
+        // Right
+        for (double y = 0; y < LayoutHeight; y += spacing)
+            page.DrawCircle(new PdfPoint(boxPos.X + LayoutWidth, boxPos.Y + y), radius, 1);
     }
 
     private void DrawBoxShadow(PdfPageBuilder page, double absoluteX, double absoluteY)
@@ -998,9 +1080,11 @@ public partial class YogaNode : IEnumerable<YogaNode>
                 case "width":
                     Width = YogaValue.Parse(attr.Value);
                     break;
+
                 case "id":
                     ID = attr.Value;
                     break;
+
                 case "margintop":
                     MarginTop = YogaValue.Parse(attr.Value);
                     break;
@@ -1056,8 +1140,12 @@ public partial class YogaNode : IEnumerable<YogaNode>
                 case "flexdirection":
                     FlexDirection = Enum.Parse<YogaFlexDirection>(attr.Value, true);
                     break;
+
                 case "bordercolor":
                     BorderColor = Colors.Parse(attr.Value);
+                    break;
+                case "borderstyle":
+                    BorderStyle = Enum.Parse<BorderStyle>(attr.Value, true);
                     break;
                 case "boxshadow":
                     var spl = attr.Value.Split(' ');
