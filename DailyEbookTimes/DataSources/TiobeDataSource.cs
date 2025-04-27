@@ -41,42 +41,20 @@ public class TiobeDataSource : IDataSource
 
         container.Title = "TIOBE Index Top 10";
         container.Copyright = "tiobe.com";
-/*
-        var tableContainer = node.ParentLayout.CreateNode("table");
-        tableContainer.FlexDirection = YogaFlexDirection.Column;
-        tableContainer.JustifyContent = YogaJustify.FlexStart;
-        tableContainer.Width = container.Content.Width;
 
-        var headerRow = node.ParentLayout.CreateNode("headerRow");
-        headerRow.FlexDirection = YogaFlexDirection.Row;
-        headerRow.JustifyContent = YogaJustify.SpaceEvenly;
-        headerRow.AlignItems = YogaAlign.Center;
-
-        string[] headers = ["Rank", "Change", "Language", "Rating"];
-        foreach (var header in headers)
-        {
-            var headerNode = node.ParentLayout.CreateTextNode(header);
-            headerNode.FontSize = 10;
-            headerNode.FontFamily = "NoticiaText";
-            headerNode.AutoSize = true;
-            headerRow.Add(headerNode);
-        }
-        tableContainer.Add(headerRow);
-*/
         var tableNode = node.ParentLayout.CreateTableNode("table");
-        tableNode.AddColumn();
-        tableNode.AddColumn();
-        tableNode.AddColumn();
-        tableNode.AddColumn();
+        tableNode.AddColumn("Rank");
+        tableNode.AddColumn("Change");
+        tableNode.AddColumn("Language");
+        tableNode.AddColumn("Rating");
+
+        tableNode.AddHeaderRow();
 
         foreach (var row in rows.Take(10))
         {
             var cells = row.SelectNodes("td")!;
             var rowNode = tableNode.AddRow();
             var cell = rowNode.AddCell();
-            //rowNode.FlexDirection = YogaFlexDirection.Row;
-            //rowNode.JustifyContent = YogaJustify.SpaceEvenly;
-            //rowNode.AlignItems = YogaAlign.Center;
 
             // Rank
             var rankNode = node.ParentLayout.CreateTextNode(cells[0].InnerText.Trim());

@@ -9,15 +9,44 @@ public class TableNode : YogaNode
         FlexDirection = YogaFlexDirection.Column;
     }
 
-    public TableRowNode AddRow()
+    public TableRowNode AddRow(string? name = null)
     {
-        TableRowNode row = new(Config, ParentLayout);
+        TableRowNode row = new(Config, ParentLayout)
+        {
+            MarginBottom = 5,
+            Name = name
+        };
+
         Add(row);
         return row;
     }
 
-    public void AddColumn()
+    /// <summary>
+    /// Display a header row with the column names. Call this after adding all columns.
+    /// </summary>
+    public TableRowNode AddHeaderRow()
+    {
+        var row = AddRow("header");
+
+        foreach (var column in Columns)
+        {
+            var cell = row.AddCell();
+            cell.Add(column);
+        }
+
+        return row;
+    }
+
+    public void AddColumn(string? header = null)
     {
         Columns.Add(ParentLayout.CreateNode());
+
+        if (header != null)
+        {
+            var headerCell = ParentLayout.CreateTextNode(header);
+            headerCell.AutoSize = true;
+            headerCell.JustifyContent = YogaJustify.Center;
+            Columns.Last().Add(headerCell);
+        }
     }
 }
