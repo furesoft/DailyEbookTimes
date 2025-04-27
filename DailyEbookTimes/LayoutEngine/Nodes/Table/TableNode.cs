@@ -1,12 +1,15 @@
-﻿namespace Moss.NET.Sdk.LayoutEngine.Nodes.Table;
+﻿using UglyToad.PdfPig.Writer;
+
+namespace Moss.NET.Sdk.LayoutEngine.Nodes.Table;
 
 public class TableNode : YogaNode
 {
-    public List<YogaNode> Columns = [];
+    private TableRowNode headerRow;
 
     public TableNode(YogaConfig config, Layout parentLayout) : base(config, parentLayout)
     {
         FlexDirection = YogaFlexDirection.Column;
+        headerRow = AddRow("header");
     }
 
     public TableRowNode AddRow(string? name = null)
@@ -24,29 +27,34 @@ public class TableNode : YogaNode
     /// <summary>
     /// Display a header row with the column names. Call this after adding all columns.
     /// </summary>
-    public TableRowNode AddHeaderRow()
+    public TableRowNode GetHeaderRow()
     {
-        var row = AddRow("header");
-
-        foreach (var column in Columns)
-        {
-            var cell = row.AddCell();
-            cell.Add(column);
-        }
-
-        return row;
+        return headerRow;
     }
 
     public void AddColumn(string? header = null)
     {
-        Columns.Add(ParentLayout.CreateNode());
+        var cell = headerRow.AddCell();
 
         if (header != null)
         {
-            var headerCell = ParentLayout.CreateTextNode(header);
-            headerCell.AutoSize = true;
-            headerCell.JustifyContent = YogaJustify.Center;
-            Columns.Last().Add(headerCell);
+            var headerTextNode = ParentLayout.CreateTextNode(header);
+            headerTextNode.AutoSize = true;
+            headerTextNode.JustifyContent = YogaJustify.Center;
+            cell.Add(headerTextNode);
+        }
+    }
+
+    public override void ReCalculate(PdfPageBuilder page)
+    {
+        base.ReCalculate(page);
+
+        if (headerRow.Display == YogaDisplay.None)
+        {
+            foreach (var cell in headerRow)
+            {
+                cell.GetChild(0).Display = YogaDisplay.None;
+            }
         }
     }
 }

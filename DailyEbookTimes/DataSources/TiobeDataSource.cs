@@ -48,22 +48,18 @@ public class TiobeDataSource : IDataSource
         tableNode.AddColumn("Language");
         tableNode.AddColumn("Rating");
 
-        tableNode.AddHeaderRow();
-
         foreach (var row in rows.Take(10))
         {
             var cells = row.SelectNodes("td")!;
             var rowNode = tableNode.AddRow();
             var cell = rowNode.AddCell();
 
-            // Rank
             var rankNode = node.ParentLayout.CreateTextNode(cells[0].InnerText.Trim());
             rankNode.FontSize = 10;
             rankNode.FontFamily = "NoticiaText";
             rankNode.AutoSize = true;
             cell.Add(rankNode);
 
-            // Change (Image)
             cell = rowNode.AddCell();
             var change = cells[2].FirstChild?.GetAttributeValue("src", "");
             var changeNode = node.ParentLayout.CreateImageNode(url + change);
@@ -71,14 +67,12 @@ public class TiobeDataSource : IDataSource
             changeNode.Height = 10;
             cell.Add(changeNode);
 
-            // Language Icon (Image)
             cell = rowNode.AddCell();
             var languageIcon = cells[3].FirstChild.GetAttributeValue("src", "");
             var languageIconNode = node.ParentLayout.CreateImageNode(url + languageIcon);
             languageIconNode.Width = 10;
             languageIconNode.Height = 10;
 
-            // Language Name
             var language = cells[4].InnerText.Trim();
             var languageTextNode = node.ParentLayout.CreateTextNode(language);
             languageTextNode.FontSize = 10;
@@ -95,7 +89,6 @@ public class TiobeDataSource : IDataSource
             languageNode.Add(languageTextNode);
             cell.Add(languageNode);
 
-            // Rating
             cell = rowNode.AddCell();
             var rating = cells[5].InnerText.Trim();
             var ratingTextNode = node.ParentLayout.CreateTextNode(rating);

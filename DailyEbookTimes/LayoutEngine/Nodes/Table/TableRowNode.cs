@@ -26,7 +26,7 @@ public class TableRowNode : YogaNode
 
         foreach (var cell in this)
         {
-            cell.Width = YogaValue.Percent(1.0 / table.Columns.Count * 100);
+            cell.Width = YogaValue.Percent(1.0 / table.GetHeaderRow().Children.Count * 100);
         }
     }
 }
