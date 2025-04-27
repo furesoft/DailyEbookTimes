@@ -23,6 +23,7 @@ public class ContainerNode : YogaNode
         CopyrightNode.FontSize = 6;
         CopyrightNode.AutoSize = true;
         CopyrightNode.MarginTop = 5;
+        CopyrightNode.TextFormat = "© {0}";
 
         Content.Margin= 2;
 
@@ -57,7 +58,7 @@ public class ContainerNode : YogaNode
                 return;
             }
 
-            CopyrightNode.Text = "© " + value;
+            CopyrightNode.Text = value;
         }
     }
 

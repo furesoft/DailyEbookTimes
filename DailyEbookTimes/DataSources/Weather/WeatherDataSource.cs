@@ -35,7 +35,7 @@ public class WeatherDataSource : IDataSource
         itemNode.FindNode<TextNode>("#day")!.Text = $"{itemIndex + 1}. day";
 
         var weatherCode = GetDominantWeatherCode(model, itemIndex);
-        itemNode.FindNode<ImageNode>("#icon")!.Src = new(WeatherCode.GetImagePath(weatherCode));
+        itemNode.FindNode<ImageNode>("#icon")!.Src = WeatherCode.GetImagePath(weatherCode);
 
         var temperatureMin = model.Daily.Temperature_2m_min[itemIndex];
         var temperatureMax = model.Daily.Temperature_2m_max[itemIndex];

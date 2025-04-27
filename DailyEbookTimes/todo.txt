@@ -1,2 +1,1 @@
-﻿[ ] text wrapping
-[ ] real weather data
+﻿[ ] add automatic grid layout (display=grid)

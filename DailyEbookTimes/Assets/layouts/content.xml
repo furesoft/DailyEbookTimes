@@ -11,7 +11,7 @@
     <content flexdirection="column" flexGrow="1" margin="10" marginbottom="1">
         <container datasource="xkcd" />
         <container datasource="joke" />
-        <container datasource="tiobe" maxItems="5" />
+        <container datasource="crypto" />
     </content>
 
     <footer height="10" margintop="5" marginleft="10" marginright="10" display="flex" flexdirection="row" justifyContent="spacebetween">

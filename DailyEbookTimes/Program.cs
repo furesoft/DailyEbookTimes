@@ -2,6 +2,7 @@
 using System.Globalization;
 using CodeHollow.FeedReader;
 using Moss.NET.Sdk.DataSources;
+using Moss.NET.Sdk.DataSources.Crypto;
 using Moss.NET.Sdk.LayoutEngine;
 using UglyToad.PdfPig.Outline;
 using UglyToad.PdfPig.Outline.Destinations;
@@ -42,6 +43,7 @@ class Program
         LayoutLoader.AddDataSource<JokeDataSource>();
         LayoutLoader.AddDataSource<ComicDataSource>();
         LayoutLoader.AddDataSource<TiobeDataSource>();
+        LayoutLoader.AddDataSource<CryptoDataSource>();
 
         var coverLayout = LayoutLoader.Load("layouts/cover.xml");
         //coverLayout.EnableDebugLines();
