@@ -869,6 +869,12 @@ public partial class YogaNode : IEnumerable<YogaNode>
         return (IEnumerable<T?>)FindNodes(query);
     }
 
+    public T GetChild<T>(int index)
+        where T : YogaNode
+    {
+        return (T)GetChild(index);
+    }
+
     private static YogaValue ComputedEdgeValue(YogaArray<YogaValue> edges, YogaEdge edge, YogaValue defaultValue)
     {
         if (edges[edge].Unit != YogaUnit.Undefined)

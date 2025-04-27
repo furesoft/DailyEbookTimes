@@ -44,6 +44,8 @@ public class TiobeDataSource : IDataSource
             throw new Exception("No rows found");
 
         container.Title = "TIOBE Index Top 10";
+        container.TitleNode.FontSize = 15;
+        container.TitleNode.IsBold = true;
         container.Copyright = "tiobe.com";
 
         var tableNode = node.ParentLayout.CreateTableNode("table");

@@ -31,7 +31,7 @@ public class TableNode : YogaNode
         return headerRow;
     }
 
-    public YogaNode AddColumn(string? header = null, YogaAlign? align = null)
+    public YogaNode AddColumn(string? header = null, YogaAlign? align = null, bool isBold = true)
     {
         var cell = headerRow.AddCell();
 
@@ -41,6 +41,8 @@ public class TableNode : YogaNode
             headerTextNode.AutoSize = true;
             headerTextNode.FontSize = 13;
             headerTextNode.AlignSelf = align ?? YogaAlign.Center;
+            headerTextNode.IsBold = isBold;
+
             cell.Add(headerTextNode);
         }
 
@@ -75,5 +77,15 @@ public class TableNode : YogaNode
                 tableRow.Background = i % 2 == 0 ? first : second;
             }
         }
+    }
+
+    public TextNode GetColumn(int index)
+    {
+        if (headerRow[index] is TableCellNode cell)
+        {
+            return (cell.GetChild(0) as TextNode)!;
+        }
+
+        throw new ArgumentOutOfRangeException(nameof(index), "Column index out of range");
     }
 }

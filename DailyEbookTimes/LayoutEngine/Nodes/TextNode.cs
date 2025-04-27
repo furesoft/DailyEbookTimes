@@ -3,17 +3,13 @@ using UglyToad.PdfPig.Writer;
 
 namespace Moss.NET.Sdk.LayoutEngine.Nodes;
 
-public enum TextWrapping
-{
-    None,
-    Wrap
-
-}
 public class TextNode(YogaConfig config, Layout parentLayout) : YogaNode(config, parentLayout)
 {
     public double FontSize { get; set; } = 10;
     public string? Text { get; set; }
     public string FontFamily { get; set; } = "Default";
+
+    public bool IsBold { get; set; }
 
     public Color? Color { get; set; } = Colors.Black;
     public TextWrapping TextWrapping { get; set; } = TextWrapping.None;
@@ -133,6 +129,14 @@ public class TextNode(YogaConfig config, Layout parentLayout) : YogaNode(config,
         for (var i = 0; i < lines.Count; i++)
         {
             page.AddText(lines[i], FontSize, new PdfPoint(absoluteX, y - i * lineHeight), font);
+            if (IsBold)
+            {
+                double[] offsets = [0, 0.3, -0.3, 0.3, -0.3];
+                foreach (var dx in offsets)
+                {
+                    page.AddText(lines[i], FontSize, new PdfPoint(absoluteX + dx, y - i * lineHeight), font);
+                }
+            }
         }
 
         page.ResetColor();
@@ -150,6 +154,9 @@ public class TextNode(YogaConfig config, Layout parentLayout) : YogaNode(config,
                 break;
             case "fontfamily":
                 FontFamily = value;
+                break;
+            case "bold":
+                IsBold = value == "true";
                 break;
             case "color":
                 Color = Colors.Parse(value);
