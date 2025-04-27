@@ -20,7 +20,7 @@ public static class LayoutLoader
 
     public static Layout LoadLayoutFromXml(string xmlContent)
     {
-        var xml = XDocument.Parse(xmlContent);
+        var xml = XDocument.Parse(xmlContent, LoadOptions.SetLineInfo);
 
         var device = Enum.Parse<Device>(xml.Root!.Attribute("device")!.Value, true);
         var isLandscape = xml.Root.Attribute("isLandscape")?.Value == "true";

@@ -16,6 +16,8 @@ public class TiobeDataSource : IDataSource
         if (node is not ContainerNode container)
             throw new ArgumentException("node is not a ContainerNode");
 
+        var maxItems = Math.Min(int.Parse(element.Attribute("maxItems")?.Value ?? "10"), 20);
+
         container.Content.FlexDirection = YogaFlexDirection.Column;
         container.Content.JustifyContent = YogaJustify.FlexStart;
 
@@ -43,14 +45,14 @@ public class TiobeDataSource : IDataSource
         container.Copyright = "tiobe.com";
 
         var tableNode = node.ParentLayout.CreateTableNode("table");
-        tableNode.AddColumn("Rank");
 
-        var changeCol = tableNode.AddColumn("Change");
+        tableNode.AddColumn("Rank", YogaAlign.FlexStart);
+        tableNode.AddColumn("Change", YogaAlign.FlexStart);
+        tableNode.AddColumn("Language", YogaAlign.FlexStart);
+        tableNode.AddColumn("Rating", YogaAlign.FlexStart);
+        tableNode.AddColumn("Change", YogaAlign.FlexStart);
 
-        tableNode.AddColumn("Language");
-        tableNode.AddColumn("Rating");
-
-        foreach (var row in rows.Take(10))
+        foreach (var row in rows.Take(maxItems))
         {
             var cells = row.SelectNodes("td")!;
             var rowNode = tableNode.AddRow();
@@ -98,6 +100,14 @@ public class TiobeDataSource : IDataSource
             ratingTextNode.FontFamily = "NoticiaText";
             ratingTextNode.AutoSize = true;
             cell.Add(ratingTextNode);
+
+            cell = rowNode.AddCell();
+            var changeValue = cells[6].InnerText.Trim();
+            var changeValueTextNode = node.ParentLayout.CreateTextNode(changeValue);
+            changeValueTextNode.FontSize = 10;
+            changeValueTextNode.FontFamily = "NoticiaText";
+            changeValueTextNode.AutoSize = true;
+            cell.Add(changeValueTextNode);
         }
 
         container.Content.Add(tableNode);

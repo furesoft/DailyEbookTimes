@@ -32,7 +32,7 @@ public class TableNode : YogaNode
         return headerRow;
     }
 
-    public YogaNode AddColumn(string? header = null)
+    public YogaNode AddColumn(string? header = null, YogaAlign? align = null)
     {
         var cell = headerRow.AddCell();
 
@@ -40,7 +40,7 @@ public class TableNode : YogaNode
         {
             var headerTextNode = ParentLayout.CreateTextNode(header);
             headerTextNode.AutoSize = true;
-            headerTextNode.AlignSelf = YogaAlign.Center;
+            headerTextNode.AlignSelf = align ?? YogaAlign.Center;
             cell.Add(headerTextNode);
         }
 

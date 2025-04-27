@@ -5,8 +5,8 @@ public class WeatherCode
     private static readonly Dictionary<int, string> WeatherCodeToImageMap = new()
     {
         {0, "images/icons/forecast/sunny.png"},
-        {1, "images/icons/forecast/mostly_sunny.png"},
-        {2, "images/icons/forecast/partly_cloudy.png"},
+        {1, "images/icons/forecast/sunny.png"},
+        {2, "images/icons/forecast/cloudy.png"},
         {3, "images/icons/forecast/cloudy.png"},
         {45, "images/icons/forecast/fog.png"},
         {48, "images/icons/forecast/fog.png"},
