@@ -12,9 +12,7 @@
     </header>
 
     <content flexdirection="row" flexGrow="1" margin="10" marginbottom="1">
-        <column id="left" flexgrow="1" background="White" marginright="10" bordercolor="gray" boxshadow="gray 2" width="100">
-            <fragment src="layouts/fragments/article.xml" />
-            <fragment src="layouts/fragments/article.xml" />
+        <column id="left" flexgrow="1" background="White" marginright="10" bordercolor="gray" boxshadow="gray 2">
             <fragment src="layouts/fragments/article.xml" />
             <fragment src="layouts/fragments/article.xml" />
             <fragment src="layouts/fragments/article.xml" />
@@ -24,21 +22,11 @@
             <container flexgrow="1" height="100" alignself="center" datasource="nasa" />
 
             <column id="middle" background="White" bordercolor="gray" boxshadow="gray 2">
-                <forecastStrip flexdirection="row" justifycontent="spaceevenly" alignitems="center" datasource="weather">
-                    <fragment src="layouts/fragments/forecast_item.xml" width="100" height="145" alignself="center" background="darkgray" boxshadow="gray 1" />
-                    <fragment src="layouts/fragments/forecast_item.xml" width="100" height="145" alignself="center" background="lightblue" boxshadow="gray 1" />
-                    <fragment src="layouts/fragments/forecast_item.xml" width="100" height="145" alignself="center" background="green" boxshadow="gray 1" />
-                </forecastStrip>
+                <fragment src="layouts/fragments/article.xml" />
+                <fragment src="layouts/fragments/article.xml" />
+                <fragment src="layouts/fragments/article.xml" />
             </column>
         </middle>
-
-        <column id="right" flexgrow="1" background="White" boxshadow="gray 2" marginleft="10" bordercolor="gray" width="100">
-            <fragment src="layouts/fragments/article.xml" />
-            <fragment src="layouts/fragments/article.xml" />
-            <fragment src="layouts/fragments/article.xml" />
-            <fragment src="layouts/fragments/article.xml" />
-            <fragment src="layouts/fragments/article.xml" />
-        </column>
     </content>
 
     <footer height="10" margintop="5" marginleft="10" marginright="10" display="flex" flexdirection="row" justifyContent="spacebetween">

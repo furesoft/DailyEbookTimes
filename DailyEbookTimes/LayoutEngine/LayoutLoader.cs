@@ -66,6 +66,8 @@ public static class LayoutLoader
         var xml = XDocument.Parse(xmlContent);
 
         var layout = Layout.CreateTemplate();
+
+        layout.GetRoot().SetAttributes(xml.Root!);
         foreach (var child in xml.Root!.Elements())
         {
             var node = ParseNode(layout, child);

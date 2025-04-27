@@ -83,7 +83,7 @@ public class Newspaper
         var articles = coverLayout.FindDescendantNodes("article").ToArray();
 
         var articleIndex = 0;
-        var totalArticles = 10;
+        var totalArticles = articles.Length;
         var feedQueue = new Queue<Feed>(Feeds);
 
         while (articleIndex < totalArticles && feedQueue.Count > 0)
@@ -95,8 +95,13 @@ public class Newspaper
                 if (articleIndex >= totalArticles)
                     break;
 
-                articles[articleIndex].FindNode<TextNode>("title")!.Text = item.Title;
-                articles[articleIndex].FindNode<TextNode>("summary")!.Text = item.Content;
+                var titleNode = articles[articleIndex].FindNode<TextNode>("title");
+                if(titleNode is not null)
+                    titleNode.Text = item.Title;
+
+                var summaryNode = articles[articleIndex].FindNode<TextNode>("summary")!;
+                if(titleNode is not null)
+                    summaryNode.Text = item.Content;
                 articleIndex++;
             }
 

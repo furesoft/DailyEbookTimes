@@ -12,9 +12,9 @@ class Program
 
         string[] feeds = [
             "https://www.heise.de/rss/heise-Rubrik-IT.rdf",
-            "https://rss.golem.de/rss.php?ms=softwareentwicklung&feed=RSS2.0",
-            "https://css-tricks.com/feed/",
-            "https://dev.to/feed/"
+            //"https://rss.golem.de/rss.php?ms=softwareentwicklung&feed=RSS2.0",
+            //"https://css-tricks.com/feed/",
+            //"https://dev.to/feed/"
         ];
 
         var newspaper = new Newspaper(1, "furesoft");
