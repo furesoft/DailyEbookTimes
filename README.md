@@ -12,3 +12,5 @@ An extendet news aggregator that looks like a real newspaper
 - nasa picture of the day
 - todays xkcd
 - comic of the day
+
+Here you can find an [Example](https://github.com/furesoft/DailyEbookTimes/blob/main/DailyEbookTimes/Sample.pdf)
