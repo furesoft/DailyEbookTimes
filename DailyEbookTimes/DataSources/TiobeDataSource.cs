@@ -2,6 +2,7 @@
 using HtmlAgilityPack;
 using Moss.NET.Sdk.LayoutEngine;
 using Moss.NET.Sdk.LayoutEngine.Nodes;
+using Moss.NET.Sdk.LayoutEngine.Nodes.Table;
 using UglyToad.PdfPig.Writer;
 
 namespace Moss.NET.Sdk.DataSources;
@@ -58,6 +59,16 @@ public class TiobeDataSource : IDataSource
 
         tableNode.HeaderRow.Background = Colors.Gray;
 
+        AddRows(node, rows, maxItems, tableNode, url);
+
+        tableNode.AlternateColor(Colors.White, Colors.LightGray);
+
+        tableNode.CellPadding = 5;
+        container.Content.Add(tableNode);
+    }
+
+    private static void AddRows(YogaNode node, HtmlNodeCollection rows, int maxItems, TableNode tableNode, string url)
+    {
         foreach (var row in rows.Take(maxItems))
         {
             var cells = row.SelectNodes("td")!;
@@ -115,9 +126,5 @@ public class TiobeDataSource : IDataSource
             changeValueTextNode.AutoSize = true;
             cell.Add(changeValueTextNode);
         }
-
-        tableNode.AlternateColor(Colors.White, Colors.LightGray);
-
-        container.Content.Add(tableNode);
     }
 }

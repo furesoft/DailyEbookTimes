@@ -12,6 +12,18 @@ public class TableNode : YogaNode
         HeaderRow = AddRow("header");
     }
 
+    public YogaValue CellPadding
+    {
+        get => HeaderRow.Padding;
+        set
+        {
+            foreach (var rows in this)
+            {
+                rows.Padding = value;
+            }
+        }
+    }
+
     public TableRowNode AddRow(string? name = null)
     {
         TableRowNode row = new(Config, ParentLayout)
