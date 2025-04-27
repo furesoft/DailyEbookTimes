@@ -120,6 +120,7 @@ public static class LayoutLoader
                 {
                     ((TextNode)node).Text = element.Value;
                 }
+
                 break;
             case "hr":
                 node = layout.CreateHorizontalLine();
@@ -141,6 +142,11 @@ public static class LayoutLoader
                 {
                     node = layout.CreateTextNode(t.Value,
                         element.Attribute("name")?.Value);
+
+                    if (element.Attribute("name") is null)
+                    {
+                        node.Name = element.Name.LocalName;
+                    }
                     break;
                 }
 

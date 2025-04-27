@@ -193,4 +193,9 @@ public class Layout
             Src = url
         };
     }
+
+    public IEnumerable<YogaNode> FindDescendantNodes(string name)
+    {
+        return GetRoot().Descendants(name);
+    }
 }

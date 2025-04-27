@@ -760,9 +760,13 @@ public partial class YogaNode : IEnumerable<YogaNode>
 
     public IEnumerable<YogaNode> Descendants(string name)
     {
-        foreach (var child in Children.Where(c => c.Name == name))
+        foreach (var child in Children)
         {
-            yield return child;
+            if (child.Name == name)
+            {
+                yield return child;
+            }
+
             foreach (var descendant in child.Descendants(name))
             {
                 yield return descendant;

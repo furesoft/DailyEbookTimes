@@ -2,6 +2,7 @@
 using Moss.NET.Sdk.DataSources;
 using Moss.NET.Sdk.DataSources.Crypto;
 using Moss.NET.Sdk.LayoutEngine;
+using Moss.NET.Sdk.LayoutEngine.Nodes;
 using UglyToad.PdfPig.Outline;
 using UglyToad.PdfPig.Outline.Destinations;
 using UglyToad.PdfPig.Writer;
@@ -42,6 +43,7 @@ public class Newspaper
         LayoutLoader.AddDataSource<CryptoDataSource>();
 
         var coverLayout = LayoutLoader.Load("layouts/cover.xml");
+
         _layouts.Add(coverLayout);
     }
 
@@ -63,6 +65,8 @@ public class Newspaper
 
     public byte[] Render()
     {
+        AddNewsToCover();
+
         foreach (var layout in _layouts)
         {
             layout.Apply();
@@ -73,11 +77,42 @@ public class Newspaper
         return _builder.Build();
     }
 
+    private void AddNewsToCover()
+    {
+        var coverLayout = _layouts[0];
+        var articles = coverLayout.FindDescendantNodes("article").ToArray();
+
+        var articleIndex = 0;
+        var totalArticles = 10;
+        var feedQueue = new Queue<Feed>(Feeds);
+
+        while (articleIndex < totalArticles && feedQueue.Count > 0)
+        {
+            var feed = feedQueue.Dequeue();
+
+            foreach (var item in feed.Items)
+            {
+                if (articleIndex >= totalArticles)
+                    break;
+
+                articles[articleIndex].FindNode<TextNode>("title")!.Text = item.Title;
+                articles[articleIndex].FindNode<TextNode>("summary")!.Text = item.Content;
+                articleIndex++;
+            }
+
+            if (feed.Items.Any())
+                feedQueue.Enqueue(feed);
+        }
+    }
+
     public void AddFeed(Feed feed)
     {
         Feeds.Add(feed);
 
         var layout = LayoutLoader.Load("layouts/content.xml", feed.Title);
+
+        var articles = layout.FindDescendantNodes("article").ToArray();
+
         _layouts.Add(layout);
     }
 }
