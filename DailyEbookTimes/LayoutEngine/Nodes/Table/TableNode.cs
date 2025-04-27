@@ -40,7 +40,7 @@ public class TableNode : YogaNode
         {
             var headerTextNode = ParentLayout.CreateTextNode(header);
             headerTextNode.AutoSize = true;
-            headerTextNode.JustifyContent = YogaJustify.Center;
+            headerTextNode.AlignSelf = YogaAlign.Center;
             cell.Add(headerTextNode);
         }
     }
