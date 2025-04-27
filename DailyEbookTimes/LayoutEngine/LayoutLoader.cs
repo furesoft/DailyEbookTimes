@@ -18,13 +18,14 @@ public static class LayoutLoader
         DataSources[component.Name] = component;
     }
 
-    public static Layout LoadLayoutFromXml(string xmlContent)
+    public static Layout LoadLayoutFromXml(string text, string name)
     {
-        var xml = XDocument.Parse(xmlContent, LoadOptions.SetLineInfo);
+        var xml = XDocument.Parse(text, LoadOptions.SetLineInfo);
 
         var device = Enum.Parse<Device>(xml.Root!.Attribute("device")!.Value, true);
         var isLandscape = xml.Root.Attribute("isLandscape")?.Value == "true";
         var layout = Layout.Create(device, isLandscape);
+        layout.Name = name;
 
         if (xml.Root.Attribute("name") != null)
         {
@@ -50,9 +51,9 @@ public static class LayoutLoader
         return layout;
     }
 
-    public static Layout Load(string file)
+    public static Layout Load(string file, string? name = null)
     {
-        return LoadLayoutFromXml(Layout.PathResolver.ReadText(file));
+        return LoadLayoutFromXml(Layout.PathResolver.ReadText(file), name);
     }
 
     public static YogaNode LoadFragment(string file)

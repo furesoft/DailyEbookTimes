@@ -1,81 +1,44 @@
 ﻿using System.Diagnostics;
 using System.Globalization;
 using CodeHollow.FeedReader;
-using Moss.NET.Sdk.DataSources;
-using Moss.NET.Sdk.DataSources.Crypto;
-using Moss.NET.Sdk.LayoutEngine;
-using UglyToad.PdfPig.Outline;
-using UglyToad.PdfPig.Outline.Destinations;
-using UglyToad.PdfPig.Writer;
 
 namespace Moss.NET.Sdk;
 
 class Program
 {
-    static void Main(string[] args)
+    static async Task Main(string[] args)
     {
         Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
 
         string[] feeds = [
-            "https://www.heise.de/rss/heise-Rubrik-IT.rdf"];
+            "https://www.heise.de/rss/heise-Rubrik-IT.rdf",
+            "https://rss.golem.de/rss.php?ms=softwareentwicklung&feed=RSS2.0",
+            "https://css-tricks.com/feed/",
+            "https://dev.to/feed/"
+        ];
 
-        foreach (string url in feeds)
+        var newspaper = new Newspaper(1, "furesoft");
+
+        using var httpClient = new HttpClient();
+        httpClient.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.63 Safari/537.36");
+        httpClient.DefaultRequestHeaders.Add("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
+        httpClient.DefaultRequestHeaders.Add("Accept-Language", "en-US,en;q=0.5");
+
+        foreach (var url in feeds)
         {
-            var feed = FeedReader.Read(url);
-            Feeds.Add(feed);
+            var response = await httpClient.GetAsync(url);
+            if (response.IsSuccessStatusCode)
+            {
+                var data = await response.Content.ReadAsByteArrayAsync();
+                var feed = FeedReader.ReadFromByteArray(data);
+                newspaper.AddFeed(feed);
+            }
         }
 
-        var builder = new PdfDocumentBuilder();
-
-        builder.DocumentInformation.Producer = "Totletheyn";
-        builder.DocumentInformation.Title = "Issue #1";
-        builder.DocumentInformation.CreationDate = DateTime.Now.ToString("dddd, MMMM dd, yyyy");
-
-        Layout.Builder = builder;
-        Layout.AddFont("Default", "Assets/fonts/NoticiaText-Regular.ttf");
-        Layout.AddFont("Jaini", "Assets/fonts/Jaini-Regular.ttf");
-        Layout.AddFont("NoticiaText", "Assets/fonts/NoticiaText-Regular.ttf");
-
-        Layout.PathResolver.Base = "Assets/";
-        LayoutLoader.AddDataSource<WeatherDataSource>();
-        LayoutLoader.AddDataSource<XkcdDataSource>();
-        LayoutLoader.AddDataSource<NasaDataSource>();
-        LayoutLoader.AddDataSource<JokeDataSource>();
-        LayoutLoader.AddDataSource<ComicDataSource>();
-        LayoutLoader.AddDataSource<TiobeDataSource>();
-        LayoutLoader.AddDataSource<CryptoDataSource>();
-
-        var coverLayout = LayoutLoader.Load("layouts/cover.xml");
-        //coverLayout.EnableDebugLines();
-        coverLayout.Apply();
-
-        var contentLayout = LayoutLoader.Load("layouts/content.xml");
-        contentLayout.Name = "Page 1";
-        contentLayout.Apply();
-
-        AddBookmarks(coverLayout, contentLayout);
-        var documentBytes = builder.Build();
+        var documentBytes = newspaper.Render();
 
         var samplePdf = "../../../Sample.pdf";
         File.WriteAllBytes(samplePdf, documentBytes);
         Process.Start(new ProcessStartInfo(Path.GetFullPath(samplePdf)) { UseShellExecute = true });
     }
-
-    private static void AddBookmarks(params Layout[] layouts)
-    {
-        var nodes = new List<DocumentBookmarkNode>();
-
-        foreach (var layout in layouts)
-        {
-            nodes.Add(new DocumentBookmarkNode(layout.Name, 0,
-                new ExplicitDestination(layout.Page!.PageNumber, ExplicitDestinationType.FitPage,
-                    ExplicitDestinationCoordinates.Empty),
-                [])
-            );
-        }
-
-        Layout.Builder.Bookmarks = new(nodes);
-    }
-
-    public static List<Feed> Feeds { get; set; } = [];
 }
