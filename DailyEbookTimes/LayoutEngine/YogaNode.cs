@@ -953,7 +953,10 @@ public partial class YogaNode : IEnumerable<YogaNode>
         }
         else
         {
-            page.DrawRectangle(boxPos, LayoutWidth, LayoutHeight, 1);
+            if (BorderWidth != null)
+            {
+                page.DrawRectangle(boxPos, LayoutWidth, LayoutHeight, BorderWidth!.Value);
+            }
         }
 
         page.ResetColor();

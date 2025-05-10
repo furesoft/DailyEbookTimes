@@ -1,1 +1,6 @@
 ﻿[ ] add automatic grid layout (display=grid)
+[-] add ability to include sodoku of the day:
+[ ] add ability to include crossword of the day:
+[ ] add ability to include wordle of the day:
+[ ] add stock info
+[ ] maybe add calendar for todays appointments

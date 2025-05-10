@@ -1,6 +1,7 @@
 ﻿using CodeHollow.FeedReader;
 using Moss.NET.Sdk.DataSources;
 using Moss.NET.Sdk.DataSources.Crypto;
+using Moss.NET.Sdk.DataSources.Sodoku;
 using Moss.NET.Sdk.LayoutEngine;
 using Moss.NET.Sdk.LayoutEngine.Nodes;
 using UglyToad.PdfPig.Outline;
@@ -17,6 +18,8 @@ public class Newspaper
     private readonly int Issue;
 
     private readonly List<Layout> _layouts = [];
+	
+	public string Title => _builder.DocumentInformation.Title;
 
     public Newspaper(int issue, string? author)
     {
@@ -41,6 +44,7 @@ public class Newspaper
         LayoutLoader.AddDataSource<ComicDataSource>();
         LayoutLoader.AddDataSource<TiobeDataSource>();
         LayoutLoader.AddDataSource<CryptoDataSource>();
+        LayoutLoader.AddDataSource<SodokuDataSource>();
 
         var coverLayout = LayoutLoader.Load("layouts/cover.xml");
 
@@ -65,7 +69,7 @@ public class Newspaper
 
     public byte[] Render()
     {
-        AddNewsToCover();
+        //AddNewsToCover();
 
         foreach (var layout in _layouts)
         {
