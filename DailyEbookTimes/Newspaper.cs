@@ -69,7 +69,7 @@ public class Newspaper
 
     public byte[] Render()
     {
-        //AddNewsToCover();
+        AddNewsToCover();
 
         foreach (var layout in _layouts)
         {

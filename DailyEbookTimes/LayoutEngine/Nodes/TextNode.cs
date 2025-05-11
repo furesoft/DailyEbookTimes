@@ -48,18 +48,26 @@ public class TextNode(YogaConfig config, Layout parentLayout) : YogaNode(config,
 
         var text = GetActualString();
 
-        var measuredText = page.MeasureText(text, FontSize, PdfPoint.Origin, ParentLayout.GetFont(FontFamily));
-        var leftMost = measuredText.Min(g => g.GlyphRectangle.Left);
-        var rightMost = measuredText.Max(g => g.GlyphRectangle.Right);
-        var textWidth = rightMost - leftMost;
+        try
+        {
+            var measuredText = page.MeasureText(text, FontSize, PdfPoint.Origin, ParentLayout.GetFont(FontFamily));
+            var leftMost = measuredText.Min(g => g.GlyphRectangle.Left);
+            var rightMost = measuredText.Max(g => g.GlyphRectangle.Right);
+            var textWidth = rightMost - leftMost;
 
-        var textHeight = measuredText.Max(glyph => glyph.GlyphRectangle.Top) - measuredText.Min(glyph => glyph.GlyphRectangle.Bottom);
+            var textHeight = measuredText.Max(glyph => glyph.GlyphRectangle.Top) -
+                             measuredText.Min(glyph => glyph.GlyphRectangle.Bottom);
 
-        if (Width is { Unit: YogaUnit.Auto, Value: 1 })
-            Width = textWidth;
+            if (Width is { Unit: YogaUnit.Auto, Value: 1 })
+                Width = textWidth;
 
-        if (Height is { Unit: YogaUnit.Auto, Value: 1 })
-            Height = textHeight;
+            if (Height is { Unit: YogaUnit.Auto, Value: 1 })
+                Height = textHeight;
+        }
+        catch
+        {
+            // ignored
+        }
     }
 
     private string GetActualString()

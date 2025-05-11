@@ -15,16 +15,23 @@
         <column id="left" flexgrow="1" background="White" marginright="10" bordercolor="gray" boxshadow="gray 2" gap="10">
             <fragment src="layouts/fragments/article.xml" />
             <fragment src="layouts/fragments/article.xml" />
+            <fragment src="layouts/fragments/article.xml" />
         </column>
 
-        <middle flexgrow="1" marginleft="5" marginright="5" gap="3">
+        <middle flexgrow="1" marginleft="5" marginright="5">
             <container alignself="center" datasource="nasa" />
 
-            <column id="middle" background="White" bordercolor="gray" boxshadow="gray 2" flexgrow="1">
+            <column id="middle" background="White" bordercolor="gray" boxshadow="gray 2" flexgrow="1" margintop="5">
                 <fragment src="layouts/fragments/article.xml" />
                 <fragment src="layouts/fragments/article.xml" />
             </column>
         </middle>
+
+        <column id="right" flexgrow="1" background="White" marginright="10" bordercolor="gray" boxshadow="gray 2" gap="10">
+            <fragment src="layouts/fragments/article.xml" />
+            <fragment src="layouts/fragments/article.xml" />
+            <fragment src="layouts/fragments/article.xml" />
+        </column>
     </content>
 
     <footer height="10" margintop="5" marginleft="10" marginright="10" display="flex" flexdirection="row" justifyContent="spacebetween">

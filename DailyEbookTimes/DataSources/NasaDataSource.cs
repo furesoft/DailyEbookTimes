@@ -35,8 +35,8 @@ public class NasaDataSource : IDataSource
         var a = doc.DocumentNode.SelectSingleNode("//html//body//center/p//a//img")!;
 
         var img = node.ParentLayout.CreateImageNode($"https://apod.nasa.gov/apod/{a.Attributes["src"].Value}");
-        img.Width = 300;
-        img.Height = 150;
+        img.Width = 450;
+        img.Height = 300;
 
         container.Copyright = "NASA";
         container.Width = img.Width;
