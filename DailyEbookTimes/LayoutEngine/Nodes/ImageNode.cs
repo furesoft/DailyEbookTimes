@@ -9,7 +9,7 @@ public enum ImageFormat {Png, Jpeg,
 
 public class ImageNode(YogaConfig config, Layout parentLayout) : YogaNode(config, parentLayout)
 {
-    public required string Src { get; set; }
+    public string? Src { get; set; }
     public bool AutoSize { get; set; }
 
     private byte[] _data;
@@ -18,6 +18,13 @@ public class ImageNode(YogaConfig config, Layout parentLayout) : YogaNode(config
     public override void ReCalculate(PdfPageBuilder page)
     {
         base.ReCalculate(page);
+
+        if (Src is null)
+        {
+            Display = YogaDisplay.None;
+            return;
+        }
+
         _data = LoadImage();
 
         DetectImageFormat();

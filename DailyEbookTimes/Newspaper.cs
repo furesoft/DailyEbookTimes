@@ -1,4 +1,5 @@
 ﻿using CodeHollow.FeedReader;
+using HtmlAgilityPack;
 using Moss.NET.Sdk.DataSources;
 using Moss.NET.Sdk.DataSources.Crypto;
 using Moss.NET.Sdk.DataSources.Sodoku;
@@ -103,9 +104,15 @@ public class Newspaper
                 if(titleNode is not null)
                     titleNode.Text = item.Title;
 
-                var summaryNode = articles[articleIndex].FindNode<TextNode>("summary")!;
-                if(titleNode is not null)
-                    summaryNode.Text = item.Content;
+                var summaryNode = articles[articleIndex].FindNode("summary")!;
+                if (summaryNode is not null)
+                {
+                    var doc = new HtmlDocument();
+                    doc.LoadHtml(item.Content);
+
+                    summaryNode.FindNode<ImageNode>("img")!.Src = doc.DocumentNode.SelectSingleNode("//img")?.GetAttributeValue("src", null);
+                    summaryNode.FindNode<TextNode>("text")!.Text = Utils.StripHtml(item.Description);
+                }
                 articleIndex++;
             }
 
