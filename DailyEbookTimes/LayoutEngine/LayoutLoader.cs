@@ -18,7 +18,7 @@ public static class LayoutLoader
         DataSources[component.Name] = component;
     }
 
-    public static Layout LoadLayoutFromXml(string text, string name)
+    public static Layout LoadLayoutFromXml(string text, string name, bool autoSize = false)
     {
         var xml = XDocument.Parse(text, LoadOptions.SetLineInfo);
 
@@ -36,7 +36,7 @@ public static class LayoutLoader
 
         foreach (var child in xml.Root.Elements())
         {
-            var node = ParseNode(layout, child);
+            var node = ParseNode(layout, child, autoSize);
             if (node != null)
             {
                 layout.Add(node);
@@ -61,7 +61,7 @@ public static class LayoutLoader
         return LoadFragmentFromXml(Layout.PathResolver.ReadText(file));
     }
 
-    public static YogaNode LoadFragmentFromXml(string xmlContent)
+    public static YogaNode LoadFragmentFromXml(string xmlContent, bool autoSize = false)
     {
         var xml = XDocument.Parse(xmlContent);
 
@@ -70,7 +70,7 @@ public static class LayoutLoader
         layout.GetRoot().SetAttributes(xml.Root!);
         foreach (var child in xml.Root!.Elements())
         {
-            var node = ParseNode(layout, child);
+            var node = ParseNode(layout, child, autoSize);
             if (node != null)
             {
                 layout.Add(node);
@@ -86,13 +86,13 @@ public static class LayoutLoader
         return layout.GetRoot();
     }
 
-    private static YogaNode? ParseNode(Layout layout, XElement element)
+    private static YogaNode? ParseNode(Layout layout, XElement element, bool autoSize)
     {
-        if (!CreateNode(layout, element, out var node) && node is null) return null;
+        if (!CreateNode(layout, element, out var node, autoSize) && node is null) return null;
 
         node!.SetAttributes(element);
 
-        ParseChildren(layout, element, node);
+        ParseChildren(layout, element, node, autoSize);
 
         ApplyDataSource(layout, element, node);
 
@@ -108,7 +108,7 @@ public static class LayoutLoader
         }
     }
 
-    private static bool CreateNode(Layout layout, XElement element, out YogaNode? node)
+    private static bool CreateNode(Layout layout, XElement element, out YogaNode? node, bool autoSize)
     {
         switch (element.Name.LocalName)
         {
@@ -122,6 +122,7 @@ public static class LayoutLoader
                 {
                     ((TextNode)node).Text = element.Value;
                 }
+                ((TextNode)node).AutoSize = autoSize;
 
                 break;
             case "hr":
@@ -129,6 +130,7 @@ public static class LayoutLoader
                 break;
             case "img":
                 node = layout.CreateImageNode(element.Attribute("src")?.Value!, element.Attribute("name")?.Value);
+                ((ImageNode)node).AutoSize = autoSize;
                 break;
             case "container":
                 node = layout.CreateContainerNode(element.Attribute("title")?.Value ?? string.Empty,
@@ -166,11 +168,11 @@ public static class LayoutLoader
         return true;
     }
 
-    private static void ParseChildren(Layout layout, XElement element, YogaNode node)
+    private static void ParseChildren(Layout layout, XElement element, YogaNode node, bool autoSize)
     {
         foreach (var child in element.Elements())
         {
-            var childNode = ParseNode(layout, child);
+            var childNode = ParseNode(layout, child, autoSize);
             if (childNode != null)
             {
                 if (node is ContainerNode container)

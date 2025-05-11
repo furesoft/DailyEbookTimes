@@ -8,6 +8,7 @@
 
 using System.Globalization;
 using System.Xml.Linq;
+using HtmlAgilityPack;
 using UglyToad.PdfPig.Core;
 using UglyToad.PdfPig.Writer;
 
@@ -771,6 +772,22 @@ public partial class YogaNode : IEnumerable<YogaNode>
             {
                 yield return descendant;
             }
+        }
+    }
+
+    private string _innerText;
+    public string InnerText
+    {
+        get => _innerText;
+        set
+        {
+            var doc = new HtmlDocument();
+            doc.LoadHtml("<root>" + value + "</root>");
+            doc.OptionOutputAsXml = true;
+
+            var fragment = LayoutLoader.LoadFragmentFromXml(doc.DocumentNode.OuterHtml, autoSize: true);
+            Clear();
+            Add(fragment);
         }
     }
 
