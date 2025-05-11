@@ -15,15 +15,15 @@ public class Newspaper
     private List<Feed> Feeds { get; } = [];
 
     private readonly PdfDocumentBuilder _builder = new();
-    private readonly int Issue;
+    private readonly int _issue;
 
     private readonly List<Layout> _layouts = [];
 	
-	public string Title => _builder.DocumentInformation.Title;
+	public string Title => _builder.DocumentInformation.Title!;
 
     public Newspaper(int issue, string? author)
     {
-        Issue = issue;
+        _issue = issue;
 
         _builder.DocumentInformation.Producer = "Totletheyn";
         _builder.DocumentInformation.Title = "Issue #" + issue;
@@ -120,8 +120,14 @@ public class Newspaper
 
         var layout = LayoutLoader.Load("layouts/content.xml", feed.Title);
 
-        var articles = layout.FindDescendantNodes("article").ToArray();
-
         _layouts.Add(layout);
+    }
+
+    public ContentLayout AddContent(string name)
+    {
+        var contentLayout = new ContentLayout(name);
+        _layouts.Add(contentLayout.Layout);
+
+        return contentLayout;
     }
 }

@@ -1,0 +1,5 @@
+﻿<content flexdirection="column" flexgrow="1" margin="10" marginbottom="1">
+    <section id="left" flexgrow="1" />
+    <section id="middle" flexgrow="1" />
+    <section id="right" flexgrow="1" />
+</content>

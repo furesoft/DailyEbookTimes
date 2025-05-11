@@ -35,6 +35,8 @@ class Program
             }
         }
 
+        var col3 = newspaper.AddContent("3-col");
+
         var documentBytes = newspaper.Render();
 
         var samplePdf = "../../../Sample.pdf";
