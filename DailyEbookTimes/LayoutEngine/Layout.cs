@@ -49,7 +49,9 @@ public class Layout
     public static Layout Create(Device device, bool isLandscape = true)
     {
         var dimension = device.GetDimension(isLandscape);
-        return new Layout(new(), Builder.AddPage(dimension.width, dimension.height));
+        var scale = 2;
+
+        return new Layout(new(), Builder.AddPage(dimension.width * scale, dimension.height * scale));
     }
 
     public static Layout CreateTemplate()
