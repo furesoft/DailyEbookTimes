@@ -1,7 +1,7 @@
 ﻿<article flexdirection="column" padding="5" width="auto" height="250" gap="15">
-    <title fontsize="11" fontfamily="NoticiaText" textwrapping="wrap">Title</title>
+    <title fontsize="13" fontfamily="NoticiaText" textwrapping="wrap">Title</title>
     <summary fontsize="7" fontfamily="NoticiaText" textwrapping="wrap" height="100" flexdirection="row" gap="5">
         <img name="img" width="200" height="150" marginright="5" />
-        <text name="text" fontfamily="NoticiaText" flexgrow="1" fontsize="7" textwrapping="wrap" height="100" />
+        <text name="text" fontfamily="NoticiaText" flexgrow="1" fontsize="10" textwrapping="wrap" height="100" />
     </summary>
 </article>

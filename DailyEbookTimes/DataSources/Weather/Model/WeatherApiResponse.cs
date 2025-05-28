@@ -1,45 +1,48 @@
 ﻿using System.Text.Json.Serialization;
+using PolyType;
 
 namespace Moss.NET.Sdk.DataSources.Weather.Model;
 
+[GenerateShape]
 public class WeatherApiResponse
 {
-    [JsonPropertyName("latitude")]
+    [PropertyShape(Name = "latitude")]
     public double Latitude { get; set; }
 
-    [JsonPropertyName("longitude")]
+    [PropertyShape(Name = "longitude")]
     public double Longitude { get; set; }
 
-    [JsonPropertyName("generationtime_ms")]
+    [PropertyShape(Name = "generationtime_ms")]
     public double Generationtime_ms { get; set; }
 
-    [JsonPropertyName("utc_offset_seconds")]
+    [PropertyShape(Name = "utc_offset_seconds")]
     public int Utc_offset_seconds { get; set; }
 
-    [JsonPropertyName("timezone")]
+    [PropertyShape(Name = "timezone")]
     public string Timezone { get; set; }
 
-    [JsonPropertyName("timezone_abbreviation")]
+    [PropertyShape(Name = "timezone_abbreviation")]
     public string Timezone_abbreviation { get; set; }
 
-    [JsonPropertyName("elevation")]
+    [PropertyShape(Name = "elevation")]
     public double Elevation { get; set; }
 
-    [JsonPropertyName("current_units")]
+    [PropertyShape(Name = "current_units")]
     public CurrentUnits Current_units { get; set; }
 
-    [JsonPropertyName("current")]
+    [PropertyShape(Name = "current")]
     public Current Current { get; set; }
 
-    [JsonPropertyName("hourly_units")]
+    [PropertyShape(Name = "hourly_units")]
     public HourlyUnits Hourly_units { get; set; }
 
-    [JsonPropertyName("hourly")]
+    [PropertyShape(Name = "hourly")]
     public Hourly Hourly { get; set; }
 
-    [JsonPropertyName("daily_units")]
+    [PropertyShape(Name = "daily_units")]
     public DailyUnits Daily_units { get; set; }
 
-    [JsonPropertyName("daily")]
+    [PropertyShape(Name = "daily")]
     public Daily Daily { get; set; }
 }
+
