@@ -3,7 +3,7 @@
 namespace Moss.NET.Sdk.DataSources.Crypto;
 
 [GenerateShape]
-public class CryptoPrice
+public partial class CryptoPrice
 {
     [PropertyShape(Name = "id")] public string Id { get; set; } = string.Empty;
     [PropertyShape(Name = "symbol")] public string Symbol { get; set; } = string.Empty;
